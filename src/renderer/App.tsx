@@ -1,7 +1,7 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import icon from '../../assets/icon.svg';
-import './App.global.css';
+import './style';
 import generateAPI from './utils/axios/generateAPI';
 import Button from '@material-ui/core/Button';
 import Layout from './layout/Layout';

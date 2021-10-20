@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
+import Menu from './Menu';
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -24,23 +25,15 @@ const Layout = () => {
       }}
     >
       <Grid
-        item
-        xs={2}
-        style={{
-          width: '100%',
-        }}
-      >
-        <div>xs=8</div>
-      </Grid>
-      <Grid
         container
         xs
         style={{
           width: '100%',
+          minWidth: '100%',
         }}
       >
-        <Grid container xs={4}>
-          <div>xs=4</div>
+        <Grid xs={4}>
+          <Menu />
         </Grid>
       </Grid>
       <Grid
@@ -48,6 +41,7 @@ const Layout = () => {
         xs={2}
         style={{
           width: '100%',
+          minWidth: '100%',
         }}
       >
         <div>xs=4</div>
