@@ -5,6 +5,50 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Switch from '@mui/material/Switch';
+import Icon from '../components/Icon';
+type ImenuItem = {
+  title: string;
+  icon: IconType;
+  suffix?: () => JSX.Element;
+};
+const menuItems: ImenuItem[] = [
+  {
+    title: '发现音乐',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '播客',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '视频',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '朋友',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '直播',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '私人FM',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '直播',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '直播',
+    icon: 'icon-AddProducts',
+  },
+  {
+    title: '直播',
+    icon: 'icon-AddProducts',
+  },
+];
 
 const Menu = () => {
   const [checked, setChecked] = React.useState(['wifi']);
@@ -24,33 +68,26 @@ const Menu = () => {
 
   return (
     <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: '100%', bgcolor: 'background.paper' }}
       subheader={<ListSubheader>Settings</ListSubheader>}
     >
-      <ListItem>
-        <ListItemIcon>{/* <WifiIcon /> */}</ListItemIcon>
-        <ListItemText id="switch-list-label-wifi" primary="Wi-Fi" />
-        <Switch
-          edge="end"
-          onChange={handleToggle('wifi')}
-          checked={checked.indexOf('wifi') !== -1}
-          inputProps={{
-            'aria-labelledby': 'switch-list-label-wifi',
-          }}
-        />
-      </ListItem>
-      <ListItem>
-        <ListItemIcon>{/* <BluetoothIcon /> */}</ListItemIcon>
-        <ListItemText id="switch-list-label-bluetooth" primary="Bluetooth" />
-        <Switch
-          edge="end"
-          onChange={handleToggle('bluetooth')}
-          checked={checked.indexOf('bluetooth') !== -1}
-          inputProps={{
-            'aria-labelledby': 'switch-list-label-bluetooth',
-          }}
-        />
-      </ListItem>
+      {menuItems.map((item) => {
+        return (
+          <ListItem>
+            <Icon type={item.icon} />
+            <ListItemText id="switch-list-label-wifi" primary={item.title} />
+            {item?.suffix?.()}
+            {/* <Switch
+              edge="end"
+              onChange={handleToggle('wifi')}
+              checked={checked.indexOf('wifi') !== -1}
+              inputProps={{
+                'aria-labelledby': 'switch-list-label-wifi',
+              }}
+            /> */}
+          </ListItem>
+        );
+      })}
     </List>
   );
 };
