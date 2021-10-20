@@ -5,7 +5,7 @@
 import webpack from 'webpack';
 import webpackPaths from './webpack.paths';
 import { dependencies as externals } from '../../release/app/package.json';
-
+import path from 'path';
 export default {
   externals: [...Object.keys(externals || {})],
 
@@ -37,6 +37,10 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [webpackPaths.srcPath, 'node_modules'],
+    alias: {
+      '@config': path.resolve(__dirname, '../../config'),
+      '@constants': path.resolve(__dirname, '../../constants'),
+    },
   },
 
   plugins: [

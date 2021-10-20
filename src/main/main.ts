@@ -16,8 +16,10 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import('../../server/app');
+import api from '../../server/app';
 
+let apiServer: any;
+let quitting: any;
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -117,6 +119,22 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
+app.on('before-quit', (e) => {
+  e.preventDefault();
+
+  if (quitting) {
+    return;
+  }
+
+  apiServer && apiServer.close();
+
+  // Fix issues #14
+  quitting = true;
+  mainWindow = null;
+
+  app.exit(0);
+  process.exit(0);
+});
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -129,6 +147,9 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    apiServer = api(null, (err: any) => {
+      if (err) throw err;
+    });
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

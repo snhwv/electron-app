@@ -1,49 +1,28 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
 import icon from '../../assets/icon.svg';
 import './App.global.css';
+import generateAPI from './utils/axios/generateAPI';
+import Button from '@material-ui/core/Button';
+import Layout from './layout/Layout';
 
-const Hello = () => {
-  return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
-  );
+const apis = {
+  login: 'login/cellphone',
+  playlist: 'user/playlist?uid=477944154',
+  add: 'sale/order/add post',
+  update: 'sale/order/update post',
 };
-
+const api = generateAPI(apis);
 export default function App() {
+  React.useEffect(() => {
+    api.playlist().then((re) => {
+      console.log(re);
+    });
+  }, []);
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Hello} />
+        <Route path="/" component={Layout} />
       </Switch>
     </Router>
   );
