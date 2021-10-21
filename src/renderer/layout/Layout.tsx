@@ -31,9 +31,18 @@ const Layout = () => {
         style={{
           width: '100%',
           minWidth: '100%',
+          overflow: 'hidden',
         }}
       >
-        <Grid xs={4}>
+        <Grid
+          xs={4}
+          style={{
+            height: '100%',
+            overflow: 'auto',
+            borderRight: '1px solid #f3f3f3',
+            paddingRight: '8px',
+          }}
+        >
           <Menu />
         </Grid>
       </Grid>

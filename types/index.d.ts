@@ -30,6 +30,7 @@ declare type Recordable<T = any> = Record<string, T>;
 
 declare type Nullable<T> = T | null;
 declare module '*.less';
+declare module '*.scss';
 type ValueOf<T> = T[keyof T];
 type IconType =
   | 'icon-QRcode'

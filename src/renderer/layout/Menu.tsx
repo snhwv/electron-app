@@ -3,18 +3,39 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import Switch from '@mui/material/Switch';
 import Icon from '../components/Icon';
+import { Collapse } from '@mui/material';
+import classnames from 'classnames';
+import style from './menu.module.scss';
+
 type ImenuItem = {
   title: string;
   icon: IconType;
   suffix?: () => JSX.Element;
+  children?: ImenuItem[];
 };
 const menuItems: ImenuItem[] = [
   {
     title: '发现音乐',
     icon: 'icon-AddProducts',
+    children: [
+      {
+        title: '播客',
+        icon: 'icon-AddProducts',
+      },
+      {
+        title: '视频',
+        icon: 'icon-AddProducts',
+      },
+      {
+        title: '播客',
+        icon: 'icon-AddProducts',
+      },
+      {
+        title: '视频',
+        icon: 'icon-AddProducts',
+      },
+    ],
   },
   {
     title: '播客',
@@ -50,45 +71,59 @@ const menuItems: ImenuItem[] = [
   },
 ];
 
-const Menu = () => {
-  const [checked, setChecked] = React.useState(['wifi']);
+const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
+  item,
+  isChild = false,
+}) => {
+  const [open, setOpen] = React.useState(true);
 
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  // const [hover, setHover] = React.useState(false);
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const handleClick = () => {
+    setOpen(!open);
   };
 
   return (
-    <List
-      sx={{ width: '100%', bgcolor: 'background.paper' }}
-      subheader={<ListSubheader>Settings</ListSubheader>}
-    >
-      {menuItems.map((item) => {
-        return (
-          <ListItem>
-            <Icon type={item.icon} />
-            <ListItemText id="switch-list-label-wifi" primary={item.title} />
-            {item?.suffix?.()}
-            {/* <Switch
-              edge="end"
-              onChange={handleToggle('wifi')}
-              checked={checked.indexOf('wifi') !== -1}
-              inputProps={{
-                'aria-labelledby': 'switch-list-label-wifi',
-              }}
-            /> */}
-          </ListItem>
-        );
+    <>
+      <ListItem
+        onClick={item?.children && handleClick}
+        className={style['menuList']}
+      >
+        <Icon
+          type={item.icon}
+          className={classnames('sidebarMenuIcon', { alwayShow: !isChild })}
+        />
+        <ListItemText
+          className={classnames({
+            menuTextBolder: !isChild,
+          })}
+          primary={item.title}
+        />
+        <Icon type={'icon-arrow-right'} />
+        {item?.suffix?.()}
+      </ListItem>
+      {item?.children && (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <MenuList listData={item.children!} isChild={true} />
+        </Collapse>
+      )}
+    </>
+  );
+};
+
+const MenuList: React.FC<{ listData: ImenuItem[]; isChild?: boolean }> = ({
+  listData,
+  isChild,
+}) => {
+  return (
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }} disablePadding>
+      {listData.map((item, index) => {
+        return <MenuItem item={item} key={index} isChild={isChild}></MenuItem>;
       })}
     </List>
   );
+};
+const Menu = () => {
+  return <MenuList listData={menuItems}></MenuList>;
 };
 export default Menu;
