@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Icon from '../components/Icon';
 import { Collapse } from '@mui/material';
 import classnames from 'classnames';
+import { Box } from '@mui/system';
 import style from './menu.module.scss';
 
 type ImenuItem = {
@@ -77,8 +78,6 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
 }) => {
   const [open, setOpen] = React.useState(true);
 
-  // const [hover, setHover] = React.useState(false);
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -97,6 +96,9 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
           className={classnames({
             menuTextBolder: !isChild,
           })}
+          sx={{
+            color: 'text.primary',
+          }}
           primary={item.title}
         />
         <Icon type={'icon-arrow-right'} />
@@ -123,7 +125,24 @@ const MenuList: React.FC<{ listData: ImenuItem[]; isChild?: boolean }> = ({
     </List>
   );
 };
+
+const MenuHeader = () => {
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        height: 100,
+      }}
+    ></Box>
+  );
+};
+
 const Menu = () => {
-  return <MenuList listData={menuItems}></MenuList>;
+  return (
+    <>
+      <MenuHeader></MenuHeader>
+      <MenuList listData={menuItems}></MenuList>
+    </>
+  );
 };
 export default Menu;

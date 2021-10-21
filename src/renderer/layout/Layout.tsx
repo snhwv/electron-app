@@ -35,8 +35,8 @@ const Layout = () => {
         }}
       >
         <Grid
-          xs={4}
           style={{
+            width: '240px',
             height: '100%',
             overflow: 'auto',
             borderRight: '1px solid #f3f3f3',
