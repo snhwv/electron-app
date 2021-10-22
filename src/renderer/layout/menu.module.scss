@@ -23,6 +23,9 @@
     .menuTextBolder > .MuiTypography-root {
       font-weight: bold;
     }
+    .MuiTypography-root {
+      font-size: 14px;
+    }
     .sidebarMenuIcon {
       font-size: 30px;
       visibility: hidden;
@@ -32,7 +35,7 @@
       visibility: visible;
     }
     .MuiListItemText-primary {
-      letter-spacing: 6px;
+      letter-spacing: 2px;
     }
     .icon-arrow-right {
       visibility: hidden;
@@ -42,6 +45,7 @@
   }
   &:hover :global {
     @include activeItem;
+    background: #ffbea9;
   }
 }
 .activeMenuItem {

@@ -6,6 +6,8 @@ import { isFunction } from "../is";
 import { cloneDeep } from "lodash";
 export * from "./axiosTransform";
 
+axios.defaults.withCredentials = true;
+
 /**
  * @description:  axios module
  */

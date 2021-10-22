@@ -142,6 +142,7 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
           })}
           sx={{
             color: 'text.primary',
+            fontSize: 14
           }}
           primary={item.title}
         />

@@ -14,26 +14,38 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.all('*', (req, res, next) => {
-  // google需要配置，否则报错cors error
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  // 允许的地址,http://127.0.0.1:9000这样的格式
-  if (req.get('Origin')) {
-    res.setHeader('Access-Control-Allow-Origin', req.get('Origin'));
+app.use((req, res, next) => {
+  if (req.path !== '/' && !req.path.includes('.')) {
+    res.set({
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Origin': req?.headers?.origin || '*',
+      'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type',
+      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+      'Content-Type': 'application/json; charset=utf-8',
+    });
   }
-  // 允许跨域请求的方法
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'POST, GET, OPTIONS, DELETE, PUT'
-  );
-  // 允许跨域请求header携带哪些东西
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, If-Modified-Since'
-  );
-  next();
+  req.method === 'OPTIONS' ? res.status(204).end() : next();
 });
-axios.defaults.baseURL = `http://localhost:${port}`;
+// app.all('*', (req, res, next) => {
+//   // google需要配置，否则报错cors error
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   // 允许的地址,http://127.0.0.1:9000这样的格式
+//   if (req.get('Origin')) {
+//     res.setHeader('Access-Control-Allow-Origin', req.get('Origin'));
+//   }
+//   // 允许跨域请求的方法
+//   res.setHeader(
+//     'Access-Control-Allow-Methods',
+//     'POST, GET, OPTIONS, DELETE, PUT'
+//   );
+//   // 允许跨域请求header携带哪些东西
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, If-Modified-Since'
+//   );
+//   next();
+// });
+// axios.defaults.baseURL = `http://localhost:${port}`;
 
 // Set cookie for axios
 app.use((req, res, next) => {

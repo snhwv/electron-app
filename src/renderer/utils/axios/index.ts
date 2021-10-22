@@ -179,9 +179,9 @@ const transform: AxiosTransform = {
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       if (config.headers) {
-        config.headers[`X-AUTH-TOKEN`] = options.authenticationScheme
-          ? `${options.authenticationScheme} ${token}`
-          : token;
+        // config.headers[`X-AUTH-TOKEN`] = options.authenticationScheme
+        //   ? `${options.authenticationScheme} ${token}`
+        //   : token;
       }
     }
     return config;
