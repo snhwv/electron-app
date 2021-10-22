@@ -8,10 +8,16 @@ import { Collapse } from '@mui/material';
 import classnames from 'classnames';
 import { Box } from '@mui/system';
 import style from './menu.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getActiveRoute,
+  updateActiveRoute,
+} from '../store/features/layoutSlice';
 
 type ImenuItem = {
   title: string;
   icon: IconType;
+  path: string;
   suffix?: () => JSX.Element;
   children?: ImenuItem[];
 };
@@ -19,56 +25,76 @@ const menuItems: ImenuItem[] = [
   {
     title: '发现音乐',
     icon: 'icon-AddProducts',
+    path: 'discover',
     children: [
       {
         title: '播客',
         icon: 'icon-AddProducts',
+        path: 'discover/blog',
       },
       {
         title: '视频',
         icon: 'icon-AddProducts',
+        path: 'discover/video',
       },
       {
-        title: '播客',
+        title: '朋友',
         icon: 'icon-AddProducts',
+        path: 'discover/friend',
       },
       {
-        title: '视频',
+        title: '直播',
         icon: 'icon-AddProducts',
+        path: 'discover/live',
+      },
+      {
+        title: '私人FM',
+        icon: 'icon-AddProducts',
+        path: 'discover/fm',
       },
     ],
   },
   {
-    title: '播客',
+    title: '我的音乐',
     icon: 'icon-AddProducts',
+    path: 'mine',
+    children: [
+      {
+        title: '本地音乐',
+        icon: 'icon-AddProducts',
+        path: 'mine/localMusic',
+      },
+      {
+        title: '最近播放',
+        icon: 'icon-AddProducts',
+        path: 'mine/recent',
+      },
+      {
+        title: '我的音乐云盘',
+        icon: 'icon-AddProducts',
+        path: 'mine/cloud',
+      },
+      {
+        title: '我的播客',
+        icon: 'icon-AddProducts',
+        path: 'mine/myBlog',
+      },
+      {
+        title: '我的收藏',
+        icon: 'icon-AddProducts',
+        path: 'mine/collection',
+      },
+    ],
   },
   {
-    title: '视频',
+    title: '创建的歌单',
     icon: 'icon-AddProducts',
+    path: 'createSongList',
   },
   {
-    title: '朋友',
+    title: '收藏的歌单',
     icon: 'icon-AddProducts',
-  },
-  {
-    title: '直播',
-    icon: 'icon-AddProducts',
-  },
-  {
-    title: '私人FM',
-    icon: 'icon-AddProducts',
-  },
-  {
-    title: '直播',
-    icon: 'icon-AddProducts',
-  },
-  {
-    title: '直播',
-    icon: 'icon-AddProducts',
-  },
-  {
-    title: '直播',
-    icon: 'icon-AddProducts',
+    path: 'collectionSongList',
   },
 ];
 
@@ -76,17 +102,35 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
   item,
   isChild = false,
 }) => {
+  const dispatch = useDispatch();
+  const activeRoute = useSelector(getActiveRoute);
+
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
-    setOpen(!open);
+    if (item?.children) {
+      setOpen(!open);
+    } else {
+      dispatch(updateActiveRoute(item.path));
+    }
   };
 
+  let active = activeRoute === item.path;
+  if (
+    item?.children?.length &&
+    open === false &&
+    item.children.map((item) => item.path).includes(activeRoute)
+  ) {
+    active = true;
+  }
   return (
     <>
       <ListItem
-        onClick={item?.children && handleClick}
-        className={style['menuList']}
+        onClick={handleClick}
+        className={classnames(
+          { [style['activeMenuItem']]: active },
+          style['menuList']
+        )}
       >
         <Icon
           type={item.icon}
@@ -119,8 +163,10 @@ const MenuList: React.FC<{ listData: ImenuItem[]; isChild?: boolean }> = ({
 }) => {
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }} disablePadding>
-      {listData.map((item, index) => {
-        return <MenuItem item={item} key={index} isChild={isChild}></MenuItem>;
+      {listData.map((item) => {
+        return (
+          <MenuItem item={item} key={item.path} isChild={isChild}></MenuItem>
+        );
       })}
     </List>
   );

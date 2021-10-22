@@ -1,11 +1,13 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
-import icon from '../../assets/icon.svg';
-import './style';
-import generateAPI from './utils/axios/generateAPI';
-import Button from '@material-ui/core/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import Layout from './layout/Layout';
+import generateAPI from './utils/axios/generateAPI';
+import store, { persistor } from './store';
+import './style';
+
+import routes, { RouteGenerator } from './router';
 
 const apis = {
   login: 'login/cellphone',
@@ -16,25 +18,24 @@ const apis = {
 const theme = createTheme({
   palette: {
     text: {
-      // Purple and green play nicely together.
       primary: '#878787',
     },
   },
 });
 const api = generateAPI(apis);
 export default function App() {
-  React.useEffect(() => {
-    // api.playlist().then((re) => {
-    //   console.log(re);
-    // });
-  }, []);
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Switch>
-          <Route path="/" component={Layout} />
-        </Switch>
-      </Router>
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <RouteGenerator routes={routes}></RouteGenerator>
+            {/* <Switch>
+              <Route path="/" component={Layout} />
+            </Switch> */}
+          </Router>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 }

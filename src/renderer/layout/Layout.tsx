@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import Menu from './Menu';
 import Icon from '../components/Icon';
+import withAuth from '../router/witchAuth';
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -13,7 +14,7 @@ const useStyles = makeStyles({
     padding: '0 30px',
   },
 });
-const Layout = () => {
+const Layout: React.FC<any> = ({ children }) => {
   const classes = useStyles();
   return (
     // spacing={2}
@@ -27,6 +28,7 @@ const Layout = () => {
     >
       <Grid
         container
+        item
         xs
         style={{
           width: '100%',
@@ -35,6 +37,7 @@ const Layout = () => {
         }}
       >
         <Grid
+          item
           style={{
             width: '240px',
             height: '100%',
@@ -44,6 +47,19 @@ const Layout = () => {
           }}
         >
           <Menu />
+        </Grid>
+        <Grid
+          xs
+          item
+          style={{
+            // width: '240px',
+            height: '100%',
+            overflow: 'auto',
+            // borderRight: '1px solid #f3f3f3',
+            // paddingRight: '8px',
+          }}
+        >
+          {children}
         </Grid>
       </Grid>
       <Grid
@@ -60,4 +76,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default withAuth(Layout);

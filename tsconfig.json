@@ -24,8 +24,11 @@
     "outDir": "release/app/dist",
     "paths": {
       "@config/*": ["./config/*"],
-      "@constants/*": ["./constants/*"]
-    },
+      "@constants/*": ["./constants/*"],
+      "@components/*": ["./src/renderer/components/*"],
+      "@utils/*": ["./src/renderer/utils/*"],
+      "@contexts/*": ["./src/renderer/contexts/*"]
+    }
   },
   "exclude": [
     "test",

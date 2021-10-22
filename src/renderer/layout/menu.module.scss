@@ -1,3 +1,21 @@
+@mixin activeItem {
+  color: #fff;
+  background: #fea181;
+  border-radius: 0px 100px 100px 0px;
+  box-shadow: 0px 13px 25px 1px #fea1817d;
+  z-index: 1;
+  .sidebarMenuIcon {
+    color: #fff;
+    visibility: visible;
+  }
+  .icon-arrow-right {
+    color: #fff;
+    visibility: visible;
+  }
+  .MuiListItemText-root {
+    color: #fff;
+  }
+}
 .menuList {
   // font-size: 20px;
   cursor: pointer;
@@ -23,21 +41,11 @@
     }
   }
   &:hover :global {
-    color: #fff;
-    background: #fea181;
-    border-radius: 0px 100px 100px 0px;
-    box-shadow: 0px 13px 25px 1px #fea1817d;
-    z-index: 1;
-    .sidebarMenuIcon {
-      color: #fff;
-      visibility: visible;
-    }
-    .icon-arrow-right {
-      color: #fff;
-      visibility: visible;
-    }
-    .MuiListItemText-root {
-      color: #fff;
-    }
+    @include activeItem;
+  }
+}
+.activeMenuItem {
+  :global {
+    @include activeItem;
   }
 }

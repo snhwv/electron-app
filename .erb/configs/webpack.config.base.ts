@@ -40,6 +40,9 @@ export default {
     alias: {
       '@config': path.resolve(__dirname, '../../config'),
       '@constants': path.resolve(__dirname, '../../constants'),
+      '@components': path.resolve(__dirname, '../../src/renderer/components'),
+      '@utils': path.resolve(__dirname, '../../src/renderer/utils'),
+      '@contexts': path.resolve(__dirname, '../../src/renderer/contexts'),
     },
   },
 
