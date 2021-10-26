@@ -29,8 +29,8 @@ interface Result<T = any> {
 declare type Recordable<T = any> = Record<string, T>;
 
 declare type Nullable<T> = T | null;
-declare module '*.less';
-declare module '*.scss';
+declare module '*.module.less';
+declare module '*.module.scss';
 type ValueOf<T> = T[keyof T];
 type IconType =
   | 'icon-QRcode'

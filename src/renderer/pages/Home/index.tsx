@@ -1,14 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import api from './api';
 import Banner from './components/Banner';
+import Recommend from './components/Recommend';
 const Page = () => {
+  const [banner, setbanner] = useState([]);
+  const [recommend, setrecommend] = useState([]);
+
   useEffect(() => {
-    // api.banner().then((re) => {
-    //   console.log(re);
-    // });
-    // api.recommend().then((re) => {
-    //   console.log(re);
-    // });
+    api.banner().then((re) => {
+      setbanner(re?.banners || []);
+    });
+    api.recommend().then((re) => {
+      setrecommend(re?.recommend || []);
+      console.log(re);
+    });
   }, []);
   return (
     <div>
@@ -18,7 +23,8 @@ const Page = () => {
           height: 400,
         }}
       >
-        <Banner></Banner>
+        <Banner bannerList={banner}></Banner>
+        <Recommend recommendList={recommend}></Recommend>
       </div>
     </div>
   );

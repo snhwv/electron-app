@@ -1,39 +1,62 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, {
+  EffectFade,
+  Navigation,
+  Pagination,
+  Autoplay,
+} from 'swiper';
+SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/bundle';
-
-// import Swiper core and required modules
-import SwiperCore, { Pagination, Navigation } from 'swiper';
-
-// install Swiper modules
-SwiperCore.use([Pagination, Navigation]);
-
-export default function App() {
+const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
   return (
     <>
       <Swiper
-        slidesPerView={1}
         spaceBetween={30}
-        loop={true}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
         pagination={{
           clickable: true,
         }}
         navigation={true}
+        loop={true}
         className="mySwiper"
+        slidesPerView={1}
+        style={{ height: '100%' }}
+        effect={'fade'}
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        {bannerList?.map((item) => {
+          return (
+            <SwiperSlide style={{ height: '100%' }} key={item.imageUrl}>
+              <img
+                style={{ width: '100%', height: '100%' }}
+                src={item.imageUrl}
+              />
+            </SwiperSlide>
+          );
+        })}
+        {/* <SwiperSlide style={{ height: '100%' }}>
+          <img
+            style={{ width: '100%', height: '100%' }}
+            src="https://swiperjs.com/demos/images/nature-2.jpg"
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ height: '100%' }}>
+          <img
+            style={{ width: '100%', height: '100%' }}
+            src="https://swiperjs.com/demos/images/nature-3.jpg"
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ height: '100%' }}>
+          <img
+            style={{ width: '100%', height: '100%' }}
+            src="https://swiperjs.com/demos/images/nature-4.jpg"
+          />
+        </SwiperSlide> */}
       </Swiper>
     </>
   );
-}
+};
+export default Banner;
