@@ -1,34 +1,26 @@
-// import style from './recommend.scss';
+import BlurImg from '@components/BlurImg';
 
+// import style from './recommend.scss';
+const boxSize = 130;
+const boxMargin = 30;
 const Recommend: React.FC<{ recommendList: any[] }> = ({ recommendList }) => {
   return (
     <div
       style={{
-        width: '100%',
-        height: '200px',
-        background: 'linear-gradient(0deg, #fff, transparent)',
-        marginTop: '-200px',
-        zIndex: 1,
-        position: 'relative',
-        display: 'flex',
+        width: (boxSize + boxMargin) * 3,
       }}
     >
       {recommendList?.map((item) => {
         return (
-          <div
-            style={{
-              width: '10em',
-              aspectRatio: '1',
+          <BlurImg
+            url={item.picUrl}
+            containerStyle={{
+              width: boxSize,
+              height: boxSize,
+              marginRight: `${boxMargin}px`,
+              marginBottom: `${boxMargin}px`,
             }}
-          >
-            <img
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-              src={item?.picUrl}
-            />
-          </div>
+          ></BlurImg>
         );
       })}
     </div>

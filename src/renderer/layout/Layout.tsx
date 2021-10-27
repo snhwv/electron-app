@@ -52,11 +52,8 @@ const Layout: React.FC<any> = ({ children }) => {
           xs
           item
           style={{
-            // width: '240px',
             height: '100%',
             overflow: 'auto',
-            // borderRight: '1px solid #f3f3f3',
-            // paddingRight: '8px',
           }}
         >
           {children}
