@@ -43,6 +43,11 @@ export default {
       '@components': path.resolve(__dirname, '../../src/renderer/components'),
       '@utils': path.resolve(__dirname, '../../src/renderer/utils'),
       '@contexts': path.resolve(__dirname, '../../src/renderer/contexts'),
+      '@globalApi': path.resolve(
+        __dirname,
+        '../../src/renderer/common/globalApi.ts'
+      ),
+      '@store': path.resolve(__dirname, '../../src/renderer/store'),
     },
   },
 

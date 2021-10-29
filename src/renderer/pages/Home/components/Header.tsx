@@ -34,7 +34,7 @@ const Header = () => {
           }}
         >
           <Icon
-            type="icon-search"
+            type="icon-magnify"
             style={{
               fontSize: 34,
               lineHeight: '30px',
@@ -62,7 +62,7 @@ const Header = () => {
           }}
         >
           <Icon
-            type="icon-email-fill"
+            type="icon-email"
             style={{
               fontSize: 40,
               lineHeight: '30px',

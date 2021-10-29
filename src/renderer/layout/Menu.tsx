@@ -24,76 +24,76 @@ type ImenuItem = {
 const menuItems: ImenuItem[] = [
   {
     title: '发现音乐',
-    icon: 'icon-AddProducts',
+    icon: 'icon-watermark',
     path: 'discover',
     children: [
       {
         title: '播客',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'discover/blog',
       },
       {
         title: '视频',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'discover/video',
       },
       {
         title: '朋友',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'discover/friend',
       },
       {
         title: '直播',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'discover/live',
       },
       {
         title: '私人FM',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'discover/fm',
       },
     ],
   },
   {
     title: '我的音乐',
-    icon: 'icon-AddProducts',
+    icon: 'icon-watermark',
     path: 'mine',
     children: [
       {
         title: '本地音乐',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'mine/localMusic',
       },
       {
         title: '最近播放',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'mine/recent',
       },
       {
         title: '我的音乐云盘',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'mine/cloud',
       },
       {
         title: '我的播客',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'mine/myBlog',
       },
       {
         title: '我的收藏',
-        icon: 'icon-AddProducts',
+        icon: 'icon-watermark',
         path: 'mine/collection',
       },
     ],
   },
   {
     title: '创建的歌单',
-    icon: 'icon-AddProducts',
+    icon: 'icon-watermark',
     path: 'createSongList',
   },
   {
     title: '收藏的歌单',
-    icon: 'icon-AddProducts',
+    icon: 'icon-watermark',
     path: 'collectionSongList',
   },
 ];
@@ -142,7 +142,7 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
           })}
           sx={{
             color: 'text.primary',
-            fontSize: 14
+            fontSize: 14,
           }}
           primary={item.title}
         />

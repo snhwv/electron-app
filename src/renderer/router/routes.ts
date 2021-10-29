@@ -14,10 +14,17 @@ export interface RouteMata {
 
 const routes: RouteMata[] = [
   {
-    label: "首页",
-    componentName: "Home",
-    path: "/home",
-    icon: "elevator",
+    label: '首页',
+    componentName: 'PlayList',
+    path: '/home',
+    icon: 'elevator',
+  },
+  {
+    label: '首页',
+    componentName: 'PlayListDetail',
+    path: '/playListDetail',
+    // path: '/playListDetail/:id',
+    icon: 'elevator',
   },
   // {
   //   label: "组织架构",

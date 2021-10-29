@@ -1,19 +1,18 @@
 import { Divider, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import api from './api';
-import Banner from './components/Banner';
 import Header from './components/Header';
 import Recommend from './components/Recommend';
 import Singer from './components/Singer';
 const Page = () => {
-  const [banner, setbanner] = useState([]);
+  // const [banner, setbanner] = useState([]);
   const [recommend, setrecommend] = useState([]);
   const [singerList, setsingerList] = useState([]);
 
   useEffect(() => {
-    api.banner().then((re) => {
-      setbanner(re?.banners || []);
-    });
+    // api.banner().then((re) => {
+    //   setbanner(re?.banners || []);
+    // });
     api.recommend().then((re) => {
       setrecommend(re?.recommend?.slice(0, 6) || []);
     });
@@ -38,6 +37,12 @@ const Page = () => {
           <Singer singerList={singerList}></Singer>
         </Grid>
       </Grid>
+      <Grid
+        container
+        style={{
+          padding: 20,
+        }}
+      ></Grid>
     </>
 
     // <div>

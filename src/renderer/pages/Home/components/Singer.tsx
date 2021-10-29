@@ -16,7 +16,7 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
     <List sx={{ width: '100%', maxWidth: 360 }}>
       {singerList?.map((item) => {
         return (
-          <ListItem secondaryAction={<Icon type="icon-ellipsis" style={{
+          <ListItem secondaryAction={<Icon type="icon-dots-horizontal" style={{
             fontSize: 30
           }}></Icon>}>
             <BlurImg

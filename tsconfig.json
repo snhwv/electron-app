@@ -27,7 +27,9 @@
       "@constants/*": ["./constants/*"],
       "@components/*": ["./src/renderer/components/*"],
       "@utils/*": ["./src/renderer/utils/*"],
-      "@contexts/*": ["./src/renderer/contexts/*"]
+      "@contexts/*": ["./src/renderer/contexts/*"],
+      "@store/*": ["./src/renderer/store/*"],
+      "@globalApi": ["./src/renderer/common/globalApi.ts"],
     }
   },
   "exclude": [

@@ -8,17 +8,19 @@ const useStyles = makeStyles({
     color: ({ theme }: any) => theme.palette.text.primary,
   },
 });
-const Icon: React.FC<{
-  type: IconType;
-  className?: string;
-  style?: CSSProperties;
-}> = ({ type, className, style }) => {
+const Icon: React.FC<
+  {
+    type: IconType;
+    className?: string;
+    style?: CSSProperties;
+  } & React.HTMLAttributes<HTMLSpanElement>
+> = ({ type, className, ...rest }) => {
   const theme = useTheme();
   const iconStyle = useStyles({ theme });
   return (
     <span
       className={classnames('iconfont', type, iconStyle.icon, className)}
-      style={style}
+      {...rest}
     ></span>
   );
 };
