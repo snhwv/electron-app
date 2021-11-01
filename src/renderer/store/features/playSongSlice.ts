@@ -25,6 +25,7 @@ const initialState: any = {
   songId: '',
   audioUrl: '',
   playCurrentTime: '',
+  playDurationTime: '',
   songInfo: {},
 };
 
@@ -35,6 +36,12 @@ const layoutDataSlice = createSlice({
     // updateTableColumnById(state, action) {
     // mergeWith(columns[index], payload, customizer);
     // },
+    playDurationTime(state, action) {
+      state.playDurationTime = action.payload;
+    },
+    playCurrentTime(state, action) {
+      state.playCurrentTime = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -57,12 +64,21 @@ const layoutDataSlice = createSlice({
     });
   },
 });
+export const { playDurationTime, playCurrentTime } = layoutDataSlice.actions;
 
 export default layoutDataSlice.reducer;
 
 export const getPlaySong = createSelector(
   (state: any) => state.playSong,
   (playSong: any) => playSong
+);
+export const getPlayDurationTime = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.playDurationTime
+);
+export const getPlayCurrentTime = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.playCurrentTime
 );
 // export const getLayoutActiveData = createSelector(
 //   // First, pass one or more "input selector" functions:

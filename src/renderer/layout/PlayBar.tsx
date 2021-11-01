@@ -1,7 +1,13 @@
 import Icon from '@components/Icon';
-import { getPlaySong } from '@store/features/playSongSlice';
+import {
+  getPlayCurrentTime,
+  getPlayDurationTime,
+  getPlaySong,
+  playCurrentTime,
+  playDurationTime,
+} from '@store/features/playSongSlice';
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
@@ -87,23 +93,26 @@ const TinyText = styled(Typography)({
 });
 
 function formatDuration(value: number) {
+  console.log(value);
   const minute = Math.floor(value / 60);
   const secondLeft = value - minute * 60;
-  return `${minute}:${secondLeft < 9 ? `0${secondLeft}` : secondLeft}`;
+  return `${minute}:${
+    secondLeft < 9 ? `0${secondLeft.toFixed(0)}` : secondLeft.toFixed(0)
+  }`;
 }
 
 let timeChangeHandler: any;
 let durationChangeHandler: any;
 
+
 const MusicPlayerSlider: React.FC<any> = ({ audioRef }) => {
-  const [duration, setDuration] = React.useState(0);
-  const [position, setPosition] = React.useState(32);
-  useEffect(() => {
-    timeChangeHandler = setPosition;
-    durationChangeHandler = setDuration;
-    // setPosition(audioRef.current.currentTime);
-  }, []);
-  // console.log(audioRef.current?.duration);
+  const duration = useSelector(getPlayDurationTime);
+  const position = useSelector(getPlayCurrentTime);
+  console.log(duration);
+  const onSliderChange = (_: any, value: any) => {
+    // playCurrentTime
+    console.log(audioRef.current);
+  };
   return (
     <>
       <Slider
@@ -113,7 +122,7 @@ const MusicPlayerSlider: React.FC<any> = ({ audioRef }) => {
         min={0}
         step={1}
         max={duration}
-        onChange={(_, value) => setPosition(value as number)}
+        onChange={onSliderChange}
         sx={{
           color: 'rgba(0,0,0,0.87)',
           height: 4,
@@ -146,19 +155,18 @@ const MusicPlayerSlider: React.FC<any> = ({ audioRef }) => {
         }}
       >
         <TinyText>{formatDuration(position)}</TinyText>
-        <TinyText>-{formatDuration(duration / 10)}</TinyText>
+        <TinyText>-{formatDuration(duration)}</TinyText>
       </Box>
     </>
   );
 };
 export default function PlayBar() {
   const palySong = useSelector(getPlaySong);
+  const dispatch = useDispatch();
 
   const audioRef = useRef<any>();
 
   useEffect(() => {
-    console.log(palySong);
-    console.log([audioRef.current]);
     audioRef.current.load();
     playClick(false);
   }, [palySong?.audioUrl]);
@@ -170,14 +178,16 @@ export default function PlayBar() {
     if (paused) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      // audioRef.current.play();
     }
     setPaused(paused);
   };
   const onTimeUpdate = (time: any) => {
+    dispatch(playCurrentTime(time.target.currentTime));
     // timeChangeHandler?.(time.timeStamp);
   };
   const onDurationChange = (time: any) => {
+    dispatch(playDurationTime(time.target.duration));
     // durationChangeHandler?.(time.timeStamp);
     // timeChangeHandler?.(time.timeStamp);
   };
@@ -201,8 +211,8 @@ export default function PlayBar() {
               color="text.secondary"
               fontWeight={500}
             >
-              {palySong?.songInfo?.artist?.map((item: any) => {
-                return <span> {item.name}</span>;
+              {palySong?.songInfo?.artist?.map((item: any, index: number) => {
+                return <span key={index}> {item.name}</span>;
               })}
             </Typography>
             <Typography noWrap>
