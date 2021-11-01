@@ -93,7 +93,6 @@ const TinyText = styled(Typography)({
 });
 
 function formatDuration(value: number) {
-  console.log(value);
   const minute = Math.floor(value / 60);
   const secondLeft = value - minute * 60;
   return `${minute}:${
@@ -101,17 +100,11 @@ function formatDuration(value: number) {
   }`;
 }
 
-let timeChangeHandler: any;
-let durationChangeHandler: any;
-
-
 const MusicPlayerSlider: React.FC<any> = ({ audioRef }) => {
   const duration = useSelector(getPlayDurationTime);
   const position = useSelector(getPlayCurrentTime);
-  console.log(duration);
   const onSliderChange = (_: any, value: any) => {
-    // playCurrentTime
-    console.log(audioRef.current);
+    audioRef.current.currentTime = value;
   };
   return (
     <>
@@ -178,18 +171,15 @@ export default function PlayBar() {
     if (paused) {
       audioRef.current.pause();
     } else {
-      // audioRef.current.play();
+      audioRef.current.play();
     }
     setPaused(paused);
   };
   const onTimeUpdate = (time: any) => {
     dispatch(playCurrentTime(time.target.currentTime));
-    // timeChangeHandler?.(time.timeStamp);
   };
   const onDurationChange = (time: any) => {
     dispatch(playDurationTime(time.target.duration));
-    // durationChangeHandler?.(time.timeStamp);
-    // timeChangeHandler?.(time.timeStamp);
   };
 
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000';
