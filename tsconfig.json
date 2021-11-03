@@ -22,6 +22,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "release/app/dist",
+    "noEmit": false,
     "paths": {
       "@config/*": ["./config/*"],
       "@constants/*": ["./constants/*"],
@@ -30,6 +31,7 @@
       "@contexts/*": ["./src/renderer/contexts/*"],
       "@store/*": ["./src/renderer/store/*"],
       "@globalApi": ["./src/renderer/common/globalApi.ts"],
+      "@style/*": ["./src/renderer/style/*"],
     }
   },
   "exclude": [
@@ -38,6 +40,7 @@
     "release/app/dist",
     ".erb/dll",
     "./NeteaseCloudMusicApi",
-    "./server"
+    "./server",
+    "*.d.ts"
   ]
 }

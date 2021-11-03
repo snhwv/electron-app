@@ -15,8 +15,14 @@ export interface RouteMata {
 const routes: RouteMata[] = [
   {
     label: '首页',
-    componentName: 'PlayList',
+    componentName: 'Home',
     path: '/home',
+    icon: 'elevator',
+  },
+  {
+    label: '首页',
+    componentName: 'PlayList',
+    path: '/playList',
     icon: 'elevator',
   },
   {

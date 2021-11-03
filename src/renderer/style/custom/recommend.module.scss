@@ -1,0 +1,23 @@
+.recommendSwipper {
+  :global {
+    .recommendItem:hover {
+      .MuiTypography-root {
+        display: block;
+      }
+    }
+    .swiper-button-prev {
+      top: 18px;
+      left: unset;
+      right: 80px;
+      background: #41a0fd;
+      // opacity: 1;
+    }
+    .swiper-button-next {
+      top: 18px;
+      left: unset;
+      right: 40px;
+      background: #41a0fd;
+      // opacity: 1;
+    }
+  }
+}

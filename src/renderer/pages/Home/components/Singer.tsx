@@ -7,18 +7,28 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Typography,
 } from '@mui/material';
 
 const boxSize = 60;
 const boxMargin = 30;
 const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
   return (
-    <List sx={{ width: '100%', maxWidth: 360 }}>
-      {singerList?.map((item) => {
-        return (
-          <ListItem secondaryAction={<Icon type="icon-dots-horizontal" style={{
-            fontSize: 30
-          }}></Icon>}>
+    <>
+      <Typography
+        variant="h6"
+        component="h6"
+        sx={{
+          // marginBottom: '-40px',
+          marginLeft: '10px',
+          paddingTop: '10px',
+        }}
+      >
+        推荐歌曲
+      </Typography>
+      <List sx={{ width: '100%' }}>
+        {singerList?.map((item) => {
+          return (
             <BlurImg
               url={item.picUrl}
               containerStyle={{
@@ -28,11 +38,26 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
                 borderRadius: 100,
               }}
             ></BlurImg>
-            <ListItemText primary={item.name} secondary={`专辑数：${item.albumSize}`} />
-          </ListItem>
-        );
-      })}
-    </List>
+            // <ListItem
+            //   key={item.picUrl}
+            //   secondaryAction={
+            //     <Icon
+            //       type="icon-dots-horizontal"
+            //       style={{
+            //         fontSize: 30,
+            //       }}
+            //     ></Icon>
+            //   }
+            // >
+            //   <ListItemText
+            //     primary={item.name}
+            //     secondary={`专辑数：${item.albumSize}`}
+            //   />
+            // </ListItem>
+          );
+        })}
+      </List>
+    </>
   );
 };
 const SingerItem: React.FC<{ singer: any }> = ({ singer }) => {

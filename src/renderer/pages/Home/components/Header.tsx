@@ -14,11 +14,10 @@ const Header = () => {
     <Grid
       container
       style={{
-        padding: 20,
-        position: 'sticky',
+        padding: '20px 30px 10px 30px',
+        position: 'absolute',
         top: 0,
         zIndex: 2,
-        background: '#fff',
       }}
     >
       <Grid item xs>
@@ -26,22 +25,32 @@ const Header = () => {
           sx={{
             display: 'flex',
             alignItems: 'flex-end',
-            width: 400,
+            color: '#fff',
+            width: 300,
+            background: '#e3e3e3a6',
+            height: 32,
+            borderRadius: 4,
+            paddingLeft: '8px',
             '.MuiInput-root:before': {
               display: 'none',
               content: 'unset',
+            },
+            '.MuiInput-root': {
+              color: '#fff',
+              fontSize: '0.8rem',
             },
           }}
         >
           <Icon
             type="icon-magnify"
             style={{
-              fontSize: 34,
+              fontSize: 24,
               lineHeight: '30px',
               width: '38px',
+              color: '#fff',
             }}
           />
-          <TextField label="请输入..." variant="standard" fullWidth />
+          <TextField variant="standard" fullWidth />
         </Box>
       </Grid>
       <Grid
@@ -64,13 +73,13 @@ const Header = () => {
           <Icon
             type="icon-email"
             style={{
-              fontSize: 40,
-              lineHeight: '30px',
-              width: '38px',
+              fontSize: 24,
             }}
           />
         </Badge>
-        <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+        <Avatar sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}>
+          OP
+        </Avatar>
       </Grid>
     </Grid>
   );

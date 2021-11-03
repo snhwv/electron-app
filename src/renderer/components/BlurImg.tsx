@@ -1,12 +1,13 @@
 import { Box } from '@mui/system';
 import { CSSProperties } from 'react';
 
-const BlurImg: React.FC<{
-  url: string;
-  containerStyle?: CSSProperties;
-  imgStyle?: CSSProperties;
-  blurStyle?: CSSProperties;
-}> = ({ url, containerStyle, imgStyle, blurStyle }) => {
+const BlurImg: React.FC<
+  {
+    url: string;
+    containerStyle?: CSSProperties;
+    blurStyle?: CSSProperties;
+  } & any
+> = ({ url, containerStyle, blurStyle, children, ...rest }) => {
   return (
     <Box
       sx={{
@@ -29,35 +30,12 @@ const BlurImg: React.FC<{
           transform: 'scale(0.9)',
           opacity: 0.9,
           borderRadius: '15px',
+          ...blurStyle,
         },
       }}
+      {...rest}
     >
-      {/* <img
-        style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: 10,
-          overflow: 'hidden',
-          position: 'relative',
-          zIndex: 1,
-          ...imgStyle,
-        }}
-        src={url}
-      /> */}
-      {/* <img
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          top: 10,
-          left: 0,
-          filter: 'blur(12px)',
-          zIndex: 0,
-          opacity: 0.5,
-          ...blurStyle,
-        }}
-        src={url}
-      /> */}
+      {children}
     </Box>
   );
 };

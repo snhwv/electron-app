@@ -13,7 +13,6 @@ import {
   getActiveRoute,
   updateActiveRoute,
 } from '../store/features/layoutSlice';
-
 type ImenuItem = {
   title: string;
   icon: IconType;

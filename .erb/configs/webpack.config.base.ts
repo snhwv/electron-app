@@ -48,6 +48,7 @@ export default {
         '../../src/renderer/common/globalApi.ts'
       ),
       '@store': path.resolve(__dirname, '../../src/renderer/store'),
+      '@style': path.resolve(__dirname, '../../src/renderer/style'),
     },
   },
 

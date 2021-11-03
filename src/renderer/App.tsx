@@ -9,23 +9,23 @@ import routes, { RouteGenerator } from './router';
 
 import generateAPI from '@utils/axios/generateAPI';
 
-// const apis = {
-//   login: 'login/cellphone?phone=17772450369&password=yang20050116..',
-// };
-// const api = generateAPI(apis);
-// api.login();
+const apis = {
+  login: 'login/cellphone?phone=17772450369&password=yang20050116..',
+};
+const api = generateAPI(apis);
+api.login();
 const theme = createTheme({
-  palette: {
-    text: {
-      primary: '#878787',
-    },
-    primary: {
-      light: '#ffc2ad',
-      main: '#fea181',
-      dark: '#df8d70',
-      contrastText: 'red',
-    },
-  },
+  // palette: {
+  //   text: {
+  //     // primary: '#878787',
+  //   },
+  //   primary: {
+  //     // light: '#ffc2ad',
+  //     // main: '#fea181',
+  //     // dark: '#df8d70',
+  //     // contrastText: 'red',
+  //   },
+  // },
 });
 export default function App() {
   return (

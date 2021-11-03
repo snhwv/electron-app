@@ -1,0 +1,24 @@
+:global {
+  // .swiper:hover {
+  //   .swiper-button-prev,
+  //   .swiper-button-next {
+  //     display: flex;
+  //   }
+  // }
+  .swiper-button-prev {
+    left: 18px;
+  }
+  .swiper-button-next {
+    right: 18px;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    // display: none;
+    width: 30px;
+    height: 30px;
+    background-color: #e3e3e3a6;
+    border-radius: 40px;
+    --swiper-navigation-size: 14px;
+    --swiper-theme-color: #fff;
+  }
+}

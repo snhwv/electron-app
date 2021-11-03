@@ -38,7 +38,7 @@ const formatRoutes: RouteMata[] = [
     Component: Layout,
     path: '/',
     routes: doRoute(routes),
-    redirect: '/playListDetail',
+    redirect: '/home',
     componentName: 'layout',
     icon: 'layout',
   },

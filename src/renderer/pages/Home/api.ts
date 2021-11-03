@@ -3,7 +3,8 @@ import generateAPI from '@utils/axios/generateAPI';
 const apis = {
   recommend: 'recommend/resource',
   banner: 'banner',
-  artist: 'top/artists?offset=0&limit=4',
+  artist: 'top/artists',
+  recommendSongs: 'recommend/songs',
 };
 const api = generateAPI(apis);
 export default api;

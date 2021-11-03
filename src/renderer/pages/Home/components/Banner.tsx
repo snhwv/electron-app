@@ -5,7 +5,9 @@ import SwiperCore, {
   Pagination,
   Autoplay,
 } from 'swiper';
-SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
+import { Button } from '@mui/material';
+import Icon from '@components/Icon';
+SwiperCore.use([Autoplay, EffectFade, Navigation]);
 
 const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
   return (
@@ -13,48 +15,61 @@ const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
+        // autoplay={{
+        //   delay: 5500,
+        //   disableOnInteraction: false,
+        // }}
         navigation={true}
-        loop={true}
+        // loop={true}
         className="mySwiper"
         slidesPerView={1}
-        style={{ height: '100%' }}
+        style={{ height: '340px' }}
         effect={'fade'}
       >
-        {bannerList?.map((item) => {
+        {bannerList?.map((item, index) => {
           return (
             <SwiperSlide style={{ height: '100%' }} key={item.imageUrl}>
               <img
                 style={{ width: '100%', height: '100%' }}
                 src={item.imageUrl}
               />
+              <Button
+                sx={{
+                  position: 'absolute',
+                  bottom: '50px',
+                  left: '70px',
+                  borderRadius: '50px',
+                  height: '30px',
+                  width: '90px',
+                }}
+                variant="contained"
+                endIcon={
+                  <Icon
+                    type="icon-play"
+                    style={{
+                      marginRight: '-15px',
+                      color: '#999797',
+                      background: '#fff',
+                      width: 30,
+                      height: 30,
+                      borderRadius: '20px',
+                      lineHeight: '30px',
+                      boxShadow: '0px 0px 0px 4px #ffffff96',
+                    }}
+                  />
+                }
+              >
+                <span
+                  style={{
+                    marginRight: 10,
+                  }}
+                >
+                  播放
+                </span>
+              </Button>
             </SwiperSlide>
           );
         })}
-        {/* <SwiperSlide style={{ height: '100%' }}>
-          <img
-            style={{ width: '100%', height: '100%' }}
-            src="https://swiperjs.com/demos/images/nature-2.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ height: '100%' }}>
-          <img
-            style={{ width: '100%', height: '100%' }}
-            src="https://swiperjs.com/demos/images/nature-3.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ height: '100%' }}>
-          <img
-            style={{ width: '100%', height: '100%' }}
-            src="https://swiperjs.com/demos/images/nature-4.jpg"
-          />
-        </SwiperSlide> */}
       </Swiper>
     </>
   );

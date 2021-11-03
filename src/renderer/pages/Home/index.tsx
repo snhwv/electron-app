@@ -1,38 +1,50 @@
 import { Divider, Grid } from '@mui/material';
+import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import api from './api';
+import Banner from './components/Banner';
 import Header from './components/Header';
-import Recommend from './components/Recommend';
+import RecommendCompilation from './components/RecommendCompilation';
+import RecommendSongList from './components/RecommendSongList';
 import Singer from './components/Singer';
 const Page = () => {
-  // const [banner, setbanner] = useState([]);
+  const [banner, setbanner] = useState([]);
   const [recommend, setrecommend] = useState([]);
   const [singerList, setsingerList] = useState([]);
+  const [songList, setsongList] = useState([]);
 
   useEffect(() => {
-    // api.banner().then((re) => {
-    //   setbanner(re?.banners || []);
-    // });
+    api.banner().then((re) => {
+      setbanner(re?.banners || []);
+    });
     api.recommend().then((re) => {
-      setrecommend(re?.recommend?.slice(0, 6) || []);
+      setrecommend(re?.recommend || []);
     });
     api.artist().then((re) => {
       setsingerList(re?.artists || []);
     });
+    api.recommendSongs().then((re) => {
+      setsongList(re?.data?.dailySongs || []);
+    });
   }, []);
   return (
-    <>
+    <Box
+      sx={{
+        position: 'relative',
+      }}
+    >
+      <Banner bannerList={banner}></Banner>
       <Header></Header>
+      <RecommendCompilation recommendList={recommend}></RecommendCompilation>
       <Grid
         container
         style={{
           padding: 20,
         }}
       >
-        <Grid item>
-          <Recommend recommendList={recommend}></Recommend>
+        <Grid item xs>
+          <RecommendSongList songList={songList}></RecommendSongList>
         </Grid>
-        <Divider orientation="vertical" flexItem></Divider>
         <Grid item xs>
           <Singer singerList={singerList}></Singer>
         </Grid>
@@ -43,7 +55,7 @@ const Page = () => {
           padding: 20,
         }}
       ></Grid>
-    </>
+    </Box>
 
     // <div>
     //   <div
@@ -52,10 +64,7 @@ const Page = () => {
     //       height: 400,
     //     }}
     //   >
-    //     {/* <Banner bannerList={banner}></Banner> */}
-
-    //     <Header></Header>
-    //     <Recommend recommendList={recommend}></Recommend>
+    //     <RecommendCompilation recommendList={recommend}></RecommendCompilation>
     //   </div>
     // </div>
   );
