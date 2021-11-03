@@ -28,7 +28,7 @@ const Layout: React.FC<any> = ({ children }) => {
         height: '100%',
       }}
     >
-      <img
+      {/* <img
         src={dark}
         style={{
           position: 'fixed',
@@ -37,7 +37,7 @@ const Layout: React.FC<any> = ({ children }) => {
           opacity: 0.8,
           pointerEvents: 'none'
         }}
-      />
+      /> */}
       <Grid
         container
         item
@@ -51,7 +51,7 @@ const Layout: React.FC<any> = ({ children }) => {
         <Grid
           item
           style={{
-            width: '240px',
+            width: '190px',
             height: '100%',
             overflow: 'auto',
             borderRight: '1px solid #f3f3f3',

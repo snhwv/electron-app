@@ -160,8 +160,8 @@ export default function PlayBar() {
   const audioRef = useRef<any>();
 
   useEffect(() => {
-    audioRef.current.load();
-    playClick(false);
+    // audioRef.current.load();
+    // playClick(false);
   }, [palySong?.audioUrl]);
 
   const theme = useTheme();
