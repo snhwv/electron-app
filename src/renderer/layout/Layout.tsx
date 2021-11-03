@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import Menu from './Menu';
 import Icon from '../components/Icon';
 import withAuth from '../router/witchAuth';
+import dark from './dark.png';
 import PlayBar from './PlayBar';
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,16 @@ const Layout: React.FC<any> = ({ children }) => {
         height: '100%',
       }}
     >
+      <img
+        src={dark}
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          zIndex: 100,
+          opacity: 0.8,
+          pointerEvents: 'none'
+        }}
+      />
       <Grid
         container
         item
