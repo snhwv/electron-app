@@ -5,6 +5,7 @@ import api from './api';
 import Banner from './components/Banner';
 import Header from './components/Header';
 import RecommendCompilation from './components/RecommendCompilation';
+import Recommendmv from './components/Recommendmv';
 import RecommendSongList from './components/RecommendSongList';
 import Singer from './components/Singer';
 const Page = () => {
@@ -12,6 +13,7 @@ const Page = () => {
   const [recommend, setrecommend] = useState([]);
   const [singerList, setsingerList] = useState([]);
   const [songList, setsongList] = useState([]);
+  const [mv, setmv] = useState([]);
 
   useEffect(() => {
     api.banner().then((re) => {
@@ -21,10 +23,13 @@ const Page = () => {
       setrecommend(re?.recommend || []);
     });
     api.artist().then((re) => {
-      setsingerList(re?.artists || []);
+      setsingerList(re?.artists?.slice(0, 6) || []);
     });
     api.recommendSongs().then((re) => {
       setsongList(re?.data?.dailySongs || []);
+    });
+    api.personalizedMv().then((re) => {
+      setmv(re?.data?.result || []);
     });
   }, []);
   return (
@@ -47,6 +52,7 @@ const Page = () => {
         </Grid>
         <Grid item xs>
           <Singer singerList={singerList}></Singer>
+          <Recommendmv singerList={singerList}></Recommendmv>
         </Grid>
       </Grid>
       <Grid

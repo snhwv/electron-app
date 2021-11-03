@@ -12,7 +12,7 @@ import {
 
 const boxSize = 60;
 const boxMargin = 30;
-const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
+const Recommendmv: React.FC<{ singerList: any[] }> = ({ singerList }) => {
   return (
     <>
       <Typography
@@ -85,4 +85,4 @@ const SingerItem: React.FC<{ singer: any }> = ({ singer }) => {
     </div>
   );
 };
-export default Singer;
+export default Recommendmv;

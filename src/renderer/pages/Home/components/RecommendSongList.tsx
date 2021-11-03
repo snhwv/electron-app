@@ -33,7 +33,7 @@ const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
       >
         推荐歌曲
       </Typography>
-      <List sx={{ width: '100%' }}>
+      <List sx={{ width: '100%', height: 415, overflowY: 'auto' }}>
         {songList?.map((item, index) => {
           return (
             <ListItem
