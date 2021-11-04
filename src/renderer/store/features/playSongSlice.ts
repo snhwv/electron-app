@@ -26,6 +26,7 @@ const initialState: any = {
   audioUrl: '',
   playCurrentTime: '',
   playDurationTime: '',
+  volume: 0.5,
   songInfo: {},
 };
 
@@ -38,6 +39,9 @@ const layoutDataSlice = createSlice({
     // },
     playDurationTime(state, action) {
       state.playDurationTime = action.payload;
+    },
+    updateVolume(state, action) {
+      state.volume = action.payload;
     },
     playCurrentTime(state, action) {
       state.playCurrentTime = action.payload;
@@ -64,7 +68,8 @@ const layoutDataSlice = createSlice({
     });
   },
 });
-export const { playDurationTime, playCurrentTime } = layoutDataSlice.actions;
+export const { playDurationTime, playCurrentTime, updateVolume } =
+  layoutDataSlice.actions;
 
 export default layoutDataSlice.reducer;
 
@@ -79,6 +84,10 @@ export const getPlayDurationTime = createSelector(
 export const getPlayCurrentTime = createSelector(
   (state: any) => state.playSong,
   (playSong: any) => playSong.playCurrentTime
+);
+export const getVolume = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.volume
 );
 // export const getLayoutActiveData = createSelector(
 //   // First, pass one or more "input selector" functions:

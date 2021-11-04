@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import api from './api';
 import Banner from './components/Banner';
-import Header from './components/Header';
+import PrivateContent from './components/PrivateContent';
 import RecommendCompilation from './components/RecommendCompilation';
 import Recommendmv from './components/Recommendmv';
 import RecommendSongList from './components/RecommendSongList';
@@ -14,6 +14,7 @@ const Page = () => {
   const [singerList, setsingerList] = useState([]);
   const [songList, setsongList] = useState([]);
   const [mv, setmv] = useState([]);
+  const [contentList, setcontentList] = useState([]);
 
   useEffect(() => {
     api.banner().then((re) => {
@@ -23,13 +24,16 @@ const Page = () => {
       setrecommend(re?.recommend || []);
     });
     api.artist().then((re) => {
-      setsingerList(re?.artists?.slice(0, 6) || []);
+      setsingerList(re?.artists?.slice(0, 5) || []);
     });
     api.recommendSongs().then((re) => {
       setsongList(re?.data?.dailySongs || []);
     });
     api.personalizedMv().then((re) => {
-      setmv(re?.data?.result || []);
+      setmv(re?.result || []);
+    });
+    api.privatecontent().then((re) => {
+      setcontentList(re?.result || []);
     });
   }, []);
   return (
@@ -39,20 +43,27 @@ const Page = () => {
       }}
     >
       <Banner bannerList={banner}></Banner>
-      <Header></Header>
       <RecommendCompilation recommendList={recommend}></RecommendCompilation>
       <Grid
         container
         style={{
-          padding: 20,
+          paddingLeft: 30,
+          paddingTop: '13px',
+          flexWrap: 'nowrap',
         }}
       >
         <Grid item xs>
           <RecommendSongList songList={songList}></RecommendSongList>
         </Grid>
-        <Grid item xs>
+        <Grid
+          item
+          sx={{
+            padding: '0px 44px 0px 25px',
+            minWidth: '420px',
+          }}
+        >
           <Singer singerList={singerList}></Singer>
-          <Recommendmv singerList={singerList}></Recommendmv>
+          <Recommendmv mv={mv}></Recommendmv>
         </Grid>
       </Grid>
       <Grid
@@ -60,19 +71,10 @@ const Page = () => {
         style={{
           padding: 20,
         }}
-      ></Grid>
+      >
+        <PrivateContent contentList={contentList}></PrivateContent>
+      </Grid>
     </Box>
-
-    // <div>
-    //   <div
-    //     style={{
-    //       width: '100%',
-    //       height: 400,
-    //     }}
-    //   >
-    //     <RecommendCompilation recommendList={recommend}></RecommendCompilation>
-    //   </div>
-    // </div>
   );
 };
 export default Page;

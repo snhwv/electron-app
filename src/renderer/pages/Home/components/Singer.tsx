@@ -15,15 +15,7 @@ const boxMargin = 30;
 const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
   return (
     <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          // marginBottom: '-40px',
-          marginLeft: '10px',
-          paddingTop: '10px',
-        }}
-      >
+      <Typography variant="h6" component="h6">
         热门歌手
         <span
           style={{
@@ -38,8 +30,8 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
           width: '100%',
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '15px',
           boxSizing: 'border-box',
+          paddingTop: "15px"
         }}
       >
         {singerList?.map((item) => {
@@ -52,37 +44,10 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
                 borderRadius: 100,
               }}
             ></BlurImg>
-            // <ListItem
-            //   key={item.picUrl}
-            //   secondaryAction={
-            //     <Icon
-            //       type="icon-dots-horizontal"
-            //       style={{
-            //         fontSize: 30,
-            //       }}
-            //     ></Icon>
-            //   }
-            // >
-            //   <ListItemText
-            //     primary={item.name}
-            //     secondary={`专辑数：${item.albumSize}`}
-            //   />
-            // </ListItem>
           );
         })}
       </div>
     </>
-  );
-};
-const SingerItem: React.FC<{ singer: any }> = ({ singer }) => {
-  return (
-    <div>
-      <Grid container>
-        <Grid item xs>
-          dsfsd
-        </Grid>
-      </Grid>
-    </div>
   );
 };
 export default Singer;

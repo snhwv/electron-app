@@ -23,7 +23,7 @@ const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
         // loop={true}
         className="mySwiper"
         slidesPerView={1}
-        style={{ height: '340px' }}
+        style={{ height: '284px' }}
         effect={'fade'}
       >
         {bannerList?.map((item, index) => {

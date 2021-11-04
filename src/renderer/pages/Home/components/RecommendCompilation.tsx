@@ -10,14 +10,14 @@ import Icon from '@components/Icon';
 SwiperCore.use([Autoplay, EffectFade, Navigation]);
 import BlurImg from '@components/BlurImg';
 import style from '@style/custom/recommend.module.scss';
-const boxSize = 135;
+const boxSize = 112;
 const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
   recommendList,
 }) => {
   return (
     <div
       style={{
-        padding: '32px 36px',
+        padding: '22px 26px 0px 26px',
       }}
     >
       <Typography
@@ -39,26 +39,16 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
         spaceBetween={3}
         navigation={true}
         className={style['recommendSwipper']}
-        style={{ height: '210px', width: '100%', paddingTop: '50px' }}
+        style={{ height: '180px', width: '100%', paddingTop: '50px' }}
       >
         {recommendList?.map((item, index) => {
           return (
             <SwiperSlide
               style={{ height: '100%', position: 'relative' }}
               key={index}
+              className={'swiperItem'}
             >
-              <div
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  paddingTop: '10px',
-                  borderRadius: '40px 0px',
-                  background: '#cd9999',
-                  boxSizing: 'border-box',
-                }}
-              >
+              <div style={{}} className={'alContainer'}>
                 <BlurImg
                   key={item.picUrl}
                   url={item.picUrl}
@@ -69,8 +59,6 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                   }}
                   blurStyle={{
                     display: 'none',
-                    // filter: 'unset',
-                    // background: 'unset',
                   }}
                   className={'recommendItem'}
                 >
@@ -78,8 +66,8 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                     color="primary"
                     style={{
                       position: 'absolute',
-                      left: '80px',
-                      top: '80px',
+                      left: '60px',
+                      top: '60px',
                     }}
                   >
                     <Icon
@@ -100,13 +88,13 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                     sx={{
                       position: 'absolute',
                       top: 0,
-                      width: 140,
+                      width: boxSize,
                       background: '#2c2c2cc7',
                       color: '#fff',
                       padding: '10px',
                       boxSizing: 'border-box',
                       fontSize: '14px',
-                      borderRadius: '16px 16px 0px 0px',
+                      borderRadius: '24px 0px 0px 0px',
                       display: 'none',
                     }}
                   >

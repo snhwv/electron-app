@@ -15,10 +15,11 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import log from 'electron-log';
+// const {BrowserWindow} = require("electron-acrylic-window");
+
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import api from '../../server/app';
-
 let apiServer: any;
 let quitting: any;
 export default class AppUpdater {
@@ -77,9 +78,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1200,
-    height: 800,
+    width: 1024,
+    height: 738,
     transparent: true,
+    hasShadow: true,
     frame: false,
     icon: getAssetPath('icon.png'),
     webPreferences: {

@@ -179,6 +179,7 @@ const MenuHeader = () => {
         width: '100%',
         height: 100,
       }}
+      className={'menuHeader'}
     ></Box>
   );
 };
