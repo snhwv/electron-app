@@ -40,40 +40,44 @@ const Page = () => {
     <Box
       sx={{
         position: 'relative',
+        marginTop: '-52px',
       }}
     >
       <Banner bannerList={banner}></Banner>
-      <RecommendCompilation recommendList={recommend}></RecommendCompilation>
-      <Grid
-        container
-        style={{
-          paddingLeft: 30,
-          paddingTop: '13px',
-          flexWrap: 'nowrap',
+      <Box
+        sx={{
+          padding: '26px',
         }}
       >
-        <Grid item xs>
-          <RecommendSongList songList={songList}></RecommendSongList>
-        </Grid>
+        <RecommendCompilation recommendList={recommend}></RecommendCompilation>
         <Grid
-          item
-          sx={{
-            padding: '0px 44px 0px 25px',
-            minWidth: '420px',
+          container
+          style={{
+            flexWrap: 'nowrap',
           }}
         >
-          <Singer singerList={singerList}></Singer>
-          <Recommendmv mv={mv}></Recommendmv>
+          <Grid item xs>
+            <RecommendSongList songList={songList}></RecommendSongList>
+          </Grid>
+          <Grid
+            item
+            sx={{
+              paddingLeft: '25px',
+            }}
+          >
+            <Singer singerList={singerList}></Singer>
+            <Recommendmv mv={mv}></Recommendmv>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid
-        container
-        style={{
-          padding: 20,
-        }}
-      >
-        <PrivateContent contentList={contentList}></PrivateContent>
-      </Grid>
+        <Grid
+          container
+          sx={{
+            paddingTop: '20px',
+          }}
+        >
+          <PrivateContent contentList={contentList}></PrivateContent>
+        </Grid>
+      </Box>
     </Box>
   );
 };

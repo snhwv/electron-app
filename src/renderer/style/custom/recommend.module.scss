@@ -15,22 +15,20 @@
         background: #ccc;
       }
       .MuiTypography-root {
-        display: block;
+        display: -webkit-box;
       }
     }
     .swiper-button-prev {
       top: 18px;
       left: unset;
-      right: 45px;
+      right: 35px;
       background: #41a0fd;
-      // opacity: 1;
     }
     .swiper-button-next {
       top: 18px;
       left: unset;
-      right: 10px;
+      right: 0px;
       background: #41a0fd;
-      // opacity: 1;
     }
   }
 }
@@ -39,14 +37,21 @@
     .swiper-button-prev {
       top: 18px;
       left: unset;
-      right: 45px;
+      right: 35px;
       background: #41a0fd;
     }
     .swiper-button-next {
       top: 18px;
       left: unset;
-      right: 10px;
+      right: 0px;
       background: #41a0fd;
     }
   }
+}
+.recommendDesc {
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  border: 10px transparent solid;
 }

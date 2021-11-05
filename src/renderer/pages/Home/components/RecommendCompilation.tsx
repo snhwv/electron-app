@@ -20,11 +20,7 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
     history.push(`/playListDetail/${album?.id}`);
   };
   return (
-    <div
-      style={{
-        padding: '22px 26px 0px 26px',
-      }}
-    >
+    <div>
       <Typography
         variant="h6"
         component="h6"
@@ -100,12 +96,12 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                       width: boxSize,
                       background: '#2c2c2cc7',
                       color: '#fff',
-                      padding: '10px',
                       boxSizing: 'border-box',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       borderRadius: '24px 0px 0px 0px',
                       display: 'none',
                     }}
+                    className={style['recommendDesc']}
                   >
                     {item.name}
                   </Typography>
