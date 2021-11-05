@@ -28,8 +28,8 @@ const routes: RouteMata[] = [
   {
     label: '首页',
     componentName: 'PlayListDetail',
-    path: '/playListDetail',
-    // path: '/playListDetail/:id',
+    // path: '/playListDetail',
+    path: '/playListDetail/:id',
     icon: 'elevator',
   },
   // {

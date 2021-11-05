@@ -9,10 +9,14 @@ import classnames from 'classnames';
 import { Box } from '@mui/system';
 import style from './menu.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfo } from '@store/features/userInfoSlice';
 import {
   getActiveRoute,
   updateActiveRoute,
 } from '../store/features/layoutSlice';
+import { useEffect, useState } from 'react';
+import api from './api';
+import { Link, useHistory } from 'react-router-dom';
 type ImenuItem = {
   title: string;
   icon: IconType;
@@ -85,22 +89,13 @@ const menuItems: ImenuItem[] = [
       },
     ],
   },
-  {
-    title: '创建的歌单',
-    icon: 'icon-watermark',
-    path: 'createSongList',
-  },
-  {
-    title: '收藏的歌单',
-    icon: 'icon-watermark',
-    path: 'collectionSongList',
-  },
 ];
 
 const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
   item,
   isChild = false,
 }) => {
+  let history = useHistory();
   const dispatch = useDispatch();
   const activeRoute = useSelector(getActiveRoute);
 
@@ -111,6 +106,7 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
       setOpen(!open);
     } else {
       dispatch(updateActiveRoute(item.path));
+      history.push(item.path);
     }
   };
 
@@ -140,12 +136,16 @@ const MenuItem: React.FC<{ item: ImenuItem; isChild?: boolean }> = ({
             menuTextBolder: !isChild,
           })}
           sx={{
-            color: 'text.primary',
-            fontSize: 14,
+            '& > .MuiTypography-root': {
+              color: 'text.primary',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+            },
           }}
           primary={item.title}
         />
-        <Icon type={'icon-arrow-right'} />
+        {/* <Icon type={'icon-arrow-right'} /> */}
         {item?.suffix?.()}
       </ListItem>
       {item?.children && (
@@ -179,16 +179,54 @@ const MenuHeader = () => {
         width: '100%',
         height: 100,
       }}
-      className={'menuHeader'}
-    ></Box>
+      // className={'menuHeader'}
+    >
+      <Link to="/home">云音乐</Link>
+    </Box>
   );
 };
 
 const Menu = () => {
+  const userInfo = useSelector(getUserInfo);
+  const [playList, setplayList] = useState<any[]>([]);
+  useEffect(() => {
+    api.userPlayList({ uid: userInfo?.userId }).then((re: any) => {
+      const playlist = re?.playlist || [];
+      const ownList = {
+        title: '创建的歌单',
+        icon: 'icon-watermark',
+        path: 'create',
+        children: playlist
+          .filter((item: any) => item.userId === userInfo?.userId)
+          .map((item: any) => {
+            return {
+              title: item.name,
+              icon: 'icon-watermark',
+              path: `/playListDetail/${item.id}`,
+            };
+          }),
+      };
+      const subList = {
+        title: '收藏的歌单',
+        icon: 'icon-watermark',
+        path: 'sub',
+        children: playlist
+          .filter((item: any) => item.userId !== userInfo?.userId)
+          .map((item: any) => {
+            return {
+              title: item.name,
+              icon: 'icon-watermark',
+              path: `/playListDetail/${item.id}`,
+            };
+          }),
+      };
+      setplayList([ownList, subList]);
+    });
+  }, []);
   return (
     <>
       <MenuHeader></MenuHeader>
-      <MenuList listData={menuItems}></MenuList>
+      <MenuList listData={[...menuItems, ...playList]}></MenuList>
     </>
   );
 };

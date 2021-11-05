@@ -10,10 +10,15 @@ import Icon from '@components/Icon';
 SwiperCore.use([Autoplay, EffectFade, Navigation]);
 import BlurImg from '@components/BlurImg';
 import style from '@style/custom/recommend.module.scss';
+import { useHistory } from 'react-router-dom';
 const boxSize = 112;
 const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
   recommendList,
 }) => {
+  const history = useHistory();
+  const onClick = (album: any) => {
+    history.push(`/playListDetail/${album?.id}`);
+  };
   return (
     <div
       style={{
@@ -48,7 +53,11 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
               key={index}
               className={'swiperItem'}
             >
-              <div style={{}} className={'alContainer'}>
+              <div
+                style={{}}
+                onClick={() => onClick(item)}
+                className={'alContainer'}
+              >
                 <BlurImg
                   key={item.picUrl}
                   url={item.picUrl}

@@ -7,20 +7,27 @@ import {
   fetchSongDetailById,
 } from '@store/features/playSongSlice';
 import api from './api';
+import globalApi from '@globalApi';
 import {
+  Button,
   Divider,
   Grid,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  Stack,
+  TextField,
   Typography,
 } from '@mui/material';
 import { getUserInfo } from '@store/features/userInfoSlice';
 import Icon from '@components/Icon';
 import { useHistory, useParams } from 'react-router-dom';
-
 import { Box } from '@mui/system';
+import dayjs from 'dayjs';
+import { toShortZHNumber } from '@utils/funcs';
+import Commit from './components/Commit';
+
 const boxSize = 36;
 interface PlayListDetailProps {}
 
@@ -31,14 +38,27 @@ const itemIconStyle = {
 };
 const PlayListDetail: React.FC<PlayListDetailProps> = () => {
   const [playListDetail, setPlayListDetail] = useState<any>({});
+
+  const [songs, setSongs] = useState<any[]>([]);
+
   const [selectedSong, setselectedSong] = useState<any>({});
-  // const params: any = useParams();
+  const [sourceId, setsourceId] = useState<any>();
+  const params: any = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    api.playListDetail({ id: 988690134 }).then((re) => {
-      setPlayListDetail(re?.playlist || []);
-    });
-  }, []);
+    setsourceId(params.id);
+    api
+      .playListDetail({ id: params.id })
+      .then((re) => {
+        setPlayListDetail(re?.playlist || []);
+        return globalApi.songDetail({
+          ids: re?.playlist?.trackIds.map((item: any) => item.id).join(),
+        });
+      })
+      .then((re) => {
+        setSongs(re?.songs || []);
+      });
+  }, [params.id]);
 
   const onSongClick = (album: any) => {
     setselectedSong(album);
@@ -54,8 +74,31 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
         height: '100%',
       }}
     >
-      <Typography variant="h6" component="h6">
+      <Typography
+        variant="h6"
+        component="h6"
+        style={{
+          paddingLeft: '24px',
+          marginTop: '20px',
+        }}
+      >
         {playListDetail?.name}
+        {playListDetail?.tags?.map((item: any) => {
+          return (
+            <span
+              key={item}
+              style={{
+                fontSize: '14px',
+                marginLeft: '8px',
+                background: 'red',
+                color: '#fff',
+                padding: '2px',
+              }}
+            >
+              {item}
+            </span>
+          );
+        })}
       </Typography>
       <Grid
         container
@@ -68,12 +111,77 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
           item
           xs
           style={{
-            height: 500,
             overflow: 'auto',
           }}
         >
-          <List sx={{ width: '100%', overflowY: 'auto' }}>
-            {playListDetail?.tracks?.map((item: any, index: number) => {
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            paddingBottom="10px"
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                color: '#fff',
+                width: 160,
+                background: '#e3e3e3a6',
+                height: 24,
+                borderRadius: 4,
+                paddingLeft: '8px',
+                '.MuiInput-root:before': {
+                  display: 'none',
+                  content: 'unset',
+                },
+                '.MuiInput-root': {
+                  color: '#fff',
+                  fontSize: '0.8rem',
+                },
+              }}
+            >
+              <Icon
+                type="icon-magnify"
+                style={{
+                  fontSize: 14,
+                  lineHeight: '24px',
+                  width: '20px',
+                  color: '#fff',
+                }}
+              />
+              <TextField variant="standard" fullWidth />
+            </Box>
+            <Button
+              variant="contained"
+              sx={{
+                height: 24,
+                width: '80px',
+                borderRadius: '40px',
+                padding: 0,
+              }}
+              endIcon={
+                <Icon
+                  type="icon-play"
+                  style={{
+                    fontSize: 14,
+                    lineHeight: '24px',
+                    width: '20px',
+                    color: '#fff',
+                    marginRight: '-10px',
+                  }}
+                />
+              }
+            >
+              <span
+                style={{
+                  marginRight: '-8px',
+                }}
+              >
+                播放
+              </span>
+            </Button>
+          </Stack>
+          <List sx={{ width: '100%', overflowY: 'auto', height: 370 }}>
+            {songs?.map((item: any, index: number) => {
               return (
                 <SongItem
                   key={index}
@@ -116,55 +224,151 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
               );
             })}
           </List>
-          {/* <List>
-            {playListDetail?.tracks?.map((item: any) => {
-              return (
-                <ListItem
-                  key={item.id}
-                  secondaryAction={
-                    <>
-                      <Icon
-                        type="icon-play"
-                        style={{
-                          fontSize: 30,
-                        }}
-                        onClick={() => paly(item)}
-                      ></Icon>
-                    </>
-                  }
-                  disablePadding
-                >
-                  <ListItemButton
-                    selected={selectedSong?.id === item.id}
-                    onClick={() => onSongClick(item)}
-                  >
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </List> */}
         </Grid>
-        <Divider orientation="vertical" flexItem></Divider>
-        <Grid
-          item
-          style={{
-            width: 300,
-            height: 400,
-          }}
-        >
+        <Grid item xs={5}>
           <BlurImg
             url={playListDetail?.coverImgUrl}
             containerStyle={{
-              width: 240,
-              height: 240,
+              width: '100%',
+              paddingTop: '100%',
+              height: 0,
             }}
             blurStyle={{
               display: 'none',
             }}
-          ></BlurImg>
+          >
+            <Typography
+              style={{
+                position: 'absolute',
+                color: '#fff',
+                background: 'rgb(98 98 98 / 82%)',
+                fontSize: '13px',
+                bottom: '9%',
+                width: '78%',
+                left: '4%',
+              }}
+            >
+              {playListDetail?.description}
+            </Typography>
+          </BlurImg>
+          <Stack
+            justifyContent="flex-start"
+            direction="row"
+            flexWrap="nowrap"
+            paddingTop="10px"
+            alignItems="center"
+          >
+            <BlurImg
+              url={playListDetail?.creator?.avatarUrl}
+              containerStyle={{
+                width: '30px',
+                paddingTop: '30px',
+                height: 0,
+                borderRadius: 60,
+              }}
+              blurStyle={{
+                display: 'none',
+              }}
+            ></BlurImg>
+            <Typography
+              style={{
+                fontSize: '13px',
+                color: '#0076bb',
+                marginLeft: '4px',
+                marginRight: '8px',
+              }}
+            >
+              {playListDetail?.creator?.nickname}
+            </Typography>
+            <Typography
+              style={{
+                fontSize: '13px',
+              }}
+            >
+              {dayjs(playListDetail?.createTime).format('YYYY-MM-DD')}创建
+            </Typography>
+          </Stack>
+          <Stack
+            justifyContent="flex-start"
+            direction="row"
+            flexWrap="nowrap"
+            paddingTop="10px"
+            alignItems="center"
+          >
+            <Typography
+              style={{
+                fontSize: '13px',
+                marginRight: '18px',
+              }}
+            >
+              歌曲数：{playListDetail?.trackCount}
+            </Typography>
+            <Typography
+              style={{
+                fontSize: '13px',
+              }}
+            >
+              播放量：{toShortZHNumber(playListDetail?.playCount)}
+            </Typography>
+          </Stack>
+          <Stack
+            justifyContent="space-between"
+            direction="row"
+            flexWrap="nowrap"
+            paddingTop="10px"
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                height: 30,
+                borderRadius: 30,
+                minWidth: 90,
+                color: '#424242',
+                borderColor: '#424242',
+              }}
+              endIcon={
+                <Icon type="icon-folder-outline" style={{ color: '#424242' }} />
+              }
+            >
+              收藏
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                height: 30,
+                borderRadius: 30,
+                minWidth: 90,
+                color: '#424242',
+                borderColor: '#424242',
+              }}
+              endIcon={
+                <Icon type="icon-share-variant" style={{ color: '#424242' }} />
+              }
+            >
+              分享
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                height: 30,
+                borderRadius: 30,
+                minWidth: 110,
+                color: '#424242',
+                borderColor: '#424242',
+              }}
+              endIcon={
+                <Icon type="icon-download" style={{ color: '#424242' }} />
+              }
+            >
+              下载全部
+            </Button>
+          </Stack>
         </Grid>
       </Grid>
+      <Commit sourceId={sourceId}></Commit>
     </div>
   );
 };

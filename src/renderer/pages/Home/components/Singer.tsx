@@ -31,12 +31,13 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
           display: 'flex',
           justifyContent: 'space-between',
           boxSizing: 'border-box',
-          paddingTop: "15px"
+          paddingTop: '15px',
         }}
       >
         {singerList?.map((item) => {
           return (
             <BlurImg
+              key={item.id}
               url={item.picUrl}
               containerStyle={{
                 width: boxSize,

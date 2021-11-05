@@ -29,6 +29,7 @@ const PrivateContent: React.FC<{ contentList: any[] }> = ({ contentList }) => {
         {contentList?.map((item) => {
           return (
             <div
+              key={item.id}
               style={{
                 width: '32%',
                 display: 'flex',
@@ -44,13 +45,11 @@ const PrivateContent: React.FC<{ contentList: any[] }> = ({ contentList }) => {
                 }}
               ></BlurImg>
               <Typography
-                sx={
-                  {
-                    color: '#333',
-                    padding: '4px',
-                    fontSize: '14px',
-                  }
-                }
+                sx={{
+                  color: '#333',
+                  padding: '4px',
+                  fontSize: '14px',
+                }}
               >
                 {item.name}
               </Typography>
