@@ -161,8 +161,8 @@ export default function PlayBar() {
   const audioRef = useRef<any>();
 
   useEffect(() => {
-    // audioRef.current.load();
-    // playClick(false);
+    audioRef.current.load();
+    playClick(false);
   }, [palySong?.audioUrl]);
 
   const theme = useTheme();
@@ -192,7 +192,7 @@ export default function PlayBar() {
     dispatch(playCurrentTime(time.target.currentTime));
   };
   const onDurationChange = (time: any) => {
-    dispatch(playDurationTime(time.target.duration));
+    // dispatch(playDurationTime(time.target.duration));
   };
   return (
     <Box

@@ -8,14 +8,22 @@ import { REHYDRATE } from 'redux-persist';
 import api from '@globalApi';
 export const fetchSongUrlById = createAsyncThunk(
   'song/fetchSongUrl',
-  async (id) => {
+  async (id, { getState }) => {
+    const songId = (getState() as any)?.playSong.songId;
+    if (songId === id) {
+      return;
+    }
     const response = await api.songUrl({ id });
     return response.data?.[0];
   }
 );
 export const fetchSongDetailById = createAsyncThunk(
   'song/fetchSongDetail',
-  async (ids) => {
+  async (ids, { getState }) => {
+    const songId = (getState() as any)?.playSong.songId;
+    if (songId === ids) {
+      return;
+    }
     const response = await api.songDetail({ ids });
     return response.songs?.[0];
   }
@@ -34,9 +42,6 @@ const layoutDataSlice = createSlice({
   name: 'playSong',
   initialState,
   reducers: {
-    // updateTableColumnById(state, action) {
-    // mergeWith(columns[index], payload, customizer);
-    // },
     playDurationTime(state, action) {
       state.playDurationTime = action.payload;
     },
@@ -48,23 +53,22 @@ const layoutDataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchSongUrlById.fulfilled, (state, action) => {
-      // Add user to the state array
-      state.songId = action.payload?.id;
-      state.audioUrl = action.payload?.url;
-
-      // state.entities.push(action.payload);
+      if (action.payload?.id) {
+        state.songId = action.payload?.id;
+        state.audioUrl = action.payload?.url;
+      }
     });
     builder.addCase(fetchSongDetailById.fulfilled, (state, action) => {
-      // Add user to the state array
-      const { name, ar: artist, al: album } = action.payload || {};
-      state.songInfo = {
-        name,
-        artist,
-        album,
-      };
-      // state.entities.push(action.payload);
+      const { name, ar: artist, al: album, dt } = action.payload || {};
+      if (name) {
+        state.songInfo = {
+          name,
+          artist,
+          album,
+        };
+        state.playDurationTime = Math.round(dt / 1000);
+      }
     });
   },
 });
