@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
 import {
   persistStore,
@@ -9,18 +9,18 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import hardSet from "redux-persist/es/stateReconciler/hardSet";
-import storage from "redux-persist/lib/storage";
+} from 'redux-persist';
+import hardSet from 'redux-persist/es/stateReconciler/hardSet';
+import storage from 'redux-persist/lib/storage';
 
-import rootReducer from "./features";
+import rootReducer from './features';
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   version: 1,
   storage,
   stateReconciler: hardSet,
-  whiteList: [],
+  whiteList: ['layout'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer as any);

@@ -8,7 +8,6 @@ import { isArray, mergeWith } from 'lodash';
 import { REHYDRATE } from 'redux-persist';
 import { fetchSongDetailById, fetchSongUrlById } from './playSongSlice';
 
-
 const playTypeMethds: any = {
   order: (songList: any[], currentSongId: any, offset: any) => {
     let index = _.findIndex(songList, ['id', currentSongId]);
@@ -52,23 +51,52 @@ export const nextSong = createAsyncThunk(
     const {
       playSongList = [],
       // order,random,loop,single
-      playType = 'order',
+      playType = 'random',
+      playIndex,
+      playHistory,
     } = (getState() as any)?.songList;
     const songId = (getState() as any)?.playSong?.songId;
-    const nextSong = playTypeMethds[playType](playSongList, songId, 1);
+    let nextSong = null;
+    if (playIndex < playHistory.length - 1) {
+      nextSong = playHistory[playIndex + 1];
+    } else {
+      nextSong = playTypeMethds[playType](playSongList, songId, 1);
+    }
     if (nextSong) {
       dispatch((fetchSongDetailById as any)(nextSong?.id));
       dispatch((fetchSongUrlById as any)(nextSong?.id));
     }
-    return nextSong;
+    return { song: nextSong, indexOffset: 1 };
+  }
+);
+export const prevSong = createAsyncThunk(
+  'songList/prevSong',
+  async (_: any, { getState, dispatch }) => {
+    const {
+      playSongList = [],
+      // order,random,loop,single
+      playType = 'random',
+      playIndex,
+      playHistory,
+    } = (getState() as any)?.songList;
+    let prevSong = null;
+    if (playIndex - 1 >= 0) {
+      prevSong = playHistory[playIndex - 1];
+      if (prevSong) {
+        dispatch((fetchSongDetailById as any)(prevSong?.id));
+        dispatch((fetchSongUrlById as any)(prevSong?.id));
+      }
+      return { song: prevSong, indexOffset: -1 };
+    }
+    return undefined;
   }
 );
 const initialState: any = {
   id: '',
   playSongList: [],
   // order,random,loop,single
-  playType: 'order',
-  playIndex: 0,
+  playType: 'random',
+  playIndex: -1,
   // 播放历史
   playHistory: [],
 };
@@ -82,16 +110,28 @@ const songListSlice = createSlice({
       if (id !== state.id) {
         state.id = id;
         state.playSongList = playSongList;
+        state.playIndex = -1;
+        state.playHistory = [];
       }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(updateCurrentSong.fulfilled, (state, action) => {
-      // state.playIndex = state.playIndex + 1;
-      // state.playHistory.push() = state.playIndex + 1;
+      state.playIndex += 1;
+      state.playHistory.push(action.payload);
     });
     builder.addCase(nextSong.fulfilled, (state, action) => {
-
+      if (action.payload.song) {
+        state.playIndex += action.payload.indexOffset;
+        if (state.playIndex === state.playHistory.length) {
+          state.playHistory.push(action.payload.song);
+        }
+      }
+    });
+    builder.addCase(prevSong.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.playIndex += action.payload.indexOffset;
+      }
     });
   },
 });

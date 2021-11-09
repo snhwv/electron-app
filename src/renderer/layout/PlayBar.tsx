@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
+import { nextSong, prevSong } from '@store/features/songListSlice';
 
 const Widget = styled('div')(({ theme }) => ({
   padding: '0px 30px',
@@ -168,6 +169,13 @@ export default function PlayBar() {
   const theme = useTheme();
   const [paused, setPaused] = React.useState(false);
 
+  const playNextSongClick = () => {
+    dispatch(nextSong(null));
+  };
+  const playPrevSongClick = () => {
+    dispatch(prevSong(null));
+  };
+
   const playClick = (paused: boolean) => {
     if (paused) {
       audioRef.current.pause();
@@ -239,7 +247,7 @@ export default function PlayBar() {
               marginRight: '6px',
             }}
           >
-            <IconButton aria-label="previous song">
+            <IconButton onClick={playPrevSongClick} aria-label="previous song">
               <Icon type="icon-skip-previous" />
             </IconButton>
             <IconButton
@@ -248,7 +256,7 @@ export default function PlayBar() {
             >
               {paused ? <Icon type="icon-play" /> : <Icon type="icon-pause" />}
             </IconButton>
-            <IconButton aria-label="next song">
+            <IconButton onClick={playNextSongClick} aria-label="next song">
               <Icon type="icon-skip-next" />
             </IconButton>
             <IconButton aria-label="next song">
