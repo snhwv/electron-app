@@ -32,6 +32,7 @@
       "@store/*": ["./src/renderer/store/*"],
       "@globalApi": ["./src/renderer/common/globalApi.ts"],
       "@style/*": ["./src/renderer/style/*"],
+      "@assets/*": ["./src/renderer/assets/*"],
     }
   },
   "exclude": [

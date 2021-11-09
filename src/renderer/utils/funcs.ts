@@ -114,3 +114,11 @@ export function toShortZHNumber(value: number) {
   }
   return newValue.join('');
 }
+
+export function formatDuration(value: number) {
+  const minute = Math.floor(value / 60);
+  const secondLeft = value - minute * 60;
+  return `${minute}:${
+    secondLeft < 9 ? `0${secondLeft.toFixed(0)}` : secondLeft.toFixed(0)
+  }`;
+}

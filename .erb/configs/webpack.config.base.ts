@@ -49,6 +49,7 @@ export default {
       ),
       '@store': path.resolve(__dirname, '../../src/renderer/store'),
       '@style': path.resolve(__dirname, '../../src/renderer/style'),
+      '@assets': path.resolve(__dirname, '../../src/renderer/assets'),
     },
   },
 

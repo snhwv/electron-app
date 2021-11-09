@@ -12,13 +12,13 @@ const PlayPlane: React.FC<any> = () => {
         paddingTop: '50px',
       }}
     >
-      <Grid item xs>
+      <Grid item xs={4}>
         <SongListInfo></SongListInfo>
       </Grid>
-      <Grid item xs>
+      <Grid item xs={4}>
         <Disc></Disc>
       </Grid>
-      <Grid item xs>
+      <Grid item xs={4}>
         <AlbumInfo></AlbumInfo>
       </Grid>
     </Grid>

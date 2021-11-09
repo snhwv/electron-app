@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { nextSong, prevSong } from '@store/features/songListSlice';
 import PlayPlane from './PlayPlane';
+import { formatDuration } from '@utils/funcs';
 
 const Widget = styled('div')(({ theme }) => ({
   padding: '0px 30px',
@@ -52,14 +53,6 @@ const TinyText = styled(Typography)({
   fontWeight: 500,
   letterSpacing: 0.2,
 });
-
-function formatDuration(value: number) {
-  const minute = Math.floor(value / 60);
-  const secondLeft = value - minute * 60;
-  return `${minute}:${
-    secondLeft < 9 ? `0${secondLeft.toFixed(0)}` : secondLeft.toFixed(0)
-  }`;
-}
 
 const VolumeSlider: React.FC<any> = ({ audioRef }) => {
   const volume = useSelector(getVolume);
