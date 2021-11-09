@@ -31,6 +31,7 @@ declare type Recordable<T = any> = Record<string, T>;
 declare type Nullable<T> = T | null;
 declare module '*.module.less';
 declare module '*.module.scss';
+declare module '*.webp';
 type ValueOf<T> = T[keyof T];
 type IconType =
   | 'icon-black-mesa'

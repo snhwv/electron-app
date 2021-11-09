@@ -99,6 +99,7 @@ const initialState: any = {
   playIndex: -1,
   // 播放历史
   playHistory: [],
+  playListInfo: {},
 };
 
 const songListSlice = createSlice({
@@ -106,10 +107,11 @@ const songListSlice = createSlice({
   initialState,
   reducers: {
     updatePlaySongList(state, action) {
-      const { id, playSongList } = action.payload;
+      const { id, playSongList, playListInfo } = action.payload;
       if (id !== state.id) {
         state.id = id;
         state.playSongList = playSongList;
+        state.playListInfo = playListInfo;
         state.playIndex = -1;
         state.playHistory = [];
       }
@@ -142,4 +144,8 @@ export default songListSlice.reducer;
 export const getSongList = createSelector(
   (state: any) => state.songList,
   (songList: any) => songList.playSongList
+);
+export const getSongListInfo = createSelector(
+  (state: any) => state.songList,
+  (songList: any) => songList.playListInfo
 );

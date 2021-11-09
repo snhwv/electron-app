@@ -20,7 +20,7 @@ const Header = () => {
         zIndex: 2,
       }}
     >
-      <Grid item xs>
+      <Grid item>
         <Box
           sx={{
             display: 'flex',
@@ -55,7 +55,16 @@ const Header = () => {
       </Grid>
       <Grid
         item
-        xs={2}
+        xs
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'right',
+        }}
+        className="windowHandler"
+      ></Grid>
+      <Grid
+        item
         sx={{
           display: 'flex',
           alignItems: 'center',

@@ -35,7 +35,11 @@ const SongList: React.FC<SongListProps> = ({ songs, playListDetail }) => {
   const dispatch = useDispatch();
   const onSongItemClick = (item: any) => {
     dispatch(
-      updatePlaySongList({ id: playListDetail?.id, playSongList: songs })
+      updatePlaySongList({
+        id: playListDetail?.id,
+        playListInfo: playListDetail,
+        playSongList: songs,
+      })
     );
     dispatch(updateCurrentSong(item));
   };

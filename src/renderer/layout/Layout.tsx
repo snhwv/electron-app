@@ -3,8 +3,8 @@ import { Grid } from '@material-ui/core';
 import Menu from './Menu';
 import Icon from '../components/Icon';
 import withAuth from '../router/witchAuth';
-import dark from './dark.png';
-import PlayBar from './PlayBar';
+import dark from './playbar.webp';
+import PlayBar from './playBar/PlayBar';
 import Header from './Header';
 const useStyles = makeStyles({
   root: {
@@ -27,13 +27,14 @@ const Layout: React.FC<any> = ({ children }) => {
       wrap={'wrap'}
       style={{
         height: '100%',
+        position: 'relative',
       }}
     >
       {/* <img
         src={dark}
         style={{
           position: 'fixed',
-          width: '100vw',
+          width: 'calc(100vw - 20px)',
           zIndex: 100,
           opacity: 0.8,
           pointerEvents: 'none',
@@ -80,11 +81,14 @@ const Layout: React.FC<any> = ({ children }) => {
         style={{
           width: '100%',
           minWidth: '100%',
-          height: 70,
+          height: '100%',
           display: 'flex',
           alignItems: 'center',
           boxShadow: '0px 0px 40px 0px #cfcfcf',
           zIndex: 1,
+          position: 'absolute',
+          background: 'beige',
+          bottom: 0,
         }}
       >
         <PlayBar />

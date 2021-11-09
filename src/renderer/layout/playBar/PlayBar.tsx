@@ -19,6 +19,7 @@ import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { nextSong, prevSong } from '@store/features/songListSlice';
+import PlayPlane from './PlayPlane';
 
 const Widget = styled('div')(({ theme }) => ({
   padding: '0px 30px',
@@ -162,12 +163,17 @@ export default function PlayBar() {
   const audioRef = useRef<any>();
 
   useEffect(() => {
-    audioRef.current.load();
-    playClick(false);
+    // audioRef.current.load();
+    // playClick(false);
   }, [palySong?.audioUrl]);
 
   const theme = useTheme();
   const [paused, setPaused] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const onTrigger = () => {
+    setOpen(!open);
+  };
 
   const playNextSongClick = () => {
     dispatch(nextSong(null));
@@ -199,99 +205,124 @@ export default function PlayBar() {
   const onTimeUpdate = (time: any) => {
     dispatch(playCurrentTime(time.target.currentTime));
   };
+  const onEnded = () => {
+    dispatch(nextSong(null));
+  };
   const onDurationChange = (time: any) => {
     // dispatch(playDurationTime(time.target.duration));
   };
+
   return (
     <Box
       sx={{
         width: '100%',
+        height: '100%',
       }}
     >
-      <Widget>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', flex: 1 }}>
-          <CoverImage>
-            <img
-              alt="can't win - Chilling Sunday"
-              src={palySong?.songInfo?.album?.picUrl}
-            />
-          </CoverImage>
-          <Box sx={{ ml: 1.5, minWidth: 0 }}>
-            <Typography noWrap>{palySong?.songInfo?.name}</Typography>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              fontWeight={500}
-            >
-              <b>
-                {palySong?.songInfo?.artist?.map((item: any, index: number) => {
-                  return <span key={index}> {item.name}</span>;
-                })}
-              </b>
-            </Typography>
+      <Box
+        sx={{
+          width: '100%',
+          height: 70,
+          position: 'absolute',
+          bottom: 0,
+        }}
+      >
+        <Widget>
+          <Box sx={{ display: 'inline-flex', alignItems: 'center', flex: 1 }}>
+            <CoverImage onClick={onTrigger}>
+              <img
+                alt="can't win - Chilling Sunday"
+                src={palySong?.songInfo?.album?.picUrl}
+              />
+            </CoverImage>
+            <Box sx={{ ml: 1.5, minWidth: 0 }}>
+              <Typography noWrap>{palySong?.songInfo?.name}</Typography>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                fontWeight={500}
+              >
+                <b>
+                  {palySong?.songInfo?.artist?.map(
+                    (item: any, index: number) => {
+                      return <span key={index}> {item.name}</span>;
+                    }
+                  )}
+                </b>
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            width: 600,
-          }}
-        >
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              width: 600,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 120,
+                marginRight: '6px',
+              }}
+            >
+              <IconButton
+                onClick={playPrevSongClick}
+                aria-label="previous song"
+              >
+                <Icon type="icon-skip-previous" />
+              </IconButton>
+              <IconButton
+                aria-label={paused ? 'play' : 'pause'}
+                onClick={() => playClick(!paused)}
+              >
+                {paused ? (
+                  <Icon type="icon-play" />
+                ) : (
+                  <Icon type="icon-pause" />
+                )}
+              </IconButton>
+              <IconButton onClick={playNextSongClick} aria-label="next song">
+                <Icon type="icon-skip-next" />
+              </IconButton>
+              <IconButton aria-label="next song">
+                <Icon type="icon-heart-outline" />
+              </IconButton>
+            </Box>
+            <MusicPlayerSlider audioRef={audioRef}></MusicPlayerSlider>
+          </Box>
           <Box
             sx={{
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 120,
-              marginRight: '6px',
             }}
           >
-            <IconButton onClick={playPrevSongClick} aria-label="previous song">
-              <Icon type="icon-skip-previous" />
-            </IconButton>
-            <IconButton
-              aria-label={paused ? 'play' : 'pause'}
-              onClick={() => playClick(!paused)}
+            <Stack
+              spacing={2}
+              direction="row"
+              sx={{ width: 170 }}
+              alignItems="center"
             >
-              {paused ? <Icon type="icon-play" /> : <Icon type="icon-pause" />}
-            </IconButton>
-            <IconButton onClick={playNextSongClick} aria-label="next song">
-              <Icon type="icon-skip-next" />
-            </IconButton>
-            <IconButton aria-label="next song">
-              <Icon type="icon-heart-outline" />
-            </IconButton>
+              <VolumeSlider audioRef={audioRef} />
+              <Icon type="icon-crop-square" />
+              <Icon type="icon-menu" />
+            </Stack>
           </Box>
-          <MusicPlayerSlider audioRef={audioRef}></MusicPlayerSlider>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-          }}
+        </Widget>
+        <audio
+          onDurationChange={onDurationChange}
+          onTimeUpdate={onTimeUpdate}
+          onEnded={onEnded}
+          ref={audioRef}
+          controls={false}
         >
-          <Stack
-            spacing={2}
-            direction="row"
-            sx={{ width: 170 }}
-            alignItems="center"
-          >
-            <VolumeSlider audioRef={audioRef} />
-            <Icon type="icon-crop-square" />
-            <Icon type="icon-menu" />
-          </Stack>
-        </Box>
-      </Widget>
-      <audio
-        onDurationChange={onDurationChange}
-        onTimeUpdate={onTimeUpdate}
-        ref={audioRef}
-        controls={false}
-      >
-        <source src={palySong?.audioUrl} type="audio/mp3" />
-        <source src={palySong?.audioUrl} type="audio/ogg" />
-        <embed height="100" width="100" src={palySong?.audioUrl} />
-      </audio>
+          <source src={palySong?.audioUrl} type="audio/mp3" />
+          <source src={palySong?.audioUrl} type="audio/ogg" />
+          <embed height="100" width="100" src={palySong?.audioUrl} />
+        </audio>
+      </Box>
+      <PlayPlane></PlayPlane>
     </Box>
   );
 }
