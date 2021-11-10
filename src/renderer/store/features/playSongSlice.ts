@@ -6,6 +6,28 @@ import {
 import { isArray, mergeWith } from 'lodash';
 import { REHYDRATE } from 'redux-persist';
 import api from '@globalApi';
+const splitLyc = (lyric = '') => {
+  return lyric
+    .split(/[\n]/) // 截取中括号
+    .map((item: any) => {
+      let temp: Array<string> = item.split(/\[(.+?)\]/);
+
+      return {
+        time: temp[1], // 时间
+        lyc: temp[2], //歌词内容
+      };
+    })
+    .filter((v: any) => v['lyc'])
+    .map((item: any) => {
+      const time = item.time;
+      const m = time.match(/^(\d+):/);
+      const s = time.match(/:(\d+)./);
+      return {
+        ...item,
+        time: Number(m[1]) * 60 + Number(s[1]),
+      };
+    }); // 去除无歌词内容
+};
 export const fetchSongUrlById = createAsyncThunk(
   'song/fetchSongUrl',
   async (id, { getState }) => {
@@ -25,13 +47,18 @@ export const fetchSongDetailById = createAsyncThunk(
       return;
     }
     const response = await api.songDetail({ ids });
-    return response.songs?.[0];
+    const lyric = await api.lyric({ id: ids });
+    return {
+      songDetail: response.songs?.[0],
+      lyric,
+    };
   }
 );
 const initialState: any = {
   playing: false,
   songId: '',
   audioUrl: '',
+  lyric: {},
   playCurrentTime: '',
   playDurationTime: '',
   volume: 0.5,
@@ -63,8 +90,13 @@ const layoutDataSlice = createSlice({
       }
     });
     builder.addCase(fetchSongDetailById.fulfilled, (state, action) => {
-      const { name, ar: artist, al: album, dt } = action.payload || {};
+      const { songDetail, lyric } = action.payload || {};
+      const { name, ar: artist, al: album, dt } = songDetail || {};
       if (name) {
+        state.lyric = {
+          lyric: splitLyc(lyric?.lrc?.lyric),
+          tlyric: splitLyc(lyric?.tlyric?.lyric),
+        };
         state.songInfo = {
           name,
           artist,
@@ -75,7 +107,8 @@ const layoutDataSlice = createSlice({
     });
   },
 });
-export const { playDurationTime,setPlaying, playCurrentTime, updateVolume } =
+
+export const { playDurationTime, setPlaying, playCurrentTime, updateVolume } =
   layoutDataSlice.actions;
 
 export default layoutDataSlice.reducer;
@@ -87,6 +120,10 @@ export const getPlaySong = createSelector(
 export const getPlaySongInfo = createSelector(
   (state: any) => state.playSong,
   (playSong: any) => playSong.songInfo
+);
+export const getLyric = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.lyric
 );
 export const getPlayDurationTime = createSelector(
   (state: any) => state.playSong,

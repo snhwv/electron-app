@@ -7,12 +7,46 @@ import {
   getSongListInfo,
   updateCurrentSong,
 } from '@store/features/songListSlice';
-import { getPlaying, getPlaySongInfo } from '@store/features/playSongSlice';
-import { useRef } from 'react';
+import {
+  getPlaying,
+  getLyric,
+  getPlaySongInfo,
+} from '@store/features/playSongSlice';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Typography } from '@mui/material';
+
+const Lyric: React.FC<any> = () => {
+  const lyric = useSelector(getLyric);
+  console.log(lyric);
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        background: '#bdadad',
+        width: '100%',
+        overflow: 'auto',
+        height: '500px',
+        textAlign: 'center',
+        padding: '250px 0px',
+        boxSizing: 'border-box',
+      }}
+    >
+      {lyric?.lyric?.map((item: any, index: number) => {
+        return (
+          <div>
+            <div>{item.lyc}</div>
+            <div>{lyric?.tlyric?.[index]?.lyc}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 const Pic: React.FC<any> = () => {
   const playing = useSelector(getPlaying);
   const playSongInfo = useSelector(getPlaySongInfo);
+
   return (
     <div
       style={{
@@ -20,7 +54,8 @@ const Pic: React.FC<any> = () => {
         width: '100%',
         top: '82px',
         backgroundImage: `radial-gradient(circle, #fff 0%, #fff 70%, transparent 70%, transparent 100%)`,
-        animation: playing ? 'rotation 6s linear infinite' : undefined,
+        animation: 'rotation 20s linear infinite',
+        animationPlayState: playing ? 'running' : 'paused',
       }}
     >
       <img
@@ -45,29 +80,42 @@ const Pic: React.FC<any> = () => {
 };
 
 const Disc: React.FC<any> = () => {
-  const playing = useSelector(getPlaying);
   const playSongInfo = useSelector(getPlaySongInfo);
-  // const songs = useSelector(getSongList);
-  console.log(playSongInfo);
-
+  const playing = useSelector(getPlaying);
   const dispatch = useDispatch();
-
-  const rotation = useRef(0);
-
+  console.log(playSongInfo);
   return (
     <Grid
       style={{
         height: '100%',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      <Typography
+        style={
+          {
+            // fontSize: '50px',
+            // padding: '0px 20px',
+            // textOverflow: 'ellipsis',
+            // overflow: 'hidden',
+            // color: '#b9b9b9',
+          }
+        }
+      >
+        {`songListInfo?.name`}
+      </Typography>
+      {/* <Pic /> */}
+      <Lyric />
       <img
         style={{
           position: 'absolute',
-          width: 128,
-          top: '-18px',
-          left: '40%',
-          transform: 'scaleX(-1) rotate(-12deg)',
+          width: 165,
+          top: '-24px',
+          left: '80%',
+          transform: `scaleX(-1) rotate(-${playing ? 20 : 34}deg)`,
+          transformOrigin: '20px 0px 0',
+          transition: 'all 1s',
         }}
         src={needle}
       ></img>
