@@ -6,6 +6,7 @@ import {
   getVolume,
   playCurrentTime,
   playDurationTime,
+  setPlaying,
   updateVolume,
 } from '@store/features/playSongSlice';
 import { useEffect, useRef } from 'react';
@@ -174,6 +175,9 @@ export default function PlayBar() {
   const playPrevSongClick = () => {
     dispatch(prevSong(null));
   };
+  useEffect(() => {
+    dispatch(setPlaying(!paused));
+  }, [paused]);
 
   const playClick = (paused: boolean) => {
     if (paused) {

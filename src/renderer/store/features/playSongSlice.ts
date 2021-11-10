@@ -45,6 +45,9 @@ const layoutDataSlice = createSlice({
     playDurationTime(state, action) {
       state.playDurationTime = action.payload;
     },
+    setPlaying(state, action) {
+      state.playing = action.payload;
+    },
     updateVolume(state, action) {
       state.volume = action.payload;
     },
@@ -72,7 +75,7 @@ const layoutDataSlice = createSlice({
     });
   },
 });
-export const { playDurationTime, playCurrentTime, updateVolume } =
+export const { playDurationTime,setPlaying, playCurrentTime, updateVolume } =
   layoutDataSlice.actions;
 
 export default layoutDataSlice.reducer;
@@ -81,9 +84,17 @@ export const getPlaySong = createSelector(
   (state: any) => state.playSong,
   (playSong: any) => playSong
 );
+export const getPlaySongInfo = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.songInfo
+);
 export const getPlayDurationTime = createSelector(
   (state: any) => state.playSong,
   (playSong: any) => playSong.playDurationTime
+);
+export const getPlaying = createSelector(
+  (state: any) => state.playSong,
+  (playSong: any) => playSong.playing
 );
 export const getPlayCurrentTime = createSelector(
   (state: any) => state.playSong,
