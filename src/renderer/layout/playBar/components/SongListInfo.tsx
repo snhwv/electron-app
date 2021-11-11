@@ -26,7 +26,7 @@ const itemIconStyle = {
 };
 const SongListInfo: React.FC<any> = () => {
   const songListInfo = useSelector(getSongListInfo);
-  const songs = useSelector(getSongList);
+  // const songs = useSelector(getSongList);
   console.log(songListInfo);
 
   const dispatch = useDispatch();
@@ -36,13 +36,12 @@ const SongListInfo: React.FC<any> = () => {
 
   return (
     <Grid
-      // container
       style={{
         height: '100%',
         position: 'relative',
       }}
     >
-      <Stack
+      {/* <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
@@ -60,9 +59,6 @@ const SongListInfo: React.FC<any> = () => {
             marginRight: '10px',
           }}
         ></BlurImg>
-        {/* <ListItemAvatar>
-          <Avatar alt="Remy Sharp" />
-        </ListItemAvatar> */}
         <ListItemText
           sx={{
             '& > .MuiTypography-root': {
@@ -94,8 +90,6 @@ const SongListInfo: React.FC<any> = () => {
                 onClick: () => onSongItemClick(item),
                 secondaryAction: (
                   <Box>
-                    {/* <Icon type="icon-download" style={itemIconStyle}></Icon>
-                    <Icon type="icon-heart" style={itemIconStyle}></Icon> */}
                     <Typography
                       style={{
                         color: '#b9b9b9',
@@ -136,7 +130,7 @@ const SongListInfo: React.FC<any> = () => {
             </SongItem>
           );
         })}
-      </List>
+      </List> */}
     </Grid>
   );
 };

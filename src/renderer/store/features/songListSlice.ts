@@ -142,10 +142,14 @@ export const { updatePlaySongList } = songListSlice.actions;
 export default songListSlice.reducer;
 
 export const getSongList = createSelector(
-  (state: any) => state.songList,
-  (songList: any) => songList.playSongList
+  (state: any) => {
+    return state.songList.playSongList;
+  },
+  (playSongList: any) => {
+    return playSongList;
+  }
 );
 export const getSongListInfo = createSelector(
-  (state: any) => state.songList,
-  (songList: any) => songList.playListInfo
+  (state: any) => state.songList.playListInfo,
+  (playListInfo: any) => playListInfo
 );

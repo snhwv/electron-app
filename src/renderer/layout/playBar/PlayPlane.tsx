@@ -1,11 +1,12 @@
 import { Grid } from '@material-ui/core';
+import React from 'react';
 import AlbumInfo from './components/AlbumInfo';
 import Disc from './components/Disc';
 import SongListInfo from './components/SongListInfo';
 
 const discWitdh = 38;
 
-const PlayPlane: React.FC<any> = () => {
+const PlayPlane: React.FC<any> = React.memo(() => {
   return (
     <Grid
       container
@@ -44,5 +45,5 @@ const PlayPlane: React.FC<any> = () => {
       </Grid>
     </Grid>
   );
-};
+});
 export default PlayPlane;

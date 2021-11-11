@@ -11,13 +11,77 @@ import {
   getPlaying,
   getLyric,
   getPlaySongInfo,
+  getPlayCurrentTime,
 } from '@store/features/playSongSlice';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
+import style from '@style/custom/disc.module.scss';
+
+const binarySearch = (
+  arr: { time: number }[],
+  val: number,
+  low: number,
+  high: number
+): number => {
+  if (low > high) return high;
+
+  let mid = Math.floor((low + high) / 2);
+
+  if (arr[mid].time === val) {
+    return mid;
+  } else if (arr[mid].time > val) {
+    return binarySearch(arr, val, low, mid - 1);
+  } else {
+    return binarySearch(arr, val, mid + 1, high);
+  }
+};
 
 const Lyric: React.FC<any> = () => {
   const lyric = useSelector(getLyric);
-  console.log(lyric);
+  const currentTime = useSelector(getPlayCurrentTime);
+  const containerRef = useRef<HTMLDivElement>(null);
+  let currentTimeIndex = 0;
+  if (lyric?.lyric?.length) {
+    currentTimeIndex = binarySearch(
+      lyric.lyric,
+      currentTime * 1000,
+      0,
+      lyric.lyric.length - 1 || 0
+    );
+  }
+
+  useEffect(() => {
+    const currentEl = containerRef.current?.children?.[currentTimeIndex];
+    if (currentEl) {
+      currentEl.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      });
+    }
+  }, [currentTimeIndex]);
+  const onScroll = (e: any) => {
+    console.log(e);
+  };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const { children } = containerRef.current;
+      // lyricRef.current = Array.from(children)?.reduce(
+      //   (prev: any, current: any, index: number) => {
+      //     const time = lyric?.lyric?.[index]?.time;
+      //     if (time) {
+      //       prev[time] = {
+      //         time,
+      //         offset: current.offsetTop,
+      //       };
+      //     }
+      //     return prev;
+      //   },
+      //   {}
+      // );
+    }
+  }, []);
   return (
     <div
       style={{
@@ -30,15 +94,20 @@ const Lyric: React.FC<any> = () => {
         padding: '250px 0px',
         boxSizing: 'border-box',
       }}
+      onScroll={onScroll}
     >
-      {lyric?.lyric?.map((item: any, index: number) => {
-        return (
-          <div>
-            <div>{item.lyc}</div>
-            <div>{lyric?.tlyric?.[index]?.lyc}</div>
-          </div>
-        );
-      })}
+      <div ref={containerRef} style={{}}>
+        {lyric?.lyric?.map((item: any, index: number) => {
+          return (
+            <div
+              className={index === currentTimeIndex ? style['activeLyric'] : ''}
+            >
+              <div>{item.lyc}</div>
+              <div>{item.tlyc}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -82,8 +151,6 @@ const Pic: React.FC<any> = () => {
 const Disc: React.FC<any> = () => {
   const playSongInfo = useSelector(getPlaySongInfo);
   const playing = useSelector(getPlaying);
-  const dispatch = useDispatch();
-  console.log(playSongInfo);
   return (
     <Grid
       style={{
@@ -103,7 +170,7 @@ const Disc: React.FC<any> = () => {
           }
         }
       >
-        {`songListInfo?.name`}
+        {playSongInfo?.name}
       </Typography>
       {/* <Pic /> */}
       <Lyric />

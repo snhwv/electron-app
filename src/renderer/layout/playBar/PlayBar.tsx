@@ -1,8 +1,10 @@
 import Icon from '@components/Icon';
 import {
+  getAudioUrl,
   getPlayCurrentTime,
   getPlayDurationTime,
   getPlaySong,
+  getPlaySongInfo,
   getVolume,
   playCurrentTime,
   playDurationTime,
@@ -151,15 +153,16 @@ const MusicPlayerSlider: React.FC<any> = ({ audioRef }) => {
   );
 };
 export default function PlayBar() {
-  const palySong = useSelector(getPlaySong);
+  const audioUrl = useSelector(getAudioUrl);
+  const songInfo = useSelector(getPlaySongInfo);
   const dispatch = useDispatch();
 
   const audioRef = useRef<any>();
 
   useEffect(() => {
-    // audioRef.current.load();
-    // playClick(false);
-  }, [palySong?.audioUrl]);
+    audioRef.current.load();
+    playClick(false);
+  }, [audioUrl]);
 
   const theme = useTheme();
   const [paused, setPaused] = React.useState(false);
@@ -229,22 +232,20 @@ export default function PlayBar() {
             <CoverImage onClick={onTrigger}>
               <img
                 alt="can't win - Chilling Sunday"
-                src={palySong?.songInfo?.album?.picUrl}
+                src={songInfo?.album?.picUrl}
               />
             </CoverImage>
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
-              <Typography noWrap>{palySong?.songInfo?.name}</Typography>
+              <Typography noWrap>{songInfo?.name}</Typography>
               <Typography
                 variant="caption"
                 color="text.secondary"
                 fontWeight={500}
               >
                 <b>
-                  {palySong?.songInfo?.artist?.map(
-                    (item: any, index: number) => {
-                      return <span key={index}> {item.name}</span>;
-                    }
-                  )}
+                  {songInfo?.artist?.map((item: any, index: number) => {
+                    return <span key={index}> {item.name}</span>;
+                  })}
                 </b>
               </Typography>
             </Box>
@@ -314,9 +315,9 @@ export default function PlayBar() {
           ref={audioRef}
           controls={false}
         >
-          <source src={palySong?.audioUrl} type="audio/mp3" />
-          <source src={palySong?.audioUrl} type="audio/ogg" />
-          <embed height="100" width="100" src={palySong?.audioUrl} />
+          <source src={audioUrl} type="audio/mp3" />
+          <source src={audioUrl} type="audio/ogg" />
+          <embed height="100" width="100" src={audioUrl} />
         </audio>
       </Box>
       <PlayPlane></PlayPlane>

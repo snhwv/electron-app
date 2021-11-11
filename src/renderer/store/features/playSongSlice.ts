@@ -20,11 +20,15 @@ const splitLyc = (lyric = '') => {
     .filter((v: any) => v['lyc'])
     .map((item: any) => {
       const time = item.time;
+      console.log(time);
       const m = time.match(/^(\d+):/);
-      const s = time.match(/:(\d+)./);
+      const s = time.match(/:(\d+)\./);
+      const ms = time.match(/\.(\d+)$/);
       return {
         ...item,
-        time: Number(m[1]) * 60 + Number(s[1]),
+        time:
+          Number(`${Number(m[1]) * 60 + Number(s[1])}.${Number(ms[1])}`) * 1000,
+        originTime: time,
       };
     }); // 去除无歌词内容
 };
@@ -93,9 +97,18 @@ const layoutDataSlice = createSlice({
       const { songDetail, lyric } = action.payload || {};
       const { name, ar: artist, al: album, dt } = songDetail || {};
       if (name) {
+        const originLyric = splitLyc(lyric?.lrc?.lyric);
+        const tlyric = splitLyc(lyric?.tlyric?.lyric);
+
         state.lyric = {
-          lyric: splitLyc(lyric?.lrc?.lyric),
-          tlyric: splitLyc(lyric?.tlyric?.lyric),
+          lyric: originLyric.map((item) => {
+            const t = tlyric.find((titem) => titem.time === item.time);
+            return {
+              ...item,
+              tlyc: t?.lyc,
+            };
+          }),
+          // tlyric: splitLyc(lyric?.tlyric?.lyric),
         };
         state.songInfo = {
           name,
@@ -118,28 +131,37 @@ export const getPlaySong = createSelector(
   (playSong: any) => playSong
 );
 export const getPlaySongInfo = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.songInfo
+  (state: any) => {
+    return state.playSong.songInfo;
+  },
+  (playSong: any) => {
+    console.log('Output selector running');
+    return playSong;
+  }
 );
 export const getLyric = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.lyric
+  (state: any) => state.playSong.lyric,
+  (lyric: any) => lyric
 );
 export const getPlayDurationTime = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.playDurationTime
+  (state: any) => state.playSong.playDurationTime,
+  (playDurationTime: any) => playDurationTime
+);
+export const getAudioUrl = createSelector(
+  (state: any) => state.playSong.audioUrl,
+  (audioUrl: any) => audioUrl
 );
 export const getPlaying = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.playing
+  (state: any) => state.playSong.playing,
+  (playing: any) => playing
 );
 export const getPlayCurrentTime = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.playCurrentTime
+  (state: any) => state.playSong.playCurrentTime,
+  (playCurrentTime: any) => playCurrentTime
 );
 export const getVolume = createSelector(
-  (state: any) => state.playSong,
-  (playSong: any) => playSong.volume
+  (state: any) => state.playSong.volume,
+  (volume: any) => volume
 );
 // export const getLayoutActiveData = createSelector(
 //   // First, pass one or more "input selector" functions:
