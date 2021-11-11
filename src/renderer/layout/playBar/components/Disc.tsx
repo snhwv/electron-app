@@ -1,6 +1,7 @@
 import { Grid } from '@material-ui/core';
 import disc from '@assets/disc.png';
 import needle from '@assets/needle.png';
+import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getSongList,
@@ -36,52 +37,86 @@ const binarySearch = (
   }
 };
 
+let isUserScroll = false;
+let isAutoScroll = true;
+let userScrollTimer: any;
 const Lyric: React.FC<any> = () => {
   const lyric = useSelector(getLyric);
   const currentTime = useSelector(getPlayCurrentTime);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollElRef = useRef<HTMLDivElement>(null);
   let currentTimeIndex = 0;
   if (lyric?.lyric?.length) {
     currentTimeIndex = binarySearch(
       lyric.lyric,
-      currentTime * 1000,
+      currentTime * 1000 + 1000,
       0,
       lyric.lyric.length - 1 || 0
     );
   }
 
-  useEffect(() => {
+  const scrollToCurrentLyric = () => {
     const currentEl = containerRef.current?.children?.[currentTimeIndex];
-    if (currentEl) {
+    if (currentEl && !isUserScroll) {
+      isAutoScroll = true;
       currentEl.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
         inline: 'center',
       });
     }
-  }, [currentTimeIndex]);
-  const onScroll = (e: any) => {
-    console.log(e);
+    // if (currentEl && !isUserScroll) {
+    //   currentEl.scrollIntoView({
+    //     behavior: 'smooth',
+    //     block: 'center',
+    //     inline: 'center',
+    //   });
+    //   isUserScroll = false;
+    // }
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      const { children } = containerRef.current;
-      // lyricRef.current = Array.from(children)?.reduce(
-      //   (prev: any, current: any, index: number) => {
-      //     const time = lyric?.lyric?.[index]?.time;
-      //     if (time) {
-      //       prev[time] = {
-      //         time,
-      //         offset: current.offsetTop,
-      //       };
-      //     }
-      //     return prev;
-      //   },
-      //   {}
-      // );
+    scrollToCurrentLyric();
+  }, [currentTimeIndex]);
+
+  const onWheel = (e: any) => {
+    if (isAutoScroll) {
+      isUserScroll = false;
+      isAutoScroll = false;
+    } else {
+      isUserScroll = true;
+      isAutoScroll = false;
+
+      userScrollTimer && clearTimeout(userScrollTimer);
+      userScrollTimer = setTimeout(() => {
+        isUserScroll = false;
+        scrollToCurrentLyric();
+      }, 2000);
+
+      if (containerRef.current && scrollElRef.current) {
+        const { clientHeight, scrollTop } = scrollElRef.current;
+        const height = clientHeight / 2 + scrollTop;
+        const children = Array.from(containerRef.current.children);
+        for (let i = 0; i < children.length; i++) {
+          const child: any = children[i];
+          if (
+            child.offsetTop <= height &&
+            child.offsetTop + child.clientHeight > height
+          ) {
+            // subCurrentTimeIndex = i;
+            const prevChild =
+              containerRef.current.querySelector('.subActiveLyric');
+            if (prevChild) {
+              prevChild.classList.remove('subActiveLyric');
+            }
+            child.classList.add('subActiveLyric');
+            // child.style.color = 'red';
+            break;
+          }
+        }
+      }
     }
-  }, []);
+  };
   return (
     <div
       style={{
@@ -94,13 +129,16 @@ const Lyric: React.FC<any> = () => {
         padding: '250px 0px',
         boxSizing: 'border-box',
       }}
-      onScroll={onScroll}
+      onScroll={onWheel}
+      ref={scrollElRef}
     >
       <div ref={containerRef} style={{}}>
         {lyric?.lyric?.map((item: any, index: number) => {
           return (
             <div
-              className={index === currentTimeIndex ? style['activeLyric'] : ''}
+              className={classnames({
+                [style['activeLyric']]: index === currentTimeIndex,
+              })}
             >
               <div>{item.lyc}</div>
               <div>{item.tlyc}</div>
