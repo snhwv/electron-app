@@ -216,7 +216,8 @@ export default function PlayBar() {
     <Box
       sx={{
         width: '100%',
-        height: '100%',
+        height: open ? 'calc(100vh - 20px)' : '70px',
+        transition: 'all 0.5s'
       }}
     >
       <Box
@@ -225,6 +226,7 @@ export default function PlayBar() {
           height: 70,
           position: 'absolute',
           bottom: 0,
+          display: 'flex'
         }}
       >
         <Widget>
@@ -307,7 +309,6 @@ export default function PlayBar() {
               <Icon type="icon-menu" />
             </Stack>
           </Box>
-        </Widget>
         <audio
           onDurationChange={onDurationChange}
           onTimeUpdate={onTimeUpdate}
@@ -319,8 +320,9 @@ export default function PlayBar() {
           <source src={audioUrl} type="audio/ogg" />
           <embed height="100" width="100" src={audioUrl} />
         </audio>
+        </Widget>
       </Box>
-      <PlayPlane></PlayPlane>
+      {open && <PlayPlane></PlayPlane>}
     </Box>
   );
 }

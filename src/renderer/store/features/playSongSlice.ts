@@ -95,7 +95,7 @@ const layoutDataSlice = createSlice({
     });
     builder.addCase(fetchSongDetailById.fulfilled, (state, action) => {
       const { songDetail, lyric } = action.payload || {};
-      const { name, ar: artist, al: album, dt } = songDetail || {};
+      const { name, ar: artist, al: album, dt, id } = songDetail || {};
       if (name) {
         const originLyric = splitLyc(lyric?.lrc?.lyric);
         const tlyric = splitLyc(lyric?.tlyric?.lyric);
@@ -112,6 +112,7 @@ const layoutDataSlice = createSlice({
         };
         state.songInfo = {
           name,
+          id,
           artist,
           album,
         };

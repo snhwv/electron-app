@@ -81,7 +81,7 @@ const Layout: React.FC<any> = ({ children }) => {
         style={{
           width: '100%',
           minWidth: '100%',
-          height: '100%',
+          // height: '100%',
           display: 'flex',
           alignItems: 'center',
           boxShadow: '0px 0px 40px 0px #cfcfcf',

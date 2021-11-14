@@ -40,105 +40,91 @@ const binarySearch = (
 let isUserScroll = false;
 let isAutoScroll = true;
 let userScrollTimer: any;
-const Lyric: React.FC<any> = () => {
+const Lyric: React.FC<any> = ({ onLyricClick }) => {
   const lyric = useSelector(getLyric);
   const currentTime = useSelector(getPlayCurrentTime);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollElRef = useRef<HTMLDivElement>(null);
   let currentTimeIndex = 0;
   if (lyric?.lyric?.length) {
-    currentTimeIndex = binarySearch(
+    let showIndex = binarySearch(
       lyric.lyric,
-      currentTime * 1000 + 1000,
+      currentTime * 1000 + 500,
       0,
       lyric.lyric.length - 1 || 0
     );
+    currentTimeIndex = showIndex < 0 ? 0 : showIndex;
   }
 
   const scrollToCurrentLyric = () => {
     const currentEl = containerRef.current?.children?.[currentTimeIndex];
-    if (currentEl && !isUserScroll) {
-      isAutoScroll = true;
+    if (currentEl) {
       currentEl.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
         inline: 'center',
       });
     }
-    // if (currentEl && !isUserScroll) {
-    //   currentEl.scrollIntoView({
-    //     behavior: 'smooth',
-    //     block: 'center',
-    //     inline: 'center',
-    //   });
-    //   isUserScroll = false;
-    // }
   };
 
   useEffect(() => {
     scrollToCurrentLyric();
   }, [currentTimeIndex]);
+  useEffect(() => {
+    scrollToCurrentLyric();
+  }, []);
 
   const onWheel = (e: any) => {
-    if (isAutoScroll) {
-      isUserScroll = false;
-      isAutoScroll = false;
-    } else {
-      isUserScroll = true;
-      isAutoScroll = false;
-
-      userScrollTimer && clearTimeout(userScrollTimer);
-      userScrollTimer = setTimeout(() => {
-        isUserScroll = false;
-        scrollToCurrentLyric();
-      }, 2000);
-
-      if (containerRef.current && scrollElRef.current) {
-        const { clientHeight, scrollTop } = scrollElRef.current;
-        const height = clientHeight / 2 + scrollTop;
-        const children = Array.from(containerRef.current.children);
-        for (let i = 0; i < children.length; i++) {
-          const child: any = children[i];
-          if (
-            child.offsetTop <= height &&
-            child.offsetTop + child.clientHeight > height
-          ) {
-            // subCurrentTimeIndex = i;
-            const prevChild =
-              containerRef.current.querySelector('.subActiveLyric');
-            if (prevChild) {
-              prevChild.classList.remove('subActiveLyric');
-            }
-            child.classList.add('subActiveLyric');
-            // child.style.color = 'red';
-            break;
-          }
-        }
-      }
-    }
+    // userScrollTimer && clearTimeout(userScrollTimer);
+    // userScrollTimer = setTimeout(() => {
+    //   scrollToCurrentLyric();
+    // }, 2000);
+    // if (containerRef.current && scrollElRef.current) {
+    //   const { clientHeight, scrollTop } = scrollElRef.current;
+    //   const height = clientHeight / 2 + scrollTop;
+    //   const children = Array.from(containerRef.current.children);
+    //   for (let i = 0; i < children.length; i++) {
+    //     const child: any = children[i];
+    //     if (
+    //       child.offsetTop <= height &&
+    //       child.offsetTop + child.clientHeight > height
+    //     ) {
+    //       const prevChild =
+    //         containerRef.current.querySelector('.subActiveLyric');
+    //       if (prevChild) {
+    //         prevChild.classList.remove('subActiveLyric');
+    //       }
+    //       child.classList.add('subActiveLyric');
+    //       break;
+    //     }
+    //   }
+    // }
   };
   return (
     <div
       style={{
-        position: 'absolute',
-        background: '#bdadad',
-        width: '100%',
+        background: 'rgb(0 0 0 / 7%)',
+        width: '90%',
         overflow: 'auto',
-        height: '500px',
+        height: '400px',
         textAlign: 'center',
-        padding: '250px 0px',
+        padding: '200px 0px',
         boxSizing: 'border-box',
+        margin: 'auto',
       }}
-      onScroll={onWheel}
+      onClick={onLyricClick}
       ref={scrollElRef}
     >
-      <div ref={containerRef} style={{}}>
+      <div ref={containerRef} style={{ color: '#6c6c6c', fontSize: '16px' }}>
         {lyric?.lyric?.map((item: any, index: number) => {
           return (
             <div
               className={classnames({
                 [style['activeLyric']]: index === currentTimeIndex,
               })}
+              style={{
+                padding: '16px 0px',
+              }}
             >
               <div>{item.lyc}</div>
               <div>{item.tlyc}</div>
@@ -150,7 +136,7 @@ const Lyric: React.FC<any> = () => {
   );
 };
 
-const Pic: React.FC<any> = () => {
+const Pic: React.FC<any> = ({ onPicClick }) => {
   const playing = useSelector(getPlaying);
   const playSongInfo = useSelector(getPlaySongInfo);
 
@@ -164,6 +150,7 @@ const Pic: React.FC<any> = () => {
         animation: 'rotation 20s linear infinite',
         animationPlayState: playing ? 'running' : 'paused',
       }}
+      onClick={onPicClick}
     >
       <img
         style={{
@@ -189,6 +176,12 @@ const Pic: React.FC<any> = () => {
 const Disc: React.FC<any> = () => {
   const playSongInfo = useSelector(getPlaySongInfo);
   const playing = useSelector(getPlaying);
+
+  const [showPic, setShowPic] = useState(true);
+
+  const triggerClick = () => {
+    setShowPic(!showPic);
+  };
   return (
     <Grid
       style={{
@@ -198,32 +191,36 @@ const Disc: React.FC<any> = () => {
       }}
     >
       <Typography
-        style={
-          {
-            // fontSize: '50px',
-            // padding: '0px 20px',
-            // textOverflow: 'ellipsis',
-            // overflow: 'hidden',
-            // color: '#b9b9b9',
-          }
-        }
+        style={{
+          fontSize: '16px',
+          padding: '13px',
+          color: '#5c5c5c',
+          fontWeight: 'bold',
+          marginTop: '20px',
+          paddingLeft: '20px',
+        }}
       >
         {playSongInfo?.name}
       </Typography>
-      {/* <Pic /> */}
-      <Lyric />
-      <img
-        style={{
-          position: 'absolute',
-          width: 165,
-          top: '-24px',
-          left: '80%',
-          transform: `scaleX(-1) rotate(-${playing ? 20 : 34}deg)`,
-          transformOrigin: '20px 0px 0',
-          transition: 'all 1s',
-        }}
-        src={needle}
-      ></img>
+      {showPic ? (
+        <Pic onPicClick={triggerClick} />
+      ) : (
+        <Lyric onLyricClick={triggerClick} />
+      )}
+      {showPic && (
+        <img
+          style={{
+            position: 'absolute',
+            width: 165,
+            top: '-24px',
+            left: '80%',
+            transform: `scaleX(-1) rotate(-${playing ? 20 : 34}deg)`,
+            transformOrigin: '20px 0px 0',
+            transition: 'all 1s',
+          }}
+          src={needle}
+        ></img>
+      )}
     </Grid>
   );
 };

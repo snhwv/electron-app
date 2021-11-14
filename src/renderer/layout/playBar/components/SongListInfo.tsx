@@ -26,7 +26,7 @@ const itemIconStyle = {
 };
 const SongListInfo: React.FC<any> = () => {
   const songListInfo = useSelector(getSongListInfo);
-  // const songs = useSelector(getSongList);
+  const songs = useSelector(getSongList);
   console.log(songListInfo);
 
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const SongListInfo: React.FC<any> = () => {
         position: 'relative',
       }}
     >
-      {/* <Stack
+      <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
@@ -130,7 +130,7 @@ const SongListInfo: React.FC<any> = () => {
             </SongItem>
           );
         })}
-      </List> */}
+      </List>
     </Grid>
   );
 };
