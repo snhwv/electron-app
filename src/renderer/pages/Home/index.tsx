@@ -61,6 +61,7 @@ const Page = () => {
           </Grid>
           <Grid
             item
+            xs={6}
             sx={{
               paddingLeft: '25px',
             }}

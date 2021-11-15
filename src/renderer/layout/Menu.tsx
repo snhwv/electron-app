@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import { Box } from '@mui/system';
 import style from './menu.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfo } from '@store/features/userInfoSlice';
+import { getUserId } from '@store/features/userInfoSlice';
 import {
   getActiveRoute,
   updateActiveRoute,
@@ -187,17 +187,18 @@ const MenuHeader = () => {
 };
 
 const Menu = () => {
-  const userInfo = useSelector(getUserInfo);
+  const uid = useSelector(getUserId);
+  console.log(uid);
   const [playList, setplayList] = useState<any[]>([]);
   useEffect(() => {
-    api.userPlayList({ uid: userInfo?.userId }).then((re: any) => {
+    api.userPlayList({ uid: uid }).then((re: any) => {
       const playlist = re?.playlist || [];
       const ownList = {
         title: '创建的歌单',
         icon: 'icon-watermark',
         path: 'create',
         children: playlist
-          .filter((item: any) => item.userId === userInfo?.userId)
+          .filter((item: any) => item.userId === uid)
           .map((item: any) => {
             return {
               title: item.name,
@@ -211,7 +212,7 @@ const Menu = () => {
         icon: 'icon-watermark',
         path: 'sub',
         children: playlist
-          .filter((item: any) => item.userId !== userInfo?.userId)
+          .filter((item: any) => item.userId !== uid)
           .map((item: any) => {
             return {
               title: item.name,

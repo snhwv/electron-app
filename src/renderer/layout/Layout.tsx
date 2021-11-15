@@ -6,6 +6,10 @@ import withAuth from '../router/witchAuth';
 import dark from './playbar.webp';
 import PlayBar from './playBar/PlayBar';
 import Header from './Header';
+import generateAPI from '@utils/axios/generateAPI';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateUserInfo } from '@store/features/userInfoSlice';
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -17,10 +21,20 @@ const useStyles = makeStyles({
     padding: '0 30px',
   },
 });
+
+const apis = {
+  login: 'login/cellphone?phone=17772450369&password=yang20050116..',
+};
+const api = generateAPI(apis);
 const Layout: React.FC<any> = ({ children }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  useEffect(() => {
+    api.login().then((re) => {
+      dispatch(updateUserInfo(re));
+    });
+  }, []);
   return (
-    // spacing={2}
     <Grid
       container
       direction={'column'}
@@ -30,16 +44,6 @@ const Layout: React.FC<any> = ({ children }) => {
         position: 'relative',
       }}
     >
-      {/* <img
-        src={dark}
-        style={{
-          position: 'fixed',
-          width: 'calc(100vw - 20px)',
-          zIndex: 100,
-          opacity: 0.8,
-          pointerEvents: 'none',
-        }}
-      /> */}
       <Grid
         container
         item
@@ -48,6 +52,7 @@ const Layout: React.FC<any> = ({ children }) => {
           width: '100%',
           minWidth: '100%',
           overflow: 'hidden',
+          paddingBottom: '68px',
         }}
       >
         <Grid

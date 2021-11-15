@@ -14,7 +14,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { getUserInfo } from '@store/features/userInfoSlice';
+import { getUserId } from '@store/features/userInfoSlice';
 import Icon from '@components/Icon';
 import { useHistory } from 'react-router-dom';
 
@@ -22,13 +22,13 @@ interface PlayListProps {}
 
 const PlayList: React.FC<PlayListProps> = () => {
   const dispatch = useDispatch();
-  const userInfo = useSelector(getUserInfo);
+  const uid = useSelector(getUserId);
   const [playList, setplayList] = useState<any[]>([]);
   const [selectedAlbum, setselectedAlbum] = useState<any>(null);
 
   const history = useHistory();
   useEffect(() => {
-    api.playlist({ uid: userInfo?.userId }).then((re) => {
+    api.playlist({ uid }).then((re) => {
       setplayList(re?.playlist || []);
     });
   }, []);

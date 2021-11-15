@@ -20,7 +20,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { getUserInfo } from '@store/features/userInfoSlice';
 import Icon from '@components/Icon';
 import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@mui/system';

@@ -43,7 +43,7 @@ const Recommendmv: React.FC<{ mv: any[] }> = ({ mv }) => {
         spaceBetween={3}
         navigation={true}
         className={style['recommendmvSwipper']}
-        style={{ height: '200px', width: '400px', paddingTop: '50px' }}
+        style={{ height: '200px', width: '350px', paddingTop: '50px' }}
       >
         {mv?.map((item, index) => {
           return (
@@ -62,7 +62,6 @@ const Recommendmv: React.FC<{ mv: any[] }> = ({ mv }) => {
                 blurStyle={{
                   display: 'none',
                 }}
-                className={'recommendItem'}
               >
                 <Typography
                   sx={{

@@ -7,9 +7,23 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetailInfo } from '@store/features/userInfoSlice';
 import { deepPurple } from '@mui/material/colors';
+import { useEffect, useState } from 'react';
+import api from './api';
 
 const Header = () => {
+  const userDetailInfo = useSelector(getUserDetailInfo);
+
+  const [msg, setMsg] = useState<any>(null);
+
+  useEffect(() => {
+    api.msgPrivate({ limit: 100 }).then((re) => {
+      setMsg(re);
+    });
+  }, []);
+
   return (
     <Grid
       container
@@ -72,9 +86,9 @@ const Header = () => {
         }}
       >
         <Badge
-          badgeContent={4}
+          badgeContent={msg?.newMsgCount}
           color="primary"
-          max={999}
+          max={99}
           style={{
             marginRight: 10,
           }}
@@ -86,9 +100,11 @@ const Header = () => {
             }}
           />
         </Badge>
-        <Avatar sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}>
-          OP
-        </Avatar>
+        {/* <Avatar alt="Remy Sharp"  /> */}
+        <Avatar
+          sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+          src={userDetailInfo?.profile?.avatarUrl}
+        ></Avatar>
       </Grid>
     </Grid>
   );

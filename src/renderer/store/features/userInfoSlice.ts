@@ -6,6 +6,7 @@ import {
 import api from '@globalApi';
 const initialState: any = {
   userId: 477944154,
+  userDetailInfo: {},
 };
 
 const layoutDataSlice = createSlice({
@@ -13,8 +14,9 @@ const layoutDataSlice = createSlice({
   initialState,
   reducers: {
     updateUserInfo(state, action) {
-      const userId = action.payload;
-      state.userId = userId;
+      const userInfo = action.payload;
+      state.userId = userInfo?.account?.id;
+      state.userDetailInfo = userInfo;
     },
   },
 });
@@ -22,11 +24,19 @@ export const { updateUserInfo } = layoutDataSlice.actions;
 
 export default layoutDataSlice.reducer;
 
-export const getUserInfo = createSelector(
+export const getUserDetailInfo = createSelector(
   (state: any) => {
-    return state.userInfo;
+    return state.userInfo.userDetailInfo;
   },
   (userInfo: any) => {
     return userInfo;
+  }
+);
+export const getUserId = createSelector(
+  (state: any) => {
+    return state.userInfo.userId;
+  },
+  (userId: any) => {
+    return userId;
   }
 );

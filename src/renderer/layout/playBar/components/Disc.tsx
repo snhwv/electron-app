@@ -49,7 +49,7 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
   if (lyric?.lyric?.length) {
     let showIndex = binarySearch(
       lyric.lyric,
-      currentTime * 1000,
+      currentTime * 1000 + 500,
       0,
       lyric.lyric.length - 1 || 0
     );
@@ -133,7 +133,7 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
       // onScroll={onWheel}
       ref={scrollElRef}
     >
-      <div ref={containerRef} style={{ color: '#6c6c6c', fontSize: '16px' }}>
+      <div ref={containerRef} style={{ color: '#6c6c6c' }}>
         {lyric?.lyric?.map((item: any, index: number) => {
           return (
             <div

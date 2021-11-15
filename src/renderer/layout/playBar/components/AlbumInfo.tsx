@@ -110,6 +110,8 @@ const AlbumInfo: React.FC<any> = () => {
                   top: 0,
                   left: '20%',
                   zIndex: -1,
+                  background:
+                    'radial-gradient(black,black 50%, transparent 50%,transparent)',
                 }}
                 src={disc}
               ></img>
@@ -117,17 +119,16 @@ const AlbumInfo: React.FC<any> = () => {
           );
         })}
       </Swiper>
-      <Box>
+      <Box
+        sx={{
+          paddingRight: '10px',
+        }}
+      >
         <Typography
-          sx={
-            {
-              // background: '#e9e9e9',
-              // padding: '5px',
-              // borderRadius: '4px',
-              // fontSize: '12px',
-              // color: '#838383',
-            }
-          }
+          sx={{
+            fontSize: '0.8rem',
+            color: '#979797',
+          }}
         >
           {activePlayList?.creator?.nickname}
         </Typography>
@@ -138,7 +139,17 @@ const AlbumInfo: React.FC<any> = () => {
             justifyContent: 'space-between',
           }}
         >
-          {activePlayList?.name}
+          <span
+            style={{
+              fontWeight: 'bold',
+              fontSize: '1.1rem',
+              whiteSpace: 'nowrap' /* 规定文本是否折行 */,
+              overflow: 'hidden' /* 规定超出内容宽度的元素隐藏 */,
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {activePlayList?.name}
+          </span>
           <Icon
             type="icon-heart"
             style={{
@@ -147,49 +158,49 @@ const AlbumInfo: React.FC<any> = () => {
           ></Icon>
         </Typography>
         <Typography
-          sx={
-            {
-              // background: '#e9e9e9',
-              // padding: '5px',
-              // borderRadius: '4px',
-              // fontSize: '12px',
-              // color: '#838383',
-            }
-          }
+          sx={{
+            fontSize: '0.8rem',
+          }}
         >
           {activePlayList?.tags?.map((tag: string) => {
             return (
               <span
                 style={{
                   color: 'rgb(0, 118, 187)',
+                  marginRight: '10px',
                 }}
               >
                 {tag}
               </span>
             );
           })}
-          <span>{dayjs(activePlayList?.createTime).format('YYYY.MM.DD')}</span>
+          <span
+            style={{
+              float: 'right',
+            }}
+          >
+            {dayjs(activePlayList?.createTime).format('YYYY.MM.DD')}
+          </span>
+        </Typography>
+
+        <Typography
+          sx={{
+            maxHeight: '174px',
+            paddingTop: '10px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            color: '#747474',
+            fontSize: '0.9rem',
+          }}
+          style={{
+            WebkitLineClamp: 7,
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {activePlayList?.description}
         </Typography>
       </Box>
-
-      <Typography
-        sx={{
-          maxHeight: '174px',
-          paddingRight: '10px',
-          paddingTop: '10px',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          color: '#747474',
-          fontSize: '0.9rem',
-        }}
-        style={{
-          WebkitLineClamp: 7,
-          display: '-webkit-box',
-          WebkitBoxOrient: 'vertical',
-        }}
-      >
-        {activePlayList?.description}
-      </Typography>
     </Box>
   );
 };
