@@ -27,7 +27,6 @@ const itemIconStyle = {
 const SongListInfo: React.FC<any> = () => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
-  console.log(songListInfo);
 
   const dispatch = useDispatch();
   const onSongItemClick = (item: any) => {
@@ -39,11 +38,15 @@ const SongListInfo: React.FC<any> = () => {
       style={{
         height: '100%',
         position: 'relative',
+        padding: '100px 24px 0px 16px',
       }}
     >
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
+        sx={{
+          paddingLeft: '20px',
+        }}
       >
         <Typography>收藏全部</Typography>
         <Typography>清空列表</Typography>
@@ -53,39 +56,63 @@ const SongListInfo: React.FC<any> = () => {
         <BlurImg
           url={songListInfo?.creator?.avatarUrl}
           containerStyle={{
-            width: '50px',
-            height: '50px',
+            width: '36px',
+            height: '36px',
             borderRadius: 2,
             marginRight: '10px',
           }}
         ></BlurImg>
         <ListItemText
           sx={{
+            margin: 0,
             '& > .MuiTypography-root': {
               fontSize: '14px',
             },
           }}
           primary={<>{songListInfo?.creator?.nickname}</>}
-          secondary={<>{songListInfo?.creator?.signature}</>}
+          secondary={
+            <span
+              style={{
+                fontSize: '12px',
+              }}
+            >
+              {songListInfo?.creator?.signature}
+            </span>
+          }
         />
       </ListItem>
 
       <Typography
         style={{
-          fontSize: '50px',
+          fontSize: '30px',
           padding: '0px 20px',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
           color: '#b9b9b9',
+          whiteSpace: 'nowrap',
+          wordBreak: 'break-all',
         }}
       >
         {songListInfo?.name}
       </Typography>
-      <List sx={{ width: '100%', overflowY: 'auto', height: 370 }}>
+      <List
+        sx={{
+          width: '100%',
+          overflowY: 'auto',
+          height: 300,
+          paddingRight: '10px',
+          boxSizing: 'border-box',
+        }}
+      >
         {songs?.map((item: any, index: number) => {
           return (
             <SongItem
               key={index}
+              containerStyle={
+                {
+                  // height: 40,
+                }
+              }
               listItemProps={{
                 onClick: () => onSongItemClick(item),
                 secondaryAction: (
@@ -104,8 +131,11 @@ const SongListInfo: React.FC<any> = () => {
               <Typography
                 sx={{
                   width: 24,
-                  marginRight: '10px',
+                  marginRight: '4px',
                   color: '#8f8f8f',
+                  flexShrink: 0,
+                  flexGrow: 0,
+                  fontSize: '0.9rem',
                 }}
               >
                 {index < 9 && 0}
@@ -114,18 +144,26 @@ const SongListInfo: React.FC<any> = () => {
               <BlurImg
                 url={item.al.picUrl}
                 containerStyle={{
-                  width: 35,
-                  height: 35,
+                  width: 30,
+                  height: 30,
                   marginRight: '15px',
                   borderRadius: '0px 10px',
+                  flexShrink: 0,
+                  flexGrow: 0,
                 }}
                 blurStyle={{
                   display: 'none',
                 }}
               ></BlurImg>
               <ListItemText
-                primary={item.name}
-                secondary={item.ar.map((item: any) => item.name).join()}
+                primary={
+                  <span style={{ fontSize: '0.9rem' }}>{item.name}</span>
+                }
+                secondary={
+                  <span style={{ fontSize: '0.8rem' }}>
+                    {item.ar.map((item: any) => item.name).join()}
+                  </span>
+                }
               />
             </SongItem>
           );

@@ -49,7 +49,7 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
   if (lyric?.lyric?.length) {
     let showIndex = binarySearch(
       lyric.lyric,
-      currentTime * 1000 + 500,
+      currentTime * 1000,
       0,
       lyric.lyric.length - 1 || 0
     );
@@ -57,12 +57,11 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
   }
 
   const scrollToCurrentLyric = () => {
-    const currentEl = containerRef.current?.children?.[currentTimeIndex];
-    if (currentEl) {
-      currentEl.scrollIntoView({
+    const currentEl: any = containerRef.current?.children?.[currentTimeIndex];
+    if (currentEl && scrollElRef.current) {
+      scrollElRef.current.scrollTo({
+        top: currentEl.offsetTop + currentEl.offsetHeight / 2 - 200,
         behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
       });
     }
   };
@@ -75,10 +74,25 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
   }, []);
 
   const onWheel = (e: any) => {
-    // userScrollTimer && clearTimeout(userScrollTimer);
-    // userScrollTimer = setTimeout(() => {
-    //   scrollToCurrentLyric();
-    // }, 2000);
+    // if (isUserScroll) {
+    //   if (containerRef.current) {
+    //     console.log('clear');
+    //     const prevChild = containerRef.current.querySelector('.subActiveLyric');
+    //     if (prevChild) {
+    //       prevChild.classList.remove('subActiveLyric');
+    //     }
+    //   }
+    //   isUserScroll = false;
+    //   console.log('auto scroll');
+    // } else {
+    //   isAutoScroll = false;
+    //   console.log('user scroll');
+    //   userScrollTimer && clearTimeout(userScrollTimer);
+    //   userScrollTimer = setTimeout(() => {
+    //     isAutoScroll = true;
+    //     scrollToCurrentLyric();
+    //   }, 2000);
+    // }
     // if (containerRef.current && scrollElRef.current) {
     //   const { clientHeight, scrollTop } = scrollElRef.current;
     //   const height = clientHeight / 2 + scrollTop;
@@ -94,6 +108,7 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
     //       if (prevChild) {
     //         prevChild.classList.remove('subActiveLyric');
     //       }
+    //       console.log('subActiveLyric');
     //       child.classList.add('subActiveLyric');
     //       break;
     //     }
@@ -111,14 +126,18 @@ const Lyric: React.FC<any> = ({ onLyricClick }) => {
         padding: '200px 0px',
         boxSizing: 'border-box',
         margin: 'auto',
+        position: 'relative',
+        marginTop: '50px',
       }}
       onClick={onLyricClick}
+      // onScroll={onWheel}
       ref={scrollElRef}
     >
       <div ref={containerRef} style={{ color: '#6c6c6c', fontSize: '16px' }}>
         {lyric?.lyric?.map((item: any, index: number) => {
           return (
             <div
+              key={index}
               className={classnames({
                 [style['activeLyric']]: index === currentTimeIndex,
               })}

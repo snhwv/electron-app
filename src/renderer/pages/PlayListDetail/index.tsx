@@ -26,7 +26,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@mui/system';
 import dayjs from 'dayjs';
 import { toShortZHNumber } from '@utils/funcs';
-import Commit from './components/Commit';
+import Comment from '@components/Comment';
 import SongList from './components/SongList';
 
 const boxSize = 36;
@@ -252,7 +252,7 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
           </Stack>
         </Grid>
       </Grid>
-      <Commit sourceId={sourceId}></Commit>
+      <Comment fetchApi={api.comment} sourceId={sourceId}></Comment>
     </div>
   );
 };

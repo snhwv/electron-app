@@ -13,16 +13,16 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import Icon from './Icon';
 
-interface CommitItemProps {
-  commit: any;
+interface CommentItemProps {
+  comment: any;
 }
 
-const CommitItem: React.FC<CommitItemProps> = ({ commit }) => {
+const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   return (
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={commit.user.avatarUrl} />
+          <Avatar alt="Remy Sharp" src={comment.user.avatarUrl} />
         </ListItemAvatar>
         <ListItemText
           sx={{
@@ -32,8 +32,8 @@ const CommitItem: React.FC<CommitItemProps> = ({ commit }) => {
           }}
           primary={
             <>
-              {commit.user.nickname}：{commit.content}
-              {commit?.beReplied?.map((item: any, index: number) => {
+              {comment.user.nickname}：{comment.content}
+              {comment?.beReplied?.map((item: any, index: number) => {
                 return (
                   <Typography
                     // component="span"
@@ -74,7 +74,7 @@ const CommitItem: React.FC<CommitItemProps> = ({ commit }) => {
                     fontSize: '12px',
                   }}
                 >
-                  {dayjs(commit?.time).format('YYYY年MM月DD日 hh:mm')}
+                  {dayjs(comment?.time).format('YYYY年MM月DD日 hh:mm')}
                 </Typography>
                 <Stack
                   component="span"
@@ -100,12 +100,12 @@ const CommitItem: React.FC<CommitItemProps> = ({ commit }) => {
                   <span>
                     <Icon
                       style={{
-                        color: commit?.liked ? 'red' : '#878787',
+                        color: comment?.liked ? 'red' : '#878787',
                       }}
                       type="icon-thumb-up-outline"
                     ></Icon>
-                    {commit?.likedCount ? (
-                      <span>{commit?.likedCount}</span>
+                    {comment?.likedCount ? (
+                      <span>{comment?.likedCount}</span>
                     ) : null}
                   </span>
                   <Icon
@@ -131,4 +131,4 @@ const CommitItem: React.FC<CommitItemProps> = ({ commit }) => {
   );
 };
 
-export default CommitItem;
+export default CommentItem;

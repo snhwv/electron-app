@@ -1,5 +1,4 @@
-import CommitItem from '@components/CommitItem';
-import CommitList from '@components/CommitList';
+import CommentList from '@components/CommentList';
 import {
   Button,
   Pagination,
@@ -8,23 +7,26 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import api from '../api';
 
 interface CommitProps {
   sourceId: number | string;
+  fetchApi: (params: any) => Promise<any>;
+  params?: any;
 }
 
-const Commit: React.FC<CommitProps> = ({ sourceId }) => {
-  const [commits, setCommits] = useState<any>({});
+const Comment: React.FC<CommitProps> = ({ sourceId, fetchApi }) => {
+  const [comments, setComments] = useState<any>({});
 
   const [page, setPage] = useState<number>(1);
 
   const fetchComment = () => {
-    sourceId && api
-      .comment({ id: sourceId, limit: 20, offset: (page - 1) * 20 })
-      .then((re) => {
-        setCommits(re);
-      });
+    sourceId &&
+      fetchApi &&
+      fetchApi({ id: sourceId, limit: 20, offset: (page - 1) * 20 }).then(
+        (re) => {
+          setComments(re);
+        }
+      );
   };
 
   useEffect(() => {
@@ -68,18 +70,18 @@ const Commit: React.FC<CommitProps> = ({ sourceId }) => {
           评论
         </Button>
       </Stack>
-      {commits?.hotComments?.length ? (
+      {comments?.hotComments?.length ? (
         <>
           <Typography sx={{}}>精彩评论</Typography>
-          <CommitList commitList={commits?.hotComments} />
+          <CommentList commentList={comments?.hotComments} />
         </>
       ) : null}
       <Typography sx={{ marginTop: '50px' }}>
-        最新评论({commits?.total})
+        最新评论({comments?.total})
       </Typography>
-      <CommitList commitList={commits?.comments} />
+      <CommentList commentList={comments?.comments} />
       <Pagination
-        count={parseInt((commits?.total || 0) / 20 + '')}
+        count={parseInt((comments?.total || 0) / 20 + '')}
         variant="outlined"
         page={page}
         onChange={onChange}
@@ -95,4 +97,4 @@ const Commit: React.FC<CommitProps> = ({ sourceId }) => {
   );
 };
 
-export default Commit;
+export default Comment;
