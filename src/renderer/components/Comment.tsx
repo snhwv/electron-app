@@ -40,6 +40,9 @@ const Comment: React.FC<CommitProps> = ({ sourceId, fetchApi }) => {
     <div
       style={{
         padding: '20px',
+        width: '80%',
+        margin: 'auto',
+        marginTop: '60px',
       }}
     >
       <TextField

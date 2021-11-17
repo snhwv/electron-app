@@ -132,6 +132,11 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
                 bottom: '9%',
                 width: '78%',
                 left: '4%',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 7,
+                WebkitBoxOrient: 'vertical',
               }}
             >
               {playListDetail?.description}

@@ -18,7 +18,7 @@ import {
   updateCurrentSong,
 } from '@store/features/songListSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatDuration } from '@utils/funcs';
+import { formatDuration, reSizeImg } from '@utils/funcs';
 
 import { updatePlaySongList } from '@store/features/songListSlice';
 import { FixedSizeList } from 'react-window';
@@ -175,7 +175,6 @@ const SongListInfo: React.FC<any> = () => {
         width={'100%'}
         itemData={songs}
         style={{
-
           paddingRight: '10px',
           boxSizing: 'border-box',
         }}

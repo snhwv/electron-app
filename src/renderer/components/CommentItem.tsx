@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { reSizeImg } from '@utils/funcs';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import Icon from './Icon';
@@ -22,12 +23,12 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={comment.user.avatarUrl} />
+          <Avatar alt="Remy Sharp" src={reSizeImg(comment.user.avatarUrl, 50)} />
         </ListItemAvatar>
         <ListItemText
           sx={{
             '& > .MuiTypography-root': {
-              fontSize: '14px',
+              fontSize: '0.9rem',
             },
           }}
           primary={

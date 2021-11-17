@@ -23,7 +23,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { nextSong, prevSong } from '@store/features/songListSlice';
 import PlayPlane from './PlayPlane';
-import { formatDuration } from '@utils/funcs';
+import { formatDuration, reSizeImg } from '@utils/funcs';
 
 const Widget = styled('div')(({ theme }) => ({
   padding: '0px 30px',
@@ -236,7 +236,7 @@ export default function PlayBar() {
             <CoverImage onClick={onTrigger}>
               <img
                 alt="can't win - Chilling Sunday"
-                src={songInfo?.album?.picUrl}
+                src={reSizeImg(songInfo?.album?.picUrl, 50)}
               />
             </CoverImage>
             <Box sx={{ ml: 1.5, minWidth: 0 }}>

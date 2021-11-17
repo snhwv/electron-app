@@ -62,6 +62,8 @@ const Row: React.FC<any> = (props) => {
           width: 24,
           marginRight: '10px',
           color: '#8f8f8f',
+          flexShrink: 0,
+          flexGrow: 0,
         }}
       >
         {index < 9 && 0}
@@ -74,6 +76,8 @@ const Row: React.FC<any> = (props) => {
           height: boxSize,
           marginRight: '15px',
           borderRadius: '0px 10px',
+          flexShrink: 0,
+          flexGrow: 0,
         }}
         blurStyle={{
           display: 'none',

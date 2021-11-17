@@ -17,6 +17,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 import style from '@style/custom/disc.module.scss';
+import { reSizeImg } from '@utils/funcs';
 
 const binarySearch = (
   arr: { time: number }[],
@@ -186,7 +187,7 @@ const Pic: React.FC<any> = ({ onPicClick }) => {
           transform: 'translate(-50%,-50%)',
           borderRadius: '50%',
         }}
-        src={playSongInfo?.album?.picUrl}
+        src={reSizeImg(playSongInfo?.album?.picUrl, 400)}
       ></img>
     </div>
   );

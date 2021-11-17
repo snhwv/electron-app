@@ -121,3 +121,9 @@ export function formatDuration(value: number) {
     secondLeft < 9 ? `0${secondLeft.toFixed(0)}` : secondLeft.toFixed(0)
   }`;
 }
+export function reSizeImg(url: string, width: number, height?: number) {
+  if (!url) {
+    return;
+  }
+  return `${url}?param=${width}y${height || width}`;
+}
