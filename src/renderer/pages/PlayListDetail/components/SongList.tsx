@@ -33,6 +33,18 @@ const itemIconStyle = {
   marginRight: '4px',
   color: '#b9b9b9',
 };
+const tagStyle = {
+  border: '1px solid #ff6161',
+  padding: '0px 2px',
+  borderRadius: '3px',
+  fontSize: '0.8rem',
+  color: '#ff6161',
+  marginLeft: '5px',
+};
+const noSourceStyle = {
+  borderColor: '#ccc',
+  color: '#ccc',
+};
 
 const Row: React.FC<any> = (props) => {
   const { index, style, data, onClick } = props;
@@ -42,12 +54,6 @@ const Row: React.FC<any> = (props) => {
       key={index}
       listItemProps={{
         onClick: () => onClick(item),
-        secondaryAction: (
-          <Box>
-            <Icon type="icon-download" style={itemIconStyle}></Icon>
-            <Icon type="icon-heart" style={itemIconStyle}></Icon>
-          </Box>
-        ),
         style,
       }}
     >
@@ -74,9 +80,44 @@ const Row: React.FC<any> = (props) => {
         }}
       ></BlurImg>
       <ListItemText
-        primary={item.name}
+        primary={
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              paddingRight: '10px',
+            }}
+          >
+            <span
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                color: item?.privilege.st === -200 ? '#ccc' : 'unset',
+              }}
+            >
+              {item.name}
+            </span>
+            {item?.privilege.st !== -200 ? (
+              <>
+                {item?.privilege.fee === 1 && <span style={tagStyle}>vip</span>}
+                {item?.privilege.dl === 999000 && (
+                  <span style={tagStyle}>sq</span>
+                )}
+                {item?.mv ? <span style={tagStyle}>mv</span> : null}
+              </>
+            ) : null}
+            {item?.privilege.st === -200 && (
+              <span style={{ ...tagStyle, ...noSourceStyle }}>无音源</span>
+            )}
+          </div>
+        }
         secondary={item.ar.map((item: any) => item.name).join()}
       />
+      <Box>
+        <Icon type="icon-download" style={itemIconStyle}></Icon>
+        <Icon type="icon-heart" style={itemIconStyle}></Icon>
+      </Box>
     </SongItem>
   );
 };
@@ -88,7 +129,7 @@ const SongList: React.FC<SongListProps> = ({ songs, playListDetail }) => {
       updatePlaySongList({
         id: playListDetail?.id,
         playListInfo: playListDetail,
-        playSongList: songs,
+        playSongList: songs.filter((item) => item?.privilege.st !== -200),
       })
     );
     dispatch(updateCurrentSong(item));

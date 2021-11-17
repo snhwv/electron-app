@@ -56,6 +56,9 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
         });
       })
       .then((re) => {
+        re?.songs.forEach((item: any, index: number) => {
+          item.privilege = re?.privileges?.[index];
+        });
         setSongs(re?.songs || []);
       });
   }, [params.id]);
