@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import SongItem from '@components/SongItem';
 import {
   Button,
@@ -69,8 +69,9 @@ const Row: React.FC<any> = (props) => {
         {index < 9 && 0}
         {index + 1}
       </Typography>
-      <BlurImg
+      <CustomImg
         url={item.al.picUrl}
+        imgWidth={boxSize}
         containerStyle={{
           width: boxSize,
           height: boxSize,
@@ -82,7 +83,7 @@ const Row: React.FC<any> = (props) => {
         blurStyle={{
           display: 'none',
         }}
-      ></BlurImg>
+      ></CustomImg>
       <ListItemText
         primary={
           <div

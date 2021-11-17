@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import {
   Avatar,

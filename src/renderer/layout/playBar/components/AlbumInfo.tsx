@@ -8,7 +8,7 @@ import {
   getPlayCurrentTime,
 } from '@store/features/playSongSlice';
 import apis from '../../api';
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import disc from '@assets/disc.png';
@@ -89,9 +89,10 @@ const AlbumInfo: React.FC<any> = () => {
                   height: '100%',
                 }}
               >
-                <BlurImg
+                <CustomImg
                   key={item.coverImgUrl}
                   url={item.coverImgUrl}
+                  imgWidth={150}
                   containerStyle={{
                     width: '100%',
                     paddingTop: '100%',
@@ -101,7 +102,7 @@ const AlbumInfo: React.FC<any> = () => {
                     display: 'none',
                   }}
                   className={'recommendItem'}
-                ></BlurImg>
+                ></CustomImg>
               </div>
               <img
                 style={{

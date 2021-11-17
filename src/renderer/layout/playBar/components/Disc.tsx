@@ -234,7 +234,7 @@ const Disc: React.FC<any> = () => {
             width: 165,
             top: '-24px',
             left: '80%',
-            transform: `scaleX(-1) rotate(-${playing ? 20 : 34}deg)`,
+            transform: `scaleX(-1) rotate(-${playing ? 17 : 34}deg)`,
             transformOrigin: '20px 0px 0',
             transition: 'all 1s',
           }}

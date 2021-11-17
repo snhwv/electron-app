@@ -228,7 +228,7 @@ export default function PlayBar() {
           bottom: 0,
           display: 'flex',
           background: '#fff',
-          zIndex: 1,
+          zIndex: 2,
         }}
       >
         <Widget>

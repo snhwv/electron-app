@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import SongItem from '@components/SongItem';
 import {
   fetchSongUrlById,
@@ -112,8 +112,9 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
       >
         <SongList songs={songs} playListDetail={playListDetail} />
         <Grid item xs={5}>
-          <BlurImg
+          <CustomImg
             url={playListDetail?.coverImgUrl}
+            imgWidth={400}
             containerStyle={{
               width: '100%',
               paddingTop: '100%',
@@ -141,7 +142,7 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
             >
               {playListDetail?.description}
             </Typography>
-          </BlurImg>
+          </CustomImg>
           <Stack
             justifyContent="flex-start"
             direction="row"
@@ -149,8 +150,9 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
             paddingTop="10px"
             alignItems="center"
           >
-            <BlurImg
+            <CustomImg
               url={playListDetail?.creator?.avatarUrl}
+              imgWidth={30}
               containerStyle={{
                 width: '30px',
                 paddingTop: '30px',
@@ -160,7 +162,7 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
               blurStyle={{
                 display: 'none',
               }}
-            ></BlurImg>
+            ></CustomImg>
             <Typography
               style={{
                 fontSize: '13px',

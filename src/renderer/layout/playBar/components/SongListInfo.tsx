@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import SongItem from '@components/SongItem';
 import { Grid } from '@material-ui/core';
@@ -69,8 +69,9 @@ const Row: React.FC<any> = (props) => {
         {index < 9 && 0}
         {index + 1}
       </Typography>
-      <BlurImg
+      <CustomImg
         url={item.al.picUrl}
+        imgWidth={30}
         containerStyle={{
           width: 30,
           height: 30,
@@ -82,7 +83,7 @@ const Row: React.FC<any> = (props) => {
         blurStyle={{
           display: 'none',
         }}
-      ></BlurImg>
+      ></CustomImg>
       <ListItemText
         primary={<span style={{ fontSize: '0.9rem' }}>{item.name}</span>}
         secondary={
@@ -125,15 +126,16 @@ const SongListInfo: React.FC<any> = () => {
       </Stack>
 
       <ListItem alignItems="flex-start" component="div">
-        <BlurImg
+        <CustomImg
           url={songListInfo?.creator?.avatarUrl}
+          imgWidth={36}
           containerStyle={{
             width: '36px',
             height: '36px',
             borderRadius: 2,
             marginRight: '10px',
           }}
-        ></BlurImg>
+        ></CustomImg>
         <ListItemText
           sx={{
             margin: 0,
@@ -183,78 +185,6 @@ const SongListInfo: React.FC<any> = () => {
           <Row {...props} onClick={(item: any) => onSongItemClick(item)}></Row>
         )}
       </FixedSizeList>
-      {/* <List
-        sx={{
-          width: '100%',
-          overflowY: 'auto',
-          height: 300,
-        }}
-      >
-        {songs?.map((item: any, index: number) => {
-          return (
-            <SongItem
-              key={index}
-              containerStyle={
-                {
-                  // height: 40,
-                }
-              }
-              listItemProps={{
-                onClick: () => onSongItemClick(item),
-                secondaryAction: (
-                  <Box>
-                    <Typography
-                      style={{
-                        color: '#b9b9b9',
-                      }}
-                    >
-                      {formatDuration(item.dt / 1000)}
-                    </Typography>
-                  </Box>
-                ),
-              }}
-            >
-              <Typography
-                sx={{
-                  width: 24,
-                  marginRight: '4px',
-                  color: '#8f8f8f',
-                  flexShrink: 0,
-                  flexGrow: 0,
-                  fontSize: '0.9rem',
-                }}
-              >
-                {index < 9 && 0}
-                {index + 1}
-              </Typography>
-              <BlurImg
-                url={item.al.picUrl}
-                containerStyle={{
-                  width: 30,
-                  height: 30,
-                  marginRight: '15px',
-                  borderRadius: '0px 10px',
-                  flexShrink: 0,
-                  flexGrow: 0,
-                }}
-                blurStyle={{
-                  display: 'none',
-                }}
-              ></BlurImg>
-              <ListItemText
-                primary={
-                  <span style={{ fontSize: '0.9rem' }}>{item.name}</span>
-                }
-                secondary={
-                  <span style={{ fontSize: '0.8rem' }}>
-                    {item.ar.map((item: any) => item.name).join()}
-                  </span>
-                }
-              />
-            </SongItem>
-          );
-        })}
-      </List> */}
     </Grid>
   );
 };

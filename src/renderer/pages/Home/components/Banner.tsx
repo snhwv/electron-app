@@ -7,6 +7,7 @@ import SwiperCore, {
 } from 'swiper';
 import { Button } from '@mui/material';
 import Icon from '@components/Icon';
+import { reSizeImg } from '@utils/funcs';
 SwiperCore.use([Autoplay, EffectFade, Navigation]);
 
 const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
@@ -32,7 +33,7 @@ const Banner: React.FC<{ bannerList: any[] }> = ({ bannerList }) => {
               <div>
                 <img
                   style={{ width: '100%', height: '100%' }}
-                  src={item.imageUrl}
+                  src={reSizeImg(item.imageUrl, 850, 320)}
                 />
                 <Button
                   sx={{

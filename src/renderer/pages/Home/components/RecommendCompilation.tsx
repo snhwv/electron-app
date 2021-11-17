@@ -8,7 +8,7 @@ import SwiperCore, {
 import { Button, IconButton, Typography } from '@mui/material';
 import Icon from '@components/Icon';
 SwiperCore.use([Autoplay, EffectFade, Navigation]);
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import style from '@style/custom/recommend.module.scss';
 import { useHistory } from 'react-router-dom';
 const boxSize = 112;
@@ -49,14 +49,11 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
               key={index}
               className={'swiperItem'}
             >
-              <div
-                style={{}}
-                onClick={() => onClick(item)}
-                className={'alContainer'}
-              >
-                <BlurImg
+              <div style={{}} className={'alContainer'}>
+                <CustomImg
                   key={item.picUrl}
                   url={item.picUrl}
+                  imgWidth={112}
                   containerStyle={{
                     width: boxSize,
                     height: boxSize,
@@ -74,6 +71,7 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                       left: '60px',
                       top: '60px',
                     }}
+                    onClick={() => onClick(item)}
                   >
                     <Icon
                       type="icon-play"
@@ -105,7 +103,7 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                   >
                     {item.name}
                   </Typography>
-                </BlurImg>
+                </CustomImg>
               </div>
             </SwiperSlide>
           );

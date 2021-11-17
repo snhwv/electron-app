@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import {
   Avatar,
@@ -36,14 +36,16 @@ const PrivateContent: React.FC<{ contentList: any[] }> = ({ contentList }) => {
                 flexWrap: 'wrap',
               }}
             >
-              <BlurImg
+              <CustomImg
                 url={item.picUrl}
+                imgWidth={250}
+                imgHeight={110}
                 containerStyle={{
                   width: '100%',
                   height: '110px',
                   borderRadius: 2,
                 }}
-              ></BlurImg>
+              ></CustomImg>
               <Typography
                 sx={{
                   color: '#333',

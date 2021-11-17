@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import {
   Avatar,
@@ -36,15 +36,16 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
       >
         {singerList?.map((item) => {
           return (
-            <BlurImg
+            <CustomImg
               key={item.id}
               url={item.picUrl}
+              imgWidth={boxSize}
               containerStyle={{
                 width: boxSize,
                 height: boxSize,
                 borderRadius: 100,
               }}
-            ></BlurImg>
+            ></CustomImg>
           );
         })}
       </div>

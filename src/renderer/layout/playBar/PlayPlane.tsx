@@ -18,49 +18,56 @@ const discWitdh = 38;
 const PlayPlane: React.FC<any> = React.memo(() => {
   const playSongInfo = useSelector(getPlaySongInfo);
   return (
-    <Grid
-      container
+    <div
       style={{
         height: '100%',
         position: 'relative',
-        paddingTop: '50px',
         overflow: 'auto',
       }}
     >
-      <Grid item container xs={12}>
-        <Grid
-          item
-          style={{
-            maxWidth: `${(100 - discWitdh) / 2}%`,
-            flexBasis: `${(100 - discWitdh) / 2}%`,
-          }}
-        >
-          <SongListInfo></SongListInfo>
+      <Grid
+        container
+        style={{
+          paddingTop: '50px',
+          background: `linear-gradient(124deg, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 540px, transparent 540px, transparent),
+            linear-gradient(rgb(160, 209, 242) 0px, rgb(160, 209, 242) 350px, rgb(230, 214, 139) 350px, rgb(230, 214, 139))`,
+        }}
+      >
+        <Grid item container xs={12}>
+          <Grid
+            item
+            style={{
+              maxWidth: `${(100 - discWitdh) / 2}%`,
+              flexBasis: `${(100 - discWitdh) / 2}%`,
+            }}
+          >
+            <SongListInfo></SongListInfo>
+          </Grid>
+          <Grid
+            item
+            style={{
+              maxWidth: `${discWitdh}%`,
+              flexBasis: `${discWitdh}%`,
+            }}
+          >
+            <Disc></Disc>
+          </Grid>
+          <Grid
+            item
+            style={{
+              maxWidth: `${(100 - discWitdh) / 2}%`,
+              flexBasis: `${(100 - discWitdh) / 2}%`,
+            }}
+          >
+            <AlbumInfo></AlbumInfo>
+          </Grid>
         </Grid>
-        <Grid
-          item
-          style={{
-            maxWidth: `${discWitdh}%`,
-            flexBasis: `${discWitdh}%`,
-          }}
-        >
-          <Disc></Disc>
-        </Grid>
-        <Grid
-          item
-          style={{
-            maxWidth: `${(100 - discWitdh) / 2}%`,
-            flexBasis: `${(100 - discWitdh) / 2}%`,
-          }}
-        >
-          <AlbumInfo></AlbumInfo>
-        </Grid>
+        <Comment
+          fetchApi={api.commentMusic}
+          sourceId={playSongInfo?.id}
+        ></Comment>
       </Grid>
-      <Comment
-        fetchApi={api.commentMusic}
-        sourceId={playSongInfo?.id}
-      ></Comment>
-    </Grid>
+    </div>
   );
 });
 export default PlayPlane;

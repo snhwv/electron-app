@@ -17,6 +17,7 @@ import {
 import { getUserId } from '@store/features/userInfoSlice';
 import Icon from '@components/Icon';
 import { useHistory } from 'react-router-dom';
+import { reSizeImg } from '@utils/funcs';
 
 interface PlayListProps {}
 
@@ -100,7 +101,7 @@ const PlayList: React.FC<PlayListProps> = () => {
           }}
         >
           <img
-            src={selectedAlbum?.coverImgUrl}
+            src={reSizeImg(selectedAlbum?.coverImgUrl, 100, 100)}
             style={{
               width: '100%',
               height: '100%',

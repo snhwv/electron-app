@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
@@ -52,9 +52,11 @@ const Recommendmv: React.FC<{ mv: any[] }> = ({ mv }) => {
               key={index}
               className={'swiperItem'}
             >
-              <BlurImg
+              <CustomImg
                 key={item.picUrl}
                 url={item.picUrl}
+                imgWidth={350}
+                imgHeight={200}
                 containerStyle={{
                   width: '100%',
                   height: '100%',
@@ -78,7 +80,7 @@ const Recommendmv: React.FC<{ mv: any[] }> = ({ mv }) => {
                 >
                   {item.name}
                 </Typography>
-              </BlurImg>
+              </CustomImg>
             </SwiperSlide>
           );
         })}

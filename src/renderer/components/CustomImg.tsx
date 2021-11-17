@@ -1,19 +1,28 @@
 import { Box } from '@mui/system';
+import { reSizeImg } from '@utils/funcs';
 import { CSSProperties } from 'react';
 
-const BlurImg: React.FC<
+const CustomImg: React.FC<
   {
     url: string;
     containerStyle?: CSSProperties;
     blurStyle?: CSSProperties;
   } & any
-> = ({ url, containerStyle, blurStyle, children, ...rest }) => {
+> = ({
+  url,
+  imgWidth,
+  imgHeight,
+  containerStyle,
+  blurStyle,
+  children,
+  ...rest
+}) => {
   return (
     <Box
       sx={{
         position: 'relative',
         display: 'inline-block',
-        background: `url(${url})`,
+        background: `url(${reSizeImg(url, imgWidth, imgHeight)})`,
         backgroundSize: '100% 100%',
         borderRadius: 4,
         ...containerStyle,
@@ -39,4 +48,4 @@ const BlurImg: React.FC<
     </Box>
   );
 };
-export default BlurImg;
+export default CustomImg;

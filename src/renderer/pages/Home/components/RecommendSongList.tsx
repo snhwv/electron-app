@@ -1,4 +1,4 @@
-import BlurImg from '@components/BlurImg';
+import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import SongItem from '@components/SongItem';
 import {
@@ -48,8 +48,9 @@ const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
                 ),
               }}
             >
-              <BlurImg
+              <CustomImg
                 url={item.al.picUrl}
+                imgWidth={boxSize}
                 containerStyle={{
                   width: boxSize,
                   height: boxSize,
@@ -59,7 +60,7 @@ const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
                 blurStyle={{
                   display: 'none',
                 }}
-              ></BlurImg>
+              ></CustomImg>
               <ListItemText
                 primary={item.name}
                 secondary={item.ar.map((item: any) => item.name).join()}
