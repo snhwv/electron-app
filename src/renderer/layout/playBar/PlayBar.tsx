@@ -232,7 +232,14 @@ export default function PlayBar() {
         }}
       >
         <Widget>
-          <Box sx={{ display: 'inline-flex', alignItems: 'center', flex: 1 }}>
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              flexBasis: '20%',
+              overflow: 'hidden',
+            }}
+          >
             <CoverImage onClick={onTrigger}>
               <img
                 alt="can't win - Chilling Sunday"
@@ -242,15 +249,14 @@ export default function PlayBar() {
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
               <Typography noWrap>{songInfo?.name}</Typography>
               <Typography
-                variant="caption"
                 color="text.secondary"
+                fontSize="0.8rem"
                 fontWeight={500}
+                noWrap
               >
-                <b>
-                  {songInfo?.artist?.map((item: any, index: number) => {
-                    return <span key={index}> {item.name}</span>;
-                  })}
-                </b>
+                {songInfo?.artist?.map((item: any, index: number) => {
+                  return item.name;
+                })}
               </Typography>
             </Box>
           </Box>
@@ -258,6 +264,7 @@ export default function PlayBar() {
             sx={{
               display: 'inline-flex',
               alignItems: 'center',
+              flexBasis: '60%',
               width: 600,
             }}
           >
@@ -298,6 +305,7 @@ export default function PlayBar() {
           <Box
             sx={{
               display: 'flex',
+              flexBasis: '20%',
             }}
           >
             <Stack
@@ -324,7 +332,7 @@ export default function PlayBar() {
           </audio>
         </Widget>
       </Box>
-      {open && <PlayPlane></PlayPlane>}
+      {<PlayPlane></PlayPlane>}
     </Box>
   );
 }

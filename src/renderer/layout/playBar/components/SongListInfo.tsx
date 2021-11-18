@@ -22,6 +22,7 @@ import { formatDuration, reSizeImg } from '@utils/funcs';
 
 import { updatePlaySongList } from '@store/features/songListSlice';
 import { FixedSizeList } from 'react-window';
+import SongList from '@components/SongList';
 
 const itemIconStyle = {
   fontSize: 16,
@@ -29,81 +30,14 @@ const itemIconStyle = {
   color: '#b9b9b9',
 };
 
-const Row: React.FC<any> = (props) => {
-  const { index, style, data, onClick } = props;
-  const item = data[index] || {};
-  return (
-    <SongItem
-      key={index}
-      containerStyle={
-        {
-          // height: 40,
-        }
-      }
-      listItemProps={{
-        onClick: () => onClick(item),
-        style,
-        secondaryAction: (
-          <Box>
-            <Typography
-              style={{
-                color: '#b9b9b9',
-              }}
-            >
-              {formatDuration(item.dt / 1000)}
-            </Typography>
-          </Box>
-        ),
-      }}
-    >
-      <Typography
-        sx={{
-          width: 24,
-          marginRight: '4px',
-          color: '#8f8f8f',
-          flexShrink: 0,
-          flexGrow: 0,
-          fontSize: '0.9rem',
-        }}
-      >
-        {index < 9 && 0}
-        {index + 1}
-      </Typography>
-      <CustomImg
-        url={item.al.picUrl}
-        imgWidth={30}
-        containerStyle={{
-          width: 30,
-          height: 30,
-          marginRight: '15px',
-          borderRadius: '0px 10px',
-          flexShrink: 0,
-          flexGrow: 0,
-        }}
-        blurStyle={{
-          display: 'none',
-        }}
-      ></CustomImg>
-      <ListItemText
-        primary={<span style={{ fontSize: '0.9rem' }}>{item.name}</span>}
-        secondary={
-          <span style={{ fontSize: '0.8rem' }}>
-            {item.ar.map((item: any) => item.name).join()}
-          </span>
-        }
-      />
-    </SongItem>
-  );
-};
-
 const SongListInfo: React.FC<any> = () => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
 
-  const dispatch = useDispatch();
-  const onSongItemClick = (item: any) => {
-    dispatch(updateCurrentSong(item));
-  };
+  // const dispatch = useDispatch();
+  // const onSongItemClick = (item: any) => {
+  //   dispatch(updateCurrentSong(item));
+  // };
 
   return (
     <Grid
@@ -169,22 +103,26 @@ const SongListInfo: React.FC<any> = () => {
       >
         {songListInfo?.name}
       </Typography>
-
-      <FixedSizeList
+      <SongList
         height={300}
-        itemCount={songs?.length || 0}
-        itemSize={54}
-        width={'100%'}
-        itemData={songs}
+        songs={songs}
+        playListDetail={songListInfo}
         style={{
           paddingRight: '10px',
           boxSizing: 'border-box',
         }}
-      >
-        {(props) => (
-          <Row {...props} onClick={(item: any) => onSongItemClick(item)}></Row>
-        )}
-      </FixedSizeList>
+        songItemProps={{
+          suffix: (item: any) => (
+            <Typography
+              style={{
+                color: '#b9b9b9',
+              }}
+            >
+              {formatDuration(item.dt / 1000)}
+            </Typography>
+          ),
+        }}
+      />
     </Grid>
   );
 };

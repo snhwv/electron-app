@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomImg from '@components/CustomImg';
-import SongItem from '@components/SongItem';
 import {
   fetchSongUrlById,
   fetchSongDetailById,
@@ -26,7 +25,7 @@ import { Box } from '@mui/system';
 import dayjs from 'dayjs';
 import { toShortZHNumber } from '@utils/funcs';
 import Comment from '@components/Comment';
-import SongList from './components/SongList';
+import SongList from './components/SongListContainer';
 
 const boxSize = 36;
 interface PlayListDetailProps {}
@@ -41,7 +40,6 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
 
   const [songs, setSongs] = useState<any[]>([]);
 
-  const [selectedSong, setselectedSong] = useState<any>({});
   const [sourceId, setsourceId] = useState<any>();
   const params: any = useParams();
   const dispatch = useDispatch();
@@ -63,9 +61,6 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
       });
   }, [params.id]);
 
-  const onSongClick = (album: any) => {
-    setselectedSong(album);
-  };
   const paly = (album: any) => {
     dispatch((fetchSongDetailById as any)(album?.id));
     dispatch((fetchSongUrlById as any)(album?.id));

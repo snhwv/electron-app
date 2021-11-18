@@ -15,12 +15,6 @@ import { Box } from '@mui/system';
 interface RecommendSongListProps {
   songList: any[];
 }
-const boxSize = 36;
-const itemIconStyle = {
-  fontSize: 16,
-  marginRight: '4px',
-  color: '#b9b9b9',
-};
 const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
   return (
     <>
@@ -38,34 +32,20 @@ const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
           return (
             <SongItem
               key={index}
-              listItemProps={{
-                secondaryAction: (
-                  <Box>
-                    <Icon type="icon-download" style={itemIconStyle}></Icon>
-                    <Icon type="icon-heart" style={itemIconStyle}></Icon>
-                    <Icon type="icon-plus" style={itemIconStyle}></Icon>
-                  </Box>
-                ),
-              }}
-            >
-              <CustomImg
-                url={item.al.picUrl}
-                imgWidth={boxSize}
-                containerStyle={{
-                  width: boxSize,
-                  height: boxSize,
-                  marginRight: '15px',
-                  borderRadius: '0px 10px',
-                }}
-                blurStyle={{
-                  display: 'none',
-                }}
-              ></CustomImg>
-              <ListItemText
-                primary={item.name}
-                secondary={item.ar.map((item: any) => item.name).join()}
-              />
-            </SongItem>
+              index={index}
+              item={item}
+              suffixIcons={[
+                {
+                  icon: 'icon-download',
+                },
+                {
+                  icon: 'icon-heart',
+                },
+                {
+                  icon: 'icon-plus',
+                },
+              ]}
+            ></SongItem>
           );
         })}
       </List>
