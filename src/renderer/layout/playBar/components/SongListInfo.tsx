@@ -18,12 +18,6 @@ const itemIconStyle = {
 const SongListInfo: React.FC<any> = () => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
-
-  // const dispatch = useDispatch();
-  // const onSongItemClick = (item: any) => {
-  //   dispatch(updateCurrentSong(item));
-  // };
-
   const theme = useTheme();
   return (
     <Grid

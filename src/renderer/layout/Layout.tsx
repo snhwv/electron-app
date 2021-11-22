@@ -5,7 +5,7 @@ import Icon from '../components/Icon';
 import withAuth from '../router/witchAuth';
 import dark from './playbar.webp';
 import PlayBar from './playBar/PlayBar';
-import Header from './Header';
+import Header from './header/Header';
 import generateAPI from '@utils/axios/generateAPI';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';

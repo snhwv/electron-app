@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getSongList,
   getSongListInfo,
-  updateCurrentSong,
 } from '@store/features/songListSlice';
 import {
   getPlaying,

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetailInfo } from '@store/features/userInfoSlice';
 import { deepPurple } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
-import api from './api';
+import api from '../api';
 
 const Header = () => {
   const userDetailInfo = useSelector(getUserDetailInfo);

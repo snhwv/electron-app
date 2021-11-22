@@ -25,6 +25,7 @@ interface SongItemProps {
   onClick?: any;
   showImg?: any;
   showTag?: any;
+  prefix?: any;
   style?: any;
   suffixIcons?: any[];
 }
@@ -41,6 +42,7 @@ const SongItem: React.FC<SongItemProps> = ({
   index,
   showImg = true,
   showTag = true,
+  prefix: prefixRender,
   item,
   suffixIcons,
   suffix: suffixRender,
@@ -102,6 +104,18 @@ const SongItem: React.FC<SongItemProps> = ({
     </>
   );
 
+  const defaultPrefix =
+    typeof index === 'number' ? (
+      <>
+        {index < 9 && 0}
+        {index + 1}
+      </>
+    ) : null;
+
+  const prefix = prefixRender
+    ? prefixRender({ rowData: item, defaultPrefix })
+    : defaultPrefix;
+
   return (
     <ListItem
       disablePadding
@@ -119,19 +133,16 @@ const SongItem: React.FC<SongItemProps> = ({
       style={style}
     >
       <ListItemButton>
-        {typeof index === 'number' ? (
-          <TypographyText
-            flexShrink={0}
-            flexGrow={0}
-            width={24}
-            mr={0.5}
-            color={'text.secondary'}
-            fontSize={'small'}
-          >
-            {index < 9 && 0}
-            {index + 1}
-          </TypographyText>
-        ) : null}
+        <TypographyText
+          flexShrink={0}
+          flexGrow={0}
+          width={24}
+          mr={0.5}
+          color={'text.secondary'}
+          fontSize={'small'}
+        >
+          {prefix}
+        </TypographyText>
         {showImg ? (
           <CustomImg
             url={item.al.picUrl}

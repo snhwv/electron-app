@@ -12,10 +12,16 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { insertSong } from '@store/features/songListSlice';
+import { useDispatch, useSelector } from 'react-redux';
 interface RecommendSongListProps {
   songList: any[];
 }
 const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
+  const dispatch = useDispatch();
+  const playInsertSongClick = (item: any) => {
+    dispatch(insertSong(item));
+  };
   return (
     <>
       <Typography variant="h6" component="h6" mr={2}>
@@ -28,6 +34,7 @@ const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
               key={index}
               index={index}
               item={item}
+              onClick={() => playInsertSongClick(item)}
               suffixIcons={[
                 {
                   icon: 'icon-download',

@@ -8,37 +8,35 @@ import { formatDuration, reSizeImg } from '@utils/funcs';
 import SongList from '@components/SongList';
 import TypographyText from '@components/TypographyText';
 import { useTheme } from '@mui/material/styles';
+import { getPlaySongInfo } from '@store/features/playSongSlice';
+import React from 'react';
 
-const e = 1;
-const q = 1;
-
-const itemIconStyle = {
-  fontSize: 16,
-  marginRight: '4px',
-  color: '#b9b9b9',
+const SongItemPrefix = ({ rowData, defaultPrefix }: any) => {
+  const songInfo = useSelector(getPlaySongInfo);
+  if (songInfo?.id && songInfo.id === rowData?.id) {
+    return <div>sdfds</div>;
+  }
+  return defaultPrefix;
 };
 const PlayingList = () => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
 
-  // const dispatch = useDispatch();
-  // const onSongItemClick = (item: any) => {
-  //   dispatch(updateCurrentSong(item));
-  // };
-
   const theme = useTheme();
   return (
     <Grid
       style={{
-        height: 'calc(100% - 102px)',
+        height: 'calc(100% - 122px)',
         bottom: 70,
-        right: 0,
-        position: 'absolute',
+        right: 10,
+        top: 10,
+        position: 'fixed',
         background: '#fff',
         padding: theme.spacing(4, 3, 0, 2),
         zIndex: 1,
         display: 'flex',
         flexDirection: 'column',
+        borderRadius: '0px 10px 0px 0px',
       }}
     >
       <Stack
@@ -103,6 +101,7 @@ const PlayingList = () => {
           boxSizing: 'border-box',
         }}
         songItemProps={{
+          prefix: SongItemPrefix,
           showTag: false,
           suffix: (item: any) => (
             <TypographyText color="text.secondary">
@@ -114,4 +113,4 @@ const PlayingList = () => {
     </Grid>
   );
 };
-export default PlayingList;
+export default React.memo(PlayingList);

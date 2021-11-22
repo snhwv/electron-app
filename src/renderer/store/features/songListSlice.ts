@@ -69,6 +69,23 @@ export const nextSong = createAsyncThunk(
     return { song: nextSong, indexOffset: 1 };
   }
 );
+export const insertSong = createAsyncThunk(
+  'songList/insertSong',
+  async (song: any, { getState, dispatch }) => {
+    const { playSongList = [] } = (getState() as any)?.songList;
+    const songId = (getState() as any)?.playSong?.songId;
+    const prevIndex = _.findIndex(
+      playSongList,
+      (song: any) => song.id === songId
+    );
+
+    if (song?.id && songId !== song?.id) {
+      dispatch((fetchSongDetailById as any)(song?.id));
+      dispatch((fetchSongUrlById as any)(song?.id));
+    }
+    return { song: song, indexOffset: 1, prevIndex };
+  }
+);
 export const prevSong = createAsyncThunk(
   'songList/prevSong',
   async (_: any, { getState, dispatch }) => {
@@ -116,6 +133,16 @@ const songListSlice = createSlice({
         state.playHistory = [];
       }
     },
+    insertPlaySongList(state, action) {
+      const { id, playSongList, playListInfo } = action.payload;
+      if (id !== state.id) {
+        state.id = id;
+        state.playSongList = playSongList;
+        state.playListInfo = playListInfo;
+        state.playIndex = -1;
+        state.playHistory = [];
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(updateCurrentSong.fulfilled, (state, action) => {
@@ -127,6 +154,25 @@ const songListSlice = createSlice({
         state.playIndex += action.payload.indexOffset;
         if (state.playIndex === state.playHistory.length) {
           state.playHistory.push(action.payload.song);
+        }
+      }
+    });
+    builder.addCase(insertSong.fulfilled, (state, action) => {
+      if (action.payload.song) {
+        state.playIndex += action.payload.indexOffset;
+        if (state.playIndex === state.playHistory.length) {
+          state.playHistory.push(action.payload.song);
+        }
+
+        if (
+          action.payload.prevIndex > 0 &&
+          action.payload.prevIndex < state.playSongList.length
+        ) {
+          state.playSongList.splice(
+            action.payload.prevIndex + 1,
+            0,
+            action.payload.song
+          );
         }
       }
     });

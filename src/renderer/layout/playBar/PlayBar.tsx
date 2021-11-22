@@ -169,9 +169,13 @@ export default function PlayBar() {
   const theme = useTheme();
   const [paused, setPaused] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [showSongList, setshowSongList] = React.useState(false);
 
   const onTrigger = () => {
     setOpen(!open);
+  };
+  const onTriggerSongList = () => {
+    setshowSongList(!showSongList);
   };
 
   const playNextSongClick = () => {
@@ -318,7 +322,7 @@ export default function PlayBar() {
             >
               <VolumeSlider audioRef={audioRef} />
               <Icon type="icon-crop-square" />
-              <Icon type="icon-menu" />
+              <Icon type="icon-menu" onClick={onTriggerSongList} />
             </Stack>
           </Box>
           <audio
@@ -335,7 +339,13 @@ export default function PlayBar() {
         </Widget>
       </Box>
       <PlayPlane></PlayPlane>
-      <PlayingList></PlayingList>
+      <div
+        style={{
+          display: showSongList ? 'block' : 'none',
+        }}
+      >
+        <PlayingList></PlayingList>
+      </div>
     </Box>
   );
 }
