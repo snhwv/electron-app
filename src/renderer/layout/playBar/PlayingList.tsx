@@ -10,6 +10,7 @@ import TypographyText from '@components/TypographyText';
 import { useTheme } from '@mui/material/styles';
 
 const a = 1;
+const b = 1;
 
 const itemIconStyle = {
   fontSize: 16,
