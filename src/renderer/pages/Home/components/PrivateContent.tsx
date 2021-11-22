@@ -1,5 +1,6 @@
 import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
+import TypographyText from '@components/TypographyText';
 import {
   Avatar,
   Grid,
@@ -32,8 +33,6 @@ const PrivateContent: React.FC<{ contentList: any[] }> = ({ contentList }) => {
               key={item.id}
               style={{
                 width: '32%',
-                display: 'flex',
-                flexWrap: 'wrap',
               }}
             >
               <CustomImg
@@ -46,15 +45,21 @@ const PrivateContent: React.FC<{ contentList: any[] }> = ({ contentList }) => {
                   borderRadius: 2,
                 }}
               ></CustomImg>
-              <Typography
+
+              <TypographyText
+                fontSize={'small'}
+                color="text.secondary"
+                noWrap
                 sx={{
-                  color: '#333',
-                  padding: '4px',
-                  fontSize: '14px',
+                  padding: 0.5,
+                  WebkitLineClamp: 2,
+                  whiteSpace: 'unset',
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
                 }}
               >
                 {item.name}
-              </Typography>
+              </TypographyText>
             </div>
           );
         })}

@@ -1,28 +1,13 @@
 import CustomImg from '@components/CustomImg';
-import Icon from '@components/Icon';
-import SongItem from '@components/SongItem';
 import { Grid } from '@material-ui/core';
-import {
-  Avatar,
-  Box,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Stack,
-  Typography,
-} from '@mui/material';
-import {
-  getSongList,
-  getSongListInfo,
-  updateCurrentSong,
-} from '@store/features/songListSlice';
+import { ListItem, ListItemText, Stack, Typography } from '@mui/material';
+import { getSongList, getSongListInfo } from '@store/features/songListSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDuration, reSizeImg } from '@utils/funcs';
 
-import { updatePlaySongList } from '@store/features/songListSlice';
-import { FixedSizeList } from 'react-window';
 import SongList from '@components/SongList';
+import TypographyText from '@components/TypographyText';
+import { useTheme } from '@mui/material/styles';
 
 const itemIconStyle = {
   fontSize: 16,
@@ -39,12 +24,13 @@ const SongListInfo: React.FC<any> = () => {
   //   dispatch(updateCurrentSong(item));
   // };
 
+  const theme = useTheme();
   return (
     <Grid
       style={{
         height: '100%',
         position: 'relative',
-        padding: '100px 24px 0px 16px',
+        padding: theme.spacing(4, 3, 0, 2),
       }}
     >
       <Stack
@@ -74,35 +60,32 @@ const SongListInfo: React.FC<any> = () => {
           sx={{
             margin: 0,
             '& > .MuiTypography-root': {
-              fontSize: '14px',
+              fontSize: '1rem',
             },
           }}
           primary={<>{songListInfo?.creator?.nickname}</>}
           secondary={
-            <span
+            <TypographyText
               style={{
-                fontSize: '12px',
+                fontSize: '0.9rem',
               }}
             >
               {songListInfo?.creator?.signature}
-            </span>
+            </TypographyText>
           }
         />
       </ListItem>
 
-      <Typography
+      <TypographyText
+        noWrap
         style={{
-          fontSize: '30px',
-          padding: '0px 20px',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
+          fontSize: '2.4rem',
+          padding: theme.spacing(0, 2),
           color: '#b9b9b9',
-          whiteSpace: 'nowrap',
-          wordBreak: 'break-all',
         }}
       >
         {songListInfo?.name}
-      </Typography>
+      </TypographyText>
       <SongList
         height={300}
         songs={songs}
@@ -112,14 +95,11 @@ const SongListInfo: React.FC<any> = () => {
           boxSizing: 'border-box',
         }}
         songItemProps={{
+          showTag: false,
           suffix: (item: any) => (
-            <Typography
-              style={{
-                color: '#b9b9b9',
-              }}
-            >
+            <TypographyText color="text.secondary">
               {formatDuration(item.dt / 1000)}
-            </Typography>
+            </TypographyText>
           ),
         }}
       />

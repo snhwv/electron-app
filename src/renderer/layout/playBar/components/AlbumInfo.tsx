@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,10 +20,10 @@ import SwiperCore, {
   Autoplay,
 } from 'swiper';
 import style from '@style/custom/recommend.module.scss';
-import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 import dayjs from 'dayjs';
+import TypographyText from '@components/TypographyText';
 
 SwiperCore.use([Autoplay, EffectFade, Navigation]);
 const AlbumInfo: React.FC<any> = () => {
@@ -125,54 +126,43 @@ const AlbumInfo: React.FC<any> = () => {
           paddingRight: '10px',
         }}
       >
-        <Typography
-          sx={{
-            fontSize: '0.8rem',
-            color: '#979797',
-          }}
-        >
+        <TypographyText fontSize={'smaller'} color="text.secondary">
           {activePlayList?.creator?.nickname}
-        </Typography>
-        <Typography
+        </TypographyText>
+        <TypographyText
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
-          <span
-            style={{
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              whiteSpace: 'nowrap' /* 规定文本是否折行 */,
-              overflow: 'hidden' /* 规定超出内容宽度的元素隐藏 */,
-              textOverflow: 'ellipsis',
-            }}
+          <TypographyText
+            nowrap
+            fontWeight={'bold'}
+            fontSize={'large'}
+            component={'span'}
           >
             {activePlayList?.name}
-          </span>
+          </TypographyText>
           <Icon
             type="icon-heart"
             style={{
               fontSize: '20px',
             }}
           ></Icon>
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: '0.8rem',
-          }}
-        >
+        </TypographyText>
+        <TypographyText fontSize={'small'}>
           {activePlayList?.tags?.map((tag: string) => {
             return (
-              <span
-                style={{
-                  color: 'rgb(0, 118, 187)',
-                  marginRight: '10px',
+              <Chip
+                key={tag}
+                label={tag}
+                color="primary"
+                size="small"
+                sx={{
+                  mr: 1,
                 }}
-              >
-                {tag}
-              </span>
+              />
             );
           })}
           <span
@@ -182,25 +172,23 @@ const AlbumInfo: React.FC<any> = () => {
           >
             {dayjs(activePlayList?.createTime).format('YYYY.MM.DD')}
           </span>
-        </Typography>
+        </TypographyText>
 
-        <Typography
+        <TypographyText
+          fontSize={'small'}
+          color="text.secondary"
+          noWrap
+          pt={1}
           sx={{
             maxHeight: '174px',
-            paddingTop: '10px',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            color: '#747474',
-            fontSize: '0.9rem',
-          }}
-          style={{
             WebkitLineClamp: 7,
+            whiteSpace: 'unset',
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
           }}
         >
           {activePlayList?.description}
-        </Typography>
+        </TypographyText>
       </Box>
     </Box>
   );

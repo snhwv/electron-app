@@ -1,6 +1,8 @@
 import api from '@globalApi';
 import {
   Avatar,
+  Card,
+  CardContent,
   Divider,
   List,
   ListItem,
@@ -13,6 +15,7 @@ import { reSizeImg } from '@utils/funcs';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import Icon from './Icon';
+import TypographyText from './TypographyText';
 
 interface CommentItemProps {
   comment: any;
@@ -23,7 +26,10 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={reSizeImg(comment.user.avatarUrl, 50)} />
+          <Avatar
+            alt="Remy Sharp"
+            src={reSizeImg(comment.user.avatarUrl, 50)}
+          />
         </ListItemAvatar>
         <ListItemText
           sx={{
@@ -33,29 +39,40 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
           }}
           primary={
             <>
-              {comment.user.nickname}：{comment.content}
+              {comment.user.nickname}：
+              <TypographyText component="span">
+                {comment.content}
+              </TypographyText>
               {comment?.beReplied?.map((item: any, index: number) => {
                 return (
-                  <Typography
-                    // component="span"
-                    key={index}
+                  <Card
                     sx={{
-                      background: '#e9e9e9',
-                      padding: '5px',
-                      borderRadius: '4px',
-                      fontSize: '12px',
-                      color: '#838383',
+                      background: '#ffffff6e',
                     }}
+                    key={index}
                   >
-                    <span
-                      style={{
-                        color: 'rgb(0, 118, 187)',
+                    <CardContent
+                      sx={{
+                        padding: 1,
+                        '&:last-child': {
+                          paddingBottom: 1,
+                        },
                       }}
                     >
-                      @{item.user.nickname}:
-                    </span>
-                    {item.content}
-                  </Typography>
+                      <TypographyText>
+                        <TypographyText component="span" color="primary.main">
+                          @{item.user.nickname}:
+                        </TypographyText>
+                        <TypographyText
+                          component="span"
+                          color="text.secondary"
+                          fontSize={'small'}
+                        >
+                          {item.content}
+                        </TypographyText>
+                      </TypographyText>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </>
@@ -69,14 +86,9 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <Typography
-                  component="span"
-                  sx={{
-                    fontSize: '12px',
-                  }}
-                >
+                <TypographyText component="span" fontSize={'small'}>
                   {dayjs(comment?.time).format('YYYY年MM月DD日 hh:mm')}
-                </Typography>
+                </TypographyText>
                 <Stack
                   component="span"
                   divider={

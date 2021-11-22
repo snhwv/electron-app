@@ -8,6 +8,21 @@ import './style';
 import routes, { RouteGenerator } from './router';
 
 const theme = createTheme({
+  components: {
+    MuiTypography: {
+      variants: [
+        // {
+        //   props: { noWrap: true },
+        //   style: {
+        //     whiteSpace: 'unset',
+        //     WebkitLineClamp: 1,
+        //     display: '-webkit-box',
+        //     WebkitBoxOrient: 'vertical',
+        //   },
+        // },
+      ],
+    },
+  },
   // palette: {
   //   text: {
   //     // primary: '#878787',
@@ -27,9 +42,6 @@ export default function App() {
         <ThemeProvider theme={theme}>
           <Router>
             <RouteGenerator routes={routes}></RouteGenerator>
-            {/* <Switch>
-              <Route path="/" component={Layout} />
-            </Switch> */}
           </Router>
         </ThemeProvider>
       </PersistGate>

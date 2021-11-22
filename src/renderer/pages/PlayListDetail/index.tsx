@@ -9,6 +9,7 @@ import api from './api';
 import globalApi from '@globalApi';
 import {
   Button,
+  Chip,
   Divider,
   Grid,
   List,
@@ -75,26 +76,21 @@ const PlayListDetail: React.FC<PlayListDetailProps> = () => {
       <Typography
         variant="h6"
         component="h6"
-        style={{
-          paddingLeft: '24px',
-          marginTop: '20px',
-        }}
+        ml={3}
+        mt={2}
       >
         {playListDetail?.name}
         {playListDetail?.tags?.map((item: any) => {
           return (
-            <span
+            <Chip
               key={item}
               style={{
-                fontSize: '14px',
                 marginLeft: '8px',
-                background: 'red',
-                color: '#fff',
-                padding: '2px',
               }}
-            >
-              {item}
-            </span>
+              color="primary"
+              label={item}
+              size="small"
+            />
           );
         })}
       </Typography>

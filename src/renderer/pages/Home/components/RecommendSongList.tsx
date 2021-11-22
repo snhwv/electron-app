@@ -18,13 +18,7 @@ interface RecommendSongListProps {
 const RecommendSongList: React.FC<RecommendSongListProps> = ({ songList }) => {
   return (
     <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          marginLeft: '15px',
-        }}
-      >
+      <Typography variant="h6" component="h6" mr={2}>
         推荐歌曲
       </Typography>
       <List sx={{ width: '100%', height: 316, overflowY: 'auto' }}>

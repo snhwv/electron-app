@@ -1,52 +1,12 @@
-import CustomImg from '@components/CustomImg';
-import SongItem from '@components/SongItem';
-import {
-  Button,
-  Chip,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, Grid, Stack, TextField } from '@mui/material';
 import Icon from '@components/Icon';
 import { Box } from '@mui/system';
-import { useDispatch } from 'react-redux';
-import {
-  updateCurrentSong,
-  updatePlaySongList,
-} from '@store/features/songListSlice';
-import { FixedSizeList } from 'react-window';
 import SongList from '@components/SongList';
 
 interface SongListProps {
   songs: any[];
   playListDetail: any;
 }
-
-const boxSize = 36;
-
-const itemIconStyle = {
-  fontSize: 16,
-  marginRight: '4px',
-  color: '#b9b9b9',
-};
-const tagStyle = {
-  border: '1px solid #ff6161',
-  padding: '0px 2px',
-  borderRadius: '3px',
-  fontSize: '0.8rem',
-  color: '#ff6161',
-  marginLeft: '5px',
-};
-const noSourceStyle = {
-  borderColor: '#ccc',
-  color: '#ccc',
-};
 
 const SongListContainer: React.FC<SongListProps> = ({
   songs,
@@ -74,7 +34,7 @@ const SongListContainer: React.FC<SongListProps> = ({
             background: '#e3e3e3a6',
             height: 24,
             borderRadius: 4,
-            paddingLeft: '8px',
+            paddingLeft: 1,
             '.MuiInput-root:before': {
               display: 'none',
               content: 'unset',
@@ -131,6 +91,7 @@ const SongListContainer: React.FC<SongListProps> = ({
         songs={songs}
         playListDetail={playListDetail}
         songItemProps={{
+          showImg: false,
           suffixIcons: [
             {
               icon: 'icon-download',

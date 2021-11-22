@@ -29,11 +29,19 @@ const PlayPlane: React.FC<any> = React.memo(() => {
         container
         style={{
           paddingTop: '50px',
+          paddingBottom: '80px',
           background: `linear-gradient(124deg, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 540px, transparent 540px, transparent),
             linear-gradient(rgb(160, 209, 242) 0px, rgb(160, 209, 242) 350px, rgb(230, 214, 139) 350px, rgb(230, 214, 139))`,
         }}
       >
-        <Grid item container xs={12}>
+        <Grid
+          item
+          container
+          xs={12}
+          style={{
+            height: 500,
+          }}
+        >
           <Grid
             item
             style={{

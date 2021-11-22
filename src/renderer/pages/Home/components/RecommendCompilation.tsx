@@ -11,6 +11,7 @@ SwiperCore.use([Autoplay, EffectFade, Navigation]);
 import CustomImg from '@components/CustomImg';
 import style from '@style/custom/recommend.module.scss';
 import { useHistory } from 'react-router-dom';
+import TypographyText from '@components/TypographyText';
 const boxSize = 112;
 const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
   recommendList,
@@ -21,15 +22,7 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
   };
   return (
     <div>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          marginBottom: '-40px',
-          marginLeft: '10px',
-          paddingTop: '10px',
-        }}
-      >
+      <Typography variant="h6" component="h6" ml={1} pt={1} mb={-5}>
         推荐歌单
       </Typography>
       <Swiper
@@ -87,7 +80,9 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                       }}
                     />
                   </IconButton>
-                  <Typography
+
+                  <TypographyText
+                    fontSize={'small'}
                     sx={{
                       position: 'absolute',
                       top: 0,
@@ -95,14 +90,13 @@ const RecommendCompilation: React.FC<{ recommendList: any[] }> = ({
                       background: '#2c2c2cc7',
                       color: '#fff',
                       boxSizing: 'border-box',
-                      fontSize: '12px',
                       borderRadius: '24px 0px 0px 0px',
                       display: 'none',
                     }}
                     className={style['recommendDesc']}
                   >
                     {item.name}
-                  </Typography>
+                  </TypographyText>
                 </CustomImg>
               </div>
             </SwiperSlide>

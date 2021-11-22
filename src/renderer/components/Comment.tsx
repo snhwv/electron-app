@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import TypographyText from './TypographyText';
 
 interface CommitProps {
   sourceId: number | string;
@@ -75,13 +76,11 @@ const Comment: React.FC<CommitProps> = ({ sourceId, fetchApi }) => {
       </Stack>
       {comments?.hotComments?.length ? (
         <>
-          <Typography sx={{}}>精彩评论</Typography>
+          <TypographyText>精彩评论</TypographyText>
           <CommentList commentList={comments?.hotComments} />
         </>
       ) : null}
-      <Typography sx={{ marginTop: '50px' }}>
-        最新评论({comments?.total})
-      </Typography>
+      <TypographyText mt={6}>最新评论({comments?.total})</TypographyText>
       <CommentList commentList={comments?.comments} />
       <Pagination
         count={parseInt((comments?.total || 0) / 20 + '')}

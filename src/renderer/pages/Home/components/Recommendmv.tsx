@@ -24,15 +24,7 @@ const boxSize = 60;
 const Recommendmv: React.FC<{ mv: any[] }> = ({ mv }) => {
   return (
     <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          marginBottom: '-40px',
-          marginLeft: '10px',
-          paddingTop: '10px',
-        }}
-      >
+      <Typography variant="h6" component="h6" ml={1} pt={1} mb={-5}>
         推荐MV
       </Typography>
 

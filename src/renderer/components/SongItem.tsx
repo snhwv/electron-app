@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import TypographyText from './TypographyText';
 interface SongItemProps {
   listItemProps?: any;
   containerStyle?: any;
@@ -22,12 +23,14 @@ interface SongItemProps {
   primary?: any;
   secondary?: any;
   onClick?: any;
+  showImg?: any;
+  showTag?: any;
   style?: any;
   suffixIcons?: any[];
 }
 
 const itemIconStyle = {
-  fontSize: 16,
+  fontSize: 14,
   marginRight: '4px',
   color: '#b9b9b9',
 };
@@ -36,6 +39,8 @@ const SongItem: React.FC<SongItemProps> = ({
   children,
   containerStyle,
   index,
+  showImg = true,
+  showTag = true,
   item,
   suffixIcons,
   suffix: suffixRender,
@@ -60,6 +65,43 @@ const SongItem: React.FC<SongItemProps> = ({
     </Box>
   );
 
+  const tags = (
+    <>
+      {item?.privilege.st !== -200 ? (
+        <>
+          {item?.privilege.fee === 1 && (
+            <Chip
+              style={{ marginLeft: 4, height: '14px', marginTop: 5 }}
+              label="vip"
+              size="small"
+            />
+          )}
+          {item?.privilege.dl === 999000 && (
+            <Chip
+              style={{ marginLeft: 4, height: '14px', marginTop: 5 }}
+              label="sq"
+              size="small"
+            />
+          )}
+          {item?.mv ? (
+            <Chip
+              style={{ marginLeft: 4, height: '14px', marginTop: 5 }}
+              label="mv"
+              size="small"
+            />
+          ) : null}
+        </>
+      ) : null}
+      {item?.privilege.st === -200 && (
+        <Chip
+          style={{ marginLeft: 4, height: '14px', marginTop: 5 }}
+          label="无音源"
+          size="small"
+        />
+      )}
+    </>
+  );
+
   return (
     <ListItem
       disablePadding
@@ -70,12 +112,6 @@ const SongItem: React.FC<SongItemProps> = ({
           paddingBottom: 0,
           maxWidth: '100%',
         },
-        '& .MuiTypography-root': {
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-          wordBreak: 'break-all',
-        },
         ...containerStyle,
       }}
       {...listItemProps}
@@ -84,76 +120,59 @@ const SongItem: React.FC<SongItemProps> = ({
     >
       <ListItemButton>
         {typeof index === 'number' ? (
-          <Typography
-            sx={{
-              width: 24,
-              marginRight: '4px',
-              color: '#8f8f8f',
-              flexShrink: 0,
-              flexGrow: 0,
-              fontSize: '0.9rem',
-            }}
+          <TypographyText
+            flexShrink={0}
+            flexGrow={0}
+            width={24}
+            mr={0.5}
+            color={'text.secondary'}
+            fontSize={'small'}
           >
             {index < 9 && 0}
             {index + 1}
-          </Typography>
+          </TypographyText>
         ) : null}
-
-        <CustomImg
-          url={item.al.picUrl}
-          imgWidth={30}
-          containerStyle={{
-            width: 30,
-            height: 30,
-            marginRight: '15px',
-            borderRadius: '0px 10px',
-            flexShrink: 0,
-            flexGrow: 0,
-          }}
-          blurStyle={{
-            display: 'none',
-          }}
-        ></CustomImg>
+        {showImg ? (
+          <CustomImg
+            url={item.al.picUrl}
+            imgWidth={30}
+            containerStyle={{
+              width: 30,
+              height: 30,
+              marginRight: '15px',
+              borderRadius: '0px 10px',
+              flexShrink: 0,
+              flexGrow: 0,
+            }}
+            blurStyle={{
+              display: 'none',
+            }}
+          ></CustomImg>
+        ) : null}
 
         <ListItemText
           primary={
-            <div
+            <Box
+              pr={1}
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
-                paddingRight: '10px',
               }}
             >
-              <span
-                style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  color: item?.privilege.st === -200 ? '#ccc' : 'unset',
-                }}
+              <TypographyText
+                noWrap
+                fontSize="small"
+                color={item?.privilege.st === -200 ? 'text.secondary' : 'unset'}
               >
                 {primary || item.name}
-              </span>
-              {item?.privilege.st !== -200 ? (
-                <>
-                  {item?.privilege.fee === 1 && (
-                    <Chip label="vip" size="small" />
-                  )}
-                  {item?.privilege.dl === 999000 && (
-                    <Chip label="sq" size="small" />
-                  )}
-                  {item?.mv ? <Chip label="mv" size="small" /> : null}
-                </>
-              ) : null}
-              {item?.privilege.st === -200 && (
-                <Chip label="无音源" size="small" />
-              )}
-            </div>
+              </TypographyText>
+              {showTag && tags}
+            </Box>
           }
           secondary={
-            <span style={{ fontSize: '0.8rem' }}>
+            <TypographyText noWrap fontSize="smaller" color={'text.secondary'}>
               {secondary || item.ar.map((item: any) => item.name).join()}
-            </span>
+            </TypographyText>
           }
         />
         <ListItemText />

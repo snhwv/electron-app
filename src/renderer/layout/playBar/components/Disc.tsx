@@ -18,6 +18,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 import style from '@style/custom/disc.module.scss';
 import { reSizeImg } from '@utils/funcs';
+import TypographyText from '@components/TypographyText';
 
 const binarySearch = (
   arr: { time: number }[],
@@ -210,18 +211,19 @@ const Disc: React.FC<any> = () => {
         overflow: 'hidden',
       }}
     >
-      <Typography
-        style={{
-          fontSize: '16px',
-          padding: '13px',
-          color: '#5c5c5c',
+      <TypographyText
+        color="text.secondary"
+        noWrap
+        mt={2}
+        p={2}
+        pl={2}
+        sx={{
+          fontSize: '1.2rem',
           fontWeight: 'bold',
-          marginTop: '20px',
-          paddingLeft: '20px',
         }}
       >
         {playSongInfo?.name}
-      </Typography>
+      </TypographyText>
       {showPic ? (
         <Pic onPicClick={triggerClick} />
       ) : (

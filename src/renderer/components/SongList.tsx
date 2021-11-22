@@ -1,26 +1,10 @@
-import CustomImg from '@components/CustomImg';
 import SongItem from '@components/SongItem';
-import {
-  Button,
-  Chip,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import Icon from '@components/Icon';
-import { Box } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import {
   updateCurrentSong,
   updatePlaySongList,
 } from '@store/features/songListSlice';
-import { FixedSizeList, FixedSizeListProps } from 'react-window';
+import { FixedSizeList } from 'react-window';
 
 const Row: React.FC<any> = (props) => {
   const { index, style, data, onClick, songItemProps } = props;

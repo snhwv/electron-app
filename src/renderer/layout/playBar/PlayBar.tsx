@@ -24,6 +24,7 @@ import Stack from '@mui/material/Stack';
 import { nextSong, prevSong } from '@store/features/songListSlice';
 import PlayPlane from './PlayPlane';
 import { formatDuration, reSizeImg } from '@utils/funcs';
+import TypographyText from '@components/TypographyText';
 
 const Widget = styled('div')(({ theme }) => ({
   padding: '0px 30px',
@@ -247,17 +248,17 @@ export default function PlayBar() {
               />
             </CoverImage>
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
-              <Typography noWrap>{songInfo?.name}</Typography>
-              <Typography
+              <TypographyText noWrap>{songInfo?.name}</TypographyText>
+              <TypographyText
                 color="text.secondary"
-                fontSize="0.8rem"
+                fontSize="smaller"
                 fontWeight={500}
                 noWrap
               >
                 {songInfo?.artist?.map((item: any, index: number) => {
                   return item.name;
                 })}
-              </Typography>
+              </TypographyText>
             </Box>
           </Box>
           <Box

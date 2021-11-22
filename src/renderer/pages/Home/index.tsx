@@ -56,7 +56,13 @@ const Page = () => {
             flexWrap: 'nowrap',
           }}
         >
-          <Grid item xs>
+          <Grid
+            item
+            xs
+            sx={{
+              minWidth: 100,
+            }}
+          >
             <RecommendSongList songList={songList}></RecommendSongList>
           </Grid>
           <Grid
