@@ -23,6 +23,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { nextSong, prevSong } from '@store/features/songListSlice';
 import PlayPlane from './PlayPlane';
+import PlayingList from './PlayingList';
 import { formatDuration, reSizeImg } from '@utils/funcs';
 import TypographyText from '@components/TypographyText';
 
@@ -333,7 +334,8 @@ export default function PlayBar() {
           </audio>
         </Widget>
       </Box>
-      {<PlayPlane></PlayPlane>}
+      <PlayPlane></PlayPlane>
+      <PlayingList></PlayingList>
     </Box>
   );
 }
