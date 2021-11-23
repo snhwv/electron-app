@@ -5,6 +5,7 @@ import {
   updatePlaySongList,
 } from '@store/features/songListSlice';
 import { FixedSizeList } from 'react-window';
+import React from 'react';
 
 const Row: React.FC<any> = (props) => {
   const { index, style, data, onClick, songItemProps } = props;
@@ -36,35 +37,40 @@ const SongList: React.FC<
     songItemProps?: any;
     style?: any;
   } & any
-> = ({ songs, playListDetail, height, songItemProps, ...rest }) => {
-  const dispatch = useDispatch();
-  const onSongItemClick = (item: any) => {
-    dispatch(
-      updatePlaySongList({
-        id: playListDetail?.id,
-        playListInfo: playListDetail,
-        playSongList: songs.filter((item: any) => item?.privilege.st !== -200),
-      })
+> = React.forwardRef(
+  ({ songs, playListDetail, height, songItemProps, ...rest }, ref) => {
+    const dispatch = useDispatch();
+    const onSongItemClick = (item: any) => {
+      dispatch(
+        updatePlaySongList({
+          id: playListDetail?.id,
+          playListInfo: playListDetail,
+          playSongList: songs.filter(
+            (item: any) => item?.privilege.st !== -200
+          ),
+        })
+      );
+      dispatch(updateCurrentSong(item));
+    };
+    return (
+      <FixedSizeList
+        height={height}
+        itemCount={songs?.length || 0}
+        itemSize={54}
+        width={'100%'}
+        itemData={songs}
+        {...rest}
+        ref={ref}
+      >
+        {(props) => (
+          <Row
+            {...props}
+            songItemProps={songItemProps}
+            onClick={(item: any) => onSongItemClick(item)}
+          ></Row>
+        )}
+      </FixedSizeList>
     );
-    dispatch(updateCurrentSong(item));
-  };
-  return (
-    <FixedSizeList
-      height={height}
-      itemCount={songs?.length || 0}
-      itemSize={54}
-      width={'100%'}
-      itemData={songs}
-      {...rest}
-    >
-      {(props) => (
-        <Row
-          {...props}
-          songItemProps={songItemProps}
-          onClick={(item: any) => onSongItemClick(item)}
-        ></Row>
-      )}
-    </FixedSizeList>
-  );
-};
+  }
+);
 export default SongList;

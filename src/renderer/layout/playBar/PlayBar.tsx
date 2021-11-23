@@ -166,7 +166,6 @@ export default function PlayBar() {
     playClick(false);
   }, [audioUrl]);
 
-  const theme = useTheme();
   const [paused, setPaused] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [showSongList, setshowSongList] = React.useState(false);
@@ -195,15 +194,7 @@ export default function PlayBar() {
       var playPromise = audioRef.current.play();
 
       if (playPromise !== undefined) {
-        playPromise
-          .then((_: any) => {
-            // Automatic playback started!
-            // Show playing UI.
-          })
-          .catch((error: any) => {
-            // Auto-play was prevented
-            // Show paused UI.
-          });
+        playPromise.then((_: any) => {}).catch((error: any) => {});
       }
     }
     setPaused(paused);
@@ -338,14 +329,8 @@ export default function PlayBar() {
           </audio>
         </Widget>
       </Box>
-      <PlayPlane></PlayPlane>
-      <div
-        style={{
-          display: showSongList ? 'block' : 'none',
-        }}
-      >
-        <PlayingList></PlayingList>
-      </div>
+      <PlayPlane isShow={open}></PlayPlane>
+      <PlayingList isShow={showSongList}></PlayingList>
     </Box>
   );
 }

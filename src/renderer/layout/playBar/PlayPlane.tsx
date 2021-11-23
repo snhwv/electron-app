@@ -7,7 +7,6 @@ import SongListInfo from './components/SongListInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from '@components/Comment';
 import {
-  getPlaying,
   getLyric,
   getPlaySongInfo,
   getPlayCurrentTime,
@@ -15,7 +14,7 @@ import {
 
 const discWitdh = 38;
 
-const PlayPlane: React.FC<any> = React.memo(() => {
+const PlayPlane: React.FC<any> = React.memo(({ isShow }) => {
   const playSongInfo = useSelector(getPlaySongInfo);
   return (
     <div
@@ -49,7 +48,7 @@ const PlayPlane: React.FC<any> = React.memo(() => {
               flexBasis: `${(100 - discWitdh) / 2}%`,
             }}
           >
-            <SongListInfo></SongListInfo>
+            <SongListInfo isShow={isShow}></SongListInfo>
           </Grid>
           <Grid
             item

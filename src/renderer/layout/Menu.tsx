@@ -188,7 +188,6 @@ const MenuHeader = () => {
 
 const Menu = () => {
   const uid = useSelector(getUserId);
-  console.log(uid);
   const [playList, setplayList] = useState<any[]>([]);
   useEffect(() => {
     api.userPlayList({ uid: uid }).then((re: any) => {

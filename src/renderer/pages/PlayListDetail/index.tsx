@@ -28,14 +28,8 @@ import { toShortZHNumber } from '@utils/funcs';
 import Comment from '@components/Comment';
 import SongList from './components/SongListContainer';
 
-const boxSize = 36;
 interface PlayListDetailProps {}
 
-const itemIconStyle = {
-  fontSize: 16,
-  marginRight: '4px',
-  color: '#b9b9b9',
-};
 const PlayListDetail: React.FC<PlayListDetailProps> = () => {
   const [playListDetail, setPlayListDetail] = useState<any>({});
 

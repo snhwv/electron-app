@@ -2,19 +2,14 @@ import { Grid } from '@material-ui/core';
 import disc from '@assets/disc.png';
 import needle from '@assets/needle.png';
 import classnames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getSongList,
-  getSongListInfo,
-} from '@store/features/songListSlice';
+import { useSelector } from 'react-redux';
 import {
   getPlaying,
   getLyric,
   getPlaySongInfo,
   getPlayCurrentTime,
 } from '@store/features/playSongSlice';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import style from '@style/custom/disc.module.scss';
 import { reSizeImg } from '@utils/funcs';
 import TypographyText from '@components/TypographyText';

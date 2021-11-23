@@ -94,3 +94,12 @@ html {
     transform: rotate(360deg);
   }
 }
+@keyframes line-scale {
+  0%,
+  100% {
+    transform: scaley(1);
+  }
+  50% {
+    transform: scaley(0.4);
+  }
+}

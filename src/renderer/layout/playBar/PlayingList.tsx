@@ -9,24 +9,38 @@ import SongList from '@components/SongList';
 import TypographyText from '@components/TypographyText';
 import { useTheme } from '@mui/material/styles';
 import { getPlaySongInfo } from '@store/features/playSongSlice';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import SongPlayTag from '@components/SongPlayTag';
+import _ from 'lodash';
 
 const SongItemPrefix = ({ rowData, defaultPrefix }: any) => {
   const songInfo = useSelector(getPlaySongInfo);
   if (songInfo?.id && songInfo.id === rowData?.id) {
-    return <div>sdfds</div>;
+    return <SongPlayTag></SongPlayTag>;
   }
   return defaultPrefix;
 };
-const PlayingList = () => {
+const PlayingList: React.FC<{ isShow: any }> = ({ isShow }) => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
+  const songInfo = useSelector(getPlaySongInfo);
+
+  const listRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
+      let index = _.findIndex(songs, ['id', songInfo?.id]);
+      console.log(index);
+      listRef.current.scrollToItem(index, 'center');
+    }
+  }, [isShow]);
 
   const theme = useTheme();
   return (
     <Grid
       style={{
         height: 'calc(100% - 122px)',
+        width: '40%',
         bottom: 70,
         right: 10,
         top: 10,
@@ -34,9 +48,9 @@ const PlayingList = () => {
         background: '#fff',
         padding: theme.spacing(4, 3, 0, 2),
         zIndex: 1,
-        display: 'flex',
         flexDirection: 'column',
         borderRadius: '0px 10px 0px 0px',
+        display: isShow ? 'flex' : 'none',
       }}
     >
       <Stack
@@ -93,6 +107,7 @@ const PlayingList = () => {
         {songListInfo?.name}
       </TypographyText>
       <SongList
+        ref={listRef}
         height={490}
         songs={songs}
         playListDetail={songListInfo}

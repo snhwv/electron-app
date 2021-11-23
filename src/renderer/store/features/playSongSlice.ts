@@ -20,7 +20,6 @@ const splitLyc = (lyric = '') => {
     .filter((v: any) => v['lyc'])
     .map((item: any) => {
       const time = item.time;
-      console.log(time);
       const m = time.match(/^(\d+):/);
       const s = time.match(/:(\d+)\./);
       const ms = time.match(/\.(\d+)$/);
@@ -136,7 +135,6 @@ export const getPlaySongInfo = createSelector(
     return state.playSong.songInfo;
   },
   (playSong: any) => {
-    console.log('Output selector running');
     return playSong;
   }
 );

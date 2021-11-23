@@ -1,25 +1,13 @@
-import { Grid } from '@material-ui/core';
 import { Chip } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getPlaying,
-  getLyric,
-  getPlaySongInfo,
-  getPlayCurrentTime,
-} from '@store/features/playSongSlice';
+import { useSelector } from 'react-redux';
+import { getPlaySongInfo } from '@store/features/playSongSlice';
 import apis from '../../api';
 import CustomImg from '@components/CustomImg';
 import Icon from '@components/Icon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import disc from '@assets/disc.png';
-import SwiperCore, {
-  EffectFade,
-  Navigation,
-  Pagination,
-  Autoplay,
-} from 'swiper';
-import style from '@style/custom/recommend.module.scss';
+import SwiperCore, { EffectFade, Navigation, Autoplay } from 'swiper';
 import { Box } from '@mui/system';
 
 import dayjs from 'dayjs';
@@ -38,7 +26,6 @@ const AlbumInfo: React.FC<any> = () => {
   useEffect(() => {
     if (playSongInfo.id) {
       apis.simiPlayList({ id: playSongInfo.id }).then((re) => {
-        console.log(re?.playlists);
         setSimmiPlayList(re?.playlists || []);
       });
     }

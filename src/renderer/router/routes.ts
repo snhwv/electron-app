@@ -28,16 +28,15 @@ const routes: RouteMata[] = [
   {
     label: '首页',
     componentName: 'PlayListDetail',
-    // path: '/playListDetail',
     path: '/playListDetail/:id',
     icon: 'elevator',
   },
-  // {
-  //   label: "组织架构",
-  //   componentName: "Organization",
-  //   path: "/system/organization",
-  //   icon: "elevator",
-  // },
+  {
+    label: '首页',
+    componentName: 'Singer',
+    path: '/singer/:id',
+    icon: 'elevator',
+  },
 ];
 
 export default routes;

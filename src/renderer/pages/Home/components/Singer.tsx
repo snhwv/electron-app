@@ -9,10 +9,15 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
+import { useHistory } from 'react-router';
 
 const boxSize = 60;
 const boxMargin = 30;
 const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
+  const history = useHistory();
+  const onClick = (singer: any) => {
+    history.push(`/singer/${singer?.id}`);
+  };
   return (
     <>
       <Typography variant="h6" component="h6">
@@ -45,6 +50,7 @@ const Singer: React.FC<{ singerList: any[] }> = ({ singerList }) => {
                 height: boxSize,
                 borderRadius: 100,
               }}
+              onClick={() => onClick(item)}
             ></CustomImg>
           );
         })}

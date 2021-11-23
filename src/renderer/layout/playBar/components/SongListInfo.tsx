@@ -8,17 +8,33 @@ import { formatDuration, reSizeImg } from '@utils/funcs';
 import SongList from '@components/SongList';
 import TypographyText from '@components/TypographyText';
 import { useTheme } from '@mui/material/styles';
+import { getPlaySongInfo } from '@store/features/playSongSlice';
+import React, { useRef, useEffect } from 'react';
+import SongPlayTag from '@components/SongPlayTag';
+import _ from 'lodash';
 
-const itemIconStyle = {
-  fontSize: 16,
-  marginRight: '4px',
-  color: '#b9b9b9',
+const SongItemPrefix = ({ rowData, defaultPrefix }: any) => {
+  const songInfo = useSelector(getPlaySongInfo);
+  if (songInfo?.id && songInfo.id === rowData?.id) {
+    return <SongPlayTag></SongPlayTag>;
+  }
+  return defaultPrefix;
 };
-
-const SongListInfo: React.FC<any> = () => {
+const SongListInfo: React.FC<any> = ({ isShow }) => {
   const songListInfo = useSelector(getSongListInfo);
   const songs = useSelector(getSongList);
   const theme = useTheme();
+  const songInfo = useSelector(getPlaySongInfo);
+
+  const listRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
+      let index = _.findIndex(songs, ['id', songInfo?.id]);
+      listRef.current.scrollToItem(index, 'center');
+    }
+  }, [isShow]);
+
   return (
     <Grid
       style={{
@@ -81,6 +97,7 @@ const SongListInfo: React.FC<any> = () => {
         {songListInfo?.name}
       </TypographyText>
       <SongList
+        ref={listRef}
         height={300}
         songs={songs}
         playListDetail={songListInfo}
@@ -89,6 +106,7 @@ const SongListInfo: React.FC<any> = () => {
           boxSizing: 'border-box',
         }}
         songItemProps={{
+          prefix: SongItemPrefix,
           showTag: false,
           suffix: (item: any) => (
             <TypographyText color="text.secondary">

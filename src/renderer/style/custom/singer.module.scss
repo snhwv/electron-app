@@ -1,0 +1,54 @@
+.albumSwiper {
+  :global {
+    .albumItem {
+      transition: all 1s;
+      &:hover {
+        width: 300px !important;
+        background-color: blue;
+      }
+    }
+    .alContainer {
+      height: 100%;
+    }
+
+    .albumName {
+      position: absolute;
+      top: 15px;
+      left: 125px;
+      background: #e97272c2;
+      height: 28px;
+      line-height: 28px;
+      color: #fff;
+      padding: 0px 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .albumImg {
+      position: absolute;
+      top: 0;
+      left: -30%;
+      width: 130%;
+      shape-outside: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+      .songList {
+        padding-left: 120px;
+        margin-top: 50px;
+        > div {
+          position: relative;
+          li {
+            background-color: #c327278f;
+            color: #fff;
+          }
+          .MuiTypography-root {
+            color: #fff;
+          }
+          .MuiChip-root {
+            margin-top: 2px;
+            background: #db7272;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
