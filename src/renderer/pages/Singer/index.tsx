@@ -7,13 +7,16 @@ import SwiperCore, {
 } from 'swiper';
 import CustomImg from '@components/CustomImg';
 import TypographyText from '@components/TypographyText';
-import { IconButton } from '@mui/material';
+import { Button, Grid, IconButton, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import style from '@style/custom/singer.module.scss';
 import api from './api';
 import Icon from '@components/Icon';
 import SongList from '@components/SongList';
+import { useTheme } from '@mui/material/styles';
+import { Box } from '@mui/system';
+import { toShortZHNumber, formatDuration } from '@utils/funcs';
 const boxSize = 112;
 const Singer = () => {
   const params: any = useParams();
@@ -21,6 +24,8 @@ const Singer = () => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [albumDetails, setAlbumDetails] = useState<any[]>([]);
   const [top50, setTop50] = useState<any[]>([]);
+  const [mvs, setMvs] = useState<any[]>([]);
+  const [simiArtists, setSimiArtists] = useState<any[]>([]);
   const singerId = params.id;
 
   const fetchalbumDetails = (albums: any[]) => {
@@ -39,7 +44,6 @@ const Singer = () => {
   };
   useEffect(() => {
     api.artistDetail({ id: singerId }).then((re) => {
-      console.log(re);
       setArtistDetail(re?.data);
     });
     api
@@ -54,27 +58,151 @@ const Singer = () => {
     api.topSong({ id: singerId }).then((re) => {
       setTop50(re?.songs || []);
     });
+    api.artistMv({ id: singerId, limit: 12 }).then((re) => {
+      setMvs(re?.mvs || []);
+    });
+    api.simiArtist({ id: singerId }).then((re) => {
+      setSimiArtists(re?.artists?.slice(0, 12) || []);
+    });
   }, [params.id]);
 
+  const theme = useTheme();
   return (
     <div style={{ marginTop: -50 }}>
-      <CustomImg
-        key={artistDetail?.artist?.cover}
-        url={artistDetail?.artist?.cover}
-        imgWidth={800}
-        containerStyle={{
-          width: '100%',
-          borderRadius: 0,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% auto',
-          height: 0,
-          paddingTop: '100%',
+      <Grid container>
+        <Grid item>
+          <CustomImg
+            key={artistDetail?.artist?.cover}
+            url={artistDetail?.artist?.cover}
+            imgWidth={800}
+            containerStyle={{
+              width: '400px',
+              height: '400px',
+              borderRadius: 0,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '100% auto',
+            }}
+            blurStyle={{
+              display: 'none',
+            }}
+          ></CustomImg>
+        </Grid>
+        <Grid xs p={theme.spacing(2, 2)} item sx={{}}>
+          <TypographyText
+            sx={{
+              fontSize: 40,
+              fontWeight: 'bold',
+            }}
+          >
+            {artistDetail?.artist?.name}
+          </TypographyText>
+          <Stack direction="row" flexWrap="nowrap" paddingTop="10px">
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                height: 30,
+                borderRadius: 30,
+                minWidth: 90,
+                color: '#424242',
+                borderColor: '#424242',
+                marginLeft: '16px',
+              }}
+              endIcon={
+                <Icon type="icon-folder-outline" style={{ color: '#424242' }} />
+              }
+            >
+              收藏
+            </Button>
+            {artistDetail?.user?.userId && (
+              <Button
+                variant="outlined"
+                size="small"
+                style={{
+                  height: 30,
+                  borderRadius: 30,
+                  minWidth: 90,
+                  color: '#424242',
+                  borderColor: '#424242',
+                  marginLeft: '16px',
+                }}
+                endIcon={
+                  <Icon
+                    type="icon-share-variant"
+                    style={{ color: '#424242' }}
+                  />
+                }
+              >
+                个人主页
+              </Button>
+            )}
+          </Stack>
+          <Stack direction="row" flexWrap="nowrap" paddingTop="10px">
+            <TypographyText ml={2}>
+              单曲数：{artistDetail?.artist?.musicSize}
+            </TypographyText>
+            <TypographyText ml={2}>
+              专辑数：{artistDetail?.artist?.albumSize}
+            </TypographyText>
+            <TypographyText ml={2}>
+              MV数：{artistDetail?.artist?.mvSize}
+            </TypographyText>
+          </Stack>
+          <Box
+            sx={{
+              height: 200,
+              overflow: 'auto',
+              paddingTop: '10px',
+            }}
+          >
+            <TypographyText ml={2} color="text.secondary">
+              {artistDetail?.artist?.briefDesc}
+            </TypographyText>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: 10,
+            }}
+          >
+            {simiArtists?.map((item) => {
+              return (
+                <CustomImg
+                  key={item?.picUrl}
+                  url={item?.picUrl}
+                  imgWidth={40}
+                  containerStyle={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '20px',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100% auto',
+                    marginLeft: '-10px',
+                  }}
+                  blurStyle={{
+                    display: 'none',
+                  }}
+                ></CustomImg>
+              );
+            })}
+          </Box>
+        </Grid>
+      </Grid>
+      <TypographyText
+        noWrap
+        mt={2}
+        mb={1}
+        p={theme.spacing(0, 1)}
+        style={{
+          fontSize: '1.6rem',
+          background: '#e1b5bf',
+          color: '#fff',
+          display: 'inline-block',
         }}
-        blurStyle={{
-          display: 'none',
-        }}
-        className={'albumImg'}
-      ></CustomImg>
+      >
+        专辑
+      </TypographyText>
       <Swiper
         pagination={{
           clickable: true,
@@ -222,6 +350,108 @@ const Singer = () => {
           );
         })}
       </Swiper>
+      <TypographyText
+        noWrap
+        mt={2}
+        mb={1}
+        p={theme.spacing(0, 1)}
+        style={{
+          fontSize: '1.6rem',
+          background: '#e1b5bf',
+          color: '#fff',
+          display: 'inline-block',
+        }}
+      >
+        MV
+      </TypographyText>
+      <Box>
+        {mvs?.map((item) => {
+          return (
+            <CustomImg
+              key={item?.imgurl}
+              url={item?.imgurl}
+              imgWidth={400}
+              containerStyle={{
+                width: '33.33%',
+                height: 200,
+                borderRadius: 0,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '100% auto',
+              }}
+              blurStyle={{
+                display: 'none',
+              }}
+              className={'albumImg'}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 0,
+                  left: 0,
+                  pointerEvents: 'none',
+                  background: '#000000a1',
+                }}
+              ></div>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  transform: 'translate(0px, -50%)',
+                  width: '80%',
+                  marginLeft: '10%',
+                }}
+              >
+                <TypographyText
+                  ml={2}
+                  noWrap
+                  style={{
+                    color: '#fff',
+                    fontSize: '1.2rem',
+                    width: '75%',
+                    margin: 'auto',
+                    textAlign: 'center',
+                  }}
+                >
+                  {item?.name}
+                </TypographyText>
+                <div
+                  style={{
+                    width: '80%',
+                    height: '4px',
+                    background: '#fff',
+                    margin: 'auto',
+                  }}
+                ></div>
+                <TypographyText
+                  ml={2}
+                  style={{
+                    color: '#fff',
+                    textAlign: 'center',
+                    margin: 'auto',
+                  }}
+                >
+                  播放量：{toShortZHNumber(item?.playCount)}
+                </TypographyText>
+              </Box>
+
+              <TypographyText
+                ml={2}
+                style={{
+                  color: '#fff',
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 10,
+                }}
+                component="span"
+              >
+                {formatDuration(item?.duration / 1000)}
+              </TypographyText>
+            </CustomImg>
+          );
+        })}
+      </Box>
     </div>
   );
 };

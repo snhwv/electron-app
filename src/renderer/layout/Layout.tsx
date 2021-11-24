@@ -75,6 +75,7 @@ const Layout: React.FC<any> = ({ children }) => {
             overflow: 'auto',
             position: 'relative',
             paddingTop: '50px',
+            paddingBottom: '50px',
           }}
         >
           <Header></Header>
