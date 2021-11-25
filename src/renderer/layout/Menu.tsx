@@ -38,7 +38,7 @@ const menuItems: ImenuItem[] = [
       {
         title: '视频',
         icon: 'icon-watermark',
-        path: 'discover/video',
+        path: 'video',
       },
       {
         title: '朋友',

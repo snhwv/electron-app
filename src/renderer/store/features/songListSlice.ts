@@ -165,7 +165,7 @@ const songListSlice = createSlice({
         }
 
         if (
-          action.payload.prevIndex > 0 &&
+          action.payload.prevIndex >= 0 &&
           action.payload.prevIndex < state.playSongList.length
         ) {
           state.playSongList.splice(

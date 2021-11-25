@@ -37,6 +37,12 @@ const routes: RouteMata[] = [
     path: '/singer/:id',
     icon: 'elevator',
   },
+  {
+    label: '首页',
+    componentName: 'Video',
+    path: '/video',
+    icon: 'elevator',
+  },
 ];
 
 export default routes;
